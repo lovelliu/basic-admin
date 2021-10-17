@@ -1,4 +1,4 @@
 <script setup lang="ts"></script>
-<template> ddd </template>
+<template> <div class="text-gray-500 header">hello world</div> </template>
 
-<style></style>
+<style lang="less" scoped></style>
