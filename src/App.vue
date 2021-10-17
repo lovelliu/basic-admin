@@ -1,10 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts"></script>
+<template> ddd </template>
 
-</script>
-
-<template>
-
-</template>
-
-<style>
-</style>
+<style></style>
