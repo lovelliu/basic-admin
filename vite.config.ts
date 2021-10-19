@@ -1,8 +1,54 @@
-import { defineConfig } from 'vite';
+import type { ConfigEnv, UserConfig } from 'vite';
+import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import WindiCSS from 'vite-plugin-windicss';
+import { resolve } from 'path';
+import { wrapperEnv } from './build/utils';
+import { createProxy } from './build/vite/proxy';
+import { OUTPUT_DIR } from './build/constants';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), WindiCSS()],
-});
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir);
+}
+export default ({ mode }: ConfigEnv): UserConfig => {
+  const root = process.cwd();
+
+  const env = loadEnv(mode, root);
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = wrapperEnv(env);
+
+  return {
+    root,
+    base: VITE_PUBLIC_PATH,
+    resolve: {
+      alias: [
+        {
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
+        // /#/xxxx => types/xxxx
+        {
+          find: /\/#\//,
+          replacement: pathResolve('types') + '/',
+        },
+      ],
+    },
+    server: {
+      host: true,
+      port: VITE_PORT,
+      proxy: createProxy(VITE_PROXY),
+    },
+    plugins: [vue(), WindiCSS()],
+    build: {
+      target: 'es2015',
+      outDir: OUTPUT_DIR,
+      reportCompressedSize: false,
+      chunkSizeWarningLimit: 2000,
+      terserOptions: {
+        compress: {
+          drop_console: VITE_DROP_CONSOLE,
+          keep_infinity: true,
+        },
+      },
+    },
+  };
+};

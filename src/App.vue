@@ -1,4 +1,6 @@
 <script setup lang="ts"></script>
-<template> <div class="text-gray-500 header">hello world</div> </template>
+<template>
+  <div class="btn text-gray-500">hello world</div> <a-button type="primary">button</a-button>
+</template>
 
 <style lang="less" scoped></style>
