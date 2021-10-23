@@ -58,5 +58,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
     },
+    optimizeDeps: {
+      exclude: ['vue-demi'],
+    },
   };
 };
