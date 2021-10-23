@@ -1,6 +1,10 @@
-export {};
+import type { ComponentRenderProxy, VNode, PropType as VueProType } from 'vue';
 
 declare global {
+  declare type Recordable<T = any> = Record<string, T>;
+  declare type Nullable<T> = T | null;
+  declare type PropType<T> = VueProType<T>;
+
   interface ImportMetaEnv extends ViteEnv {
     __: unknown;
   }
@@ -20,5 +24,21 @@ declare global {
     VITE_LEGACY: boolean;
     VITE_USE_IMAGEMIN: boolean;
     VITE_GENERATE_UI: string;
+  }
+
+  namespace JSX {
+    // tslint:disable no-empty-interface
+    type Element = VNode;
+    // tslint:disable no-empty-interface
+    type ElementClass = ComponentRenderProxy;
+    interface ElementAttributesProperty {
+      $props: any;
+    }
+    interface IntrinsicElements {
+      [elem: string]: any;
+    }
+    interface IntrinsicAttributes {
+      [elem: string]: any;
+    }
   }
 }

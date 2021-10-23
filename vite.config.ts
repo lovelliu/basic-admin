@@ -1,7 +1,6 @@
 import type { ConfigEnv, UserConfig } from 'vite';
 import { loadEnv } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import WindiCSS from 'vite-plugin-windicss';
+import { createVitePlugins } from './build/vite/plugin';
 import { resolve } from 'path';
 import { wrapperEnv } from './build/utils';
 import { createProxy } from './build/vite/proxy';
@@ -10,12 +9,14 @@ import { OUTPUT_DIR } from './build/constants';
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
-export default ({ mode }: ConfigEnv): UserConfig => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
 
   const env = loadEnv(mode, root);
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = wrapperEnv(env);
+  const viteEnv = wrapperEnv(env);
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
 
+  const isBuild = command === 'build';
   return {
     root,
     base: VITE_PUBLIC_PATH,
@@ -37,7 +38,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       port: VITE_PORT,
       proxy: createProxy(VITE_PROXY),
     },
-    plugins: [vue(), WindiCSS()],
+    css: {
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true,
+        },
+      },
+    },
+    plugins: createVitePlugins(viteEnv, isBuild),
     build: {
       target: 'es2015',
       outDir: OUTPUT_DIR,
