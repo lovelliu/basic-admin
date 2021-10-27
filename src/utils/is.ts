@@ -23,3 +23,11 @@ export function isNull(val: unknown): val is null {
 export function isNullOrUndef(val: unknown): val is null | undefined {
   return isUndef(val) || isNull(val);
 }
+
+export function isObject(val: any): val is Record<any, any> {
+  return val !== null && is(val, 'Object');
+}
+
+export function isString(val: unknown): val is string {
+  return is(val, 'String');
+}

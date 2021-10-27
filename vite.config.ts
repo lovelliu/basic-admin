@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import { wrapperEnv } from './build/utils';
 import { createProxy } from './build/vite/proxy';
 import { OUTPUT_DIR } from './build/constants';
+import { generateModifyVars } from './build/generate/generateModifyVars';
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
@@ -41,6 +42,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         less: {
+          modifyVars: generateModifyVars(),
           javascriptEnabled: true,
         },
       },
@@ -59,6 +61,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     optimizeDeps: {
+      include: ['@iconify/iconify'],
       exclude: ['vue-demi'],
     },
   };

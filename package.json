@@ -5,18 +5,26 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
+    "@iconify/iconify": "^2.0.4",
+    "@vueuse/core": "^6.7.3",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.23.0",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.0-rc.14",
     "vue": "^3.2.16",
-    "vue-i18n": "^9.2.0-beta.14"
+    "vue-i18n": "^9.2.0-beta.14",
+    "vue-router": "4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@iconify/json": "^1.1.418",
     "@types/crypto-js": "^4.0.2",
     "@types/lodash-es": "^4.17.5",
     "@types/node": "^16.11.1",
@@ -25,24 +33,45 @@
     "@typescript-eslint/parser": "^5.0.0",
     "@vitejs/plugin-vue": "^1.9.3",
     "@vitejs/plugin-vue-jsx": "^1.2.0",
+    "@vue/compiler-sfc": "^3.2.20",
+    "autoprefixer": "^10.3.7",
+    "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-define-config": "^1.1.1",
     "eslint-plugin-jest": "^25.2.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^7.19.1",
+    "global": "^4.4.0",
+    "husky": "^7.0.4",
+    "is-ci": "^3.0.0",
     "less": "^4.1.2",
+    "lint-staged": "^11.2.3",
+    "postcss": "^8.3.11",
     "prettier": "^2.4.1",
+    "pretty-quick": "^3.1.1",
+    "rimraf": "^3.0.2",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
     "typescript": "^4.4.3",
     "vite": "^2.6.4",
+    "vite-plugin-html": "^2.1.1",
+    "vite-plugin-purge-icons": "^0.7.0",
     "vite-plugin-style-import": "^1.2.1",
+    "vite-plugin-svg-icons": "^1.0.5",
+    "vite-plugin-theme": "^0.8.1",
     "vite-plugin-vue-setup-extend": "^0.1.0",
     "vite-plugin-windicss": "^1.4.11",
     "vue-tsc": "^0.3.0",
     "windicss": "^3.1.9"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

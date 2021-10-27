@@ -1,0 +1,1 @@
+import type { AppRouteRecordRaw } from '/@/router/types'

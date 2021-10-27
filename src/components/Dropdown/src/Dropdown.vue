@@ -3,7 +3,6 @@
   import type { DropMeny } from './typing';
   import { omit } from 'lodash-es';
   import { isFunction } from '/@/utils/is';
-  
 </script>
 
 <template>
