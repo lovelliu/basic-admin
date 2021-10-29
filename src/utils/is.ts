@@ -31,3 +31,7 @@ export function isObject(val: any): val is Record<any, any> {
 export function isString(val: unknown): val is string {
   return is(val, 'String');
 }
+
+export function isArray(val: any): val is Array<any> {
+  return val && Array.isArray(val);
+}

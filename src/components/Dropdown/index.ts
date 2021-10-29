@@ -1,9 +1,5 @@
-export interface DropMenu {
-  onClick?: Fn;
-  to?: string;
-  icon?: string;
-  event: string | number;
-  text: string;
-  disabled?: boolean;
-  divider?: boolean;
-}
+import { withInstall } from '/@/utils';
+import dropdown from './src/Dropdown.vue';
+
+export * from './src/typing';
+export const Dropdown = withInstall(dropdown);

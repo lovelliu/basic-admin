@@ -9,6 +9,15 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
   return src;
 }
 
+export function setObjToUrlParams(baseUrl: string, obj: any): string {
+  let parameters = '';
+  for (const key in obj) {
+    parameters += key + '=' + encodeURIComponent(obj[key]) + '&';
+  }
+  parameters = parameters.replace(/&$/, '');
+  return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, '?') + parameters;
+}
+
 export const withInstall = <T>(component: T, alias?: string) => {
   const comp = component as any;
   comp.install = (app: App) => {

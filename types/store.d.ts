@@ -1,4 +1,4 @@
-import { RoleInfo } from '/@/api/system/userModel';
+import { RoleInfo } from '../src/api/sys/model/userModel';
 import { ErrorTypeEnum } from '/@/enums/exceptionEnum';
 import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
 

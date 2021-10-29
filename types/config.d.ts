@@ -57,7 +57,7 @@ export interface TransitionSetting {
   enable: boolean;
   basicTransition: RouterTransitionEnum;
   openPageLoading: boolean;
-  openNProcess: boolean;
+  openNProgress: boolean;
 }
 
 export interface ProjectConfig {
