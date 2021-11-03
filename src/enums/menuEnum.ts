@@ -7,6 +7,7 @@ export enum MenuTypeEnum {
   TOP_MENU = 'top-menu',
 }
 
+// 折叠按钮位置
 export enum TriggerEnum {
   NONE = 'NONE',
   FOOTER = 'FOOTER',

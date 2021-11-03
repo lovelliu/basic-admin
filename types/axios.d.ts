@@ -15,6 +15,13 @@ export interface RequestOptions {
 }
 
 export interface Result<T = any> {
+  code: string;
+  time: string;
+  mesg: string;
+  data: T;
+}
+
+export interface OtherResult<T = any> {
   state: number;
   success: boolean;
   message: string;

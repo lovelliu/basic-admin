@@ -20,6 +20,7 @@ export function setObjToUrlParams(baseUrl: string, obj: any): string {
 
 export const withInstall = <T>(component: T, alias?: string) => {
   const comp = component as any;
+
   comp.install = (app: App) => {
     app.component(comp.name || comp.displayName, component);
     if (alias) {

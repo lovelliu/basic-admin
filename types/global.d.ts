@@ -3,8 +3,11 @@ import type { ComponentRenderProxy, VNode, PropType as VueProType } from 'vue';
 declare global {
   declare type Recordable<T = any> = Record<string, T>;
   declare type Nullable<T> = T | null;
+  declare type TimeoutHandle = ReturnType<typeof setTimeout>;
   declare type PropType<T> = VueProType<T>;
-
+  declare type DeepPartial<T> = {
+    [P in keyof T]?: DeepPartial<T[P]>;
+  };
   interface ImportMetaEnv extends ViteEnv {
     __: unknown;
   }
