@@ -3,13 +3,13 @@ import type { App } from 'vue';
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-const WHITE_NAME_LIST: string[] = [];
-const getRouteNames = (array: any[]) =>
-  array.forEach((item) => {
-    WHITE_NAME_LIST.push(item.name);
-    getRouteNames(item.children || []);
-  });
-getRouteNames(basicRoutes);
+// const WHITE_NAME_LIST: string[] = [];
+// const getRouteNames = (array: any[]) =>
+//   array.forEach((item) => {
+//     WHITE_NAME_LIST.push(item.name);
+//     getRouteNames(item.children || []);
+//   });
+// getRouteNames(basicRoutes);
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),

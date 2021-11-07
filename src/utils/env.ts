@@ -17,7 +17,7 @@ export function getStorageShortName() {
 export function getAppEnvConfig() {
   const ENV_NAME = getConfigFileName(import.meta.env);
 
-  const ENV = import.meta.env.Dev
+  const ENV = import.meta.env.DEV
     ? (import.meta.env as unknown as GlobEnvConfig)
     : (window[ENV_NAME as any] as unknown as GlobEnvConfig);
 

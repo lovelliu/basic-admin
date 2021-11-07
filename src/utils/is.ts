@@ -35,3 +35,13 @@ export function isString(val: unknown): val is string {
 export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
+
+export function isUrl(path: string): boolean {
+  const reg =
+    /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
+  return reg.test(path);
+}
+
+export function isUnDef<T = unknown>(val?: T): val is T {
+  return !isDef(val);
+}

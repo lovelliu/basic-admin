@@ -29,6 +29,10 @@ declare global {
     VITE_GENERATE_UI: string;
   }
 
+  declare interface ChangeEvent extends Event {
+    target: HTMLInputElement;
+  }
+
   namespace JSX {
     // tslint:disable no-empty-interface
     type Element = VNode;
