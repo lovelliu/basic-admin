@@ -72,6 +72,7 @@ export class VAxios {
 
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
       const {
+        // @ts-ignore
         headers: { ignoreCancelToken },
       } = config;
       const ignoreCancel =
@@ -135,6 +136,7 @@ export class VAxios {
       data: formData,
       headers: {
         'Content-Type': ContentTypeEnum.FORM_DATA,
+        // @ts-ignore
         ignoreCancelToken: true,
       },
     });

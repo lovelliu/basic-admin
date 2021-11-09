@@ -1,22 +1,16 @@
 <script setup lang="ts">
-  import { AppProvider } from './components/Application';
-  import { Button } from 'ant-design-vue';
-  import { nextTick, ref } from 'vue';
-  import Icon from './components/Icon/src/Icon.vue';
-  const message = ref('hello');
-  const changeMessage = async (newMessage) => {
-    message.value = newMessage;
-    await nextTick();
-    console.log('change');
-  };
+  import { ConfigProvider } from 'ant-design-vue';
+  import { AppProvider } from '/@/components/Application';
+  import { useTitle } from '/@/hooks/web/useTitle';
+  import { useLocale } from '/@/locales/useLocale';
+
+  const { getAntdLocale } = useLocale();
+  useTitle();
 </script>
 <template>
-  <AppProvider class="ok">
-    <div class="text-gray-500">{{ message }}</div
-    ><Button type="primary" @click="changeMessage('world')">按 钮</Button>
-    <!-- <SvgIcon size="30" name="moon" /> -->
-    <Icon icon="ion:language" />
-  </AppProvider>
+  <ConfigProvider :locale="getAntdLocale">
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </ConfigProvider>
 </template>
-
-<style lang="less" scoped></style>

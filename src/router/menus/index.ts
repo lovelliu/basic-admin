@@ -96,3 +96,28 @@ function basicFilter(routes: RouteRecordNormalized[]) {
     return true;
   };
 }
+
+// Get the children of the menu
+export async function getChildrenMenus(parentPath: string) {
+  const menus = await getMenus();
+  const parent = menus.find((item) => item.path === parentPath);
+  if (!parent || !parent.children || !!parent?.meta?.hideChildrenInMenu) {
+    return [] as Menu[];
+  }
+  if (isRoleMode()) {
+    const routes = router.getRoutes();
+    return filter(parent.children, basicFilter(routes));
+  }
+  return parent.children;
+}
+
+// Get the level 1 menu, delete children
+export async function getShallowMenus(): Promise<Menu[]> {
+  const menus = await getAsyncMenus();
+  const shallowMenuList = menus.map((item) => ({ ...item, children: undefined }));
+  if (isRoleMode()) {
+    const routes = router.getRoutes();
+    return shallowMenuList.filter(basicFilter(routes));
+  }
+  return shallowMenuList;
+}

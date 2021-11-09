@@ -51,7 +51,7 @@ export const useAppStore = defineStore({
     getMenuSetting(): MenuSetting {
       return this.getProjectConfig.menuSetting;
     },
-    getMultiTabSetting(): MultiTabsSetting {
+    getMultiTabsSetting(): MultiTabsSetting {
       return this.getProjectConfig.multiTabsSetting;
     },
     getTransitionSetting(): TransitionSetting {
