@@ -4,7 +4,7 @@ export const primaryColor = '#0960bd';
 
 export const darkMode = 'light';
 
-type Fn = (...args: any) => any;
+type Fn = (...arg: any) => any;
 
 type GenerateTheme = 'default' | 'dark';
 

@@ -4,6 +4,13 @@ import { isObject } from './is';
 
 export const noop = () => {};
 
+/**
+ * @description:  Set ui mount node
+ */
+export function getPopupContainer(node?: HTMLElement): HTMLElement {
+  return (node?.parentNode as HTMLElement) ?? document.body;
+}
+
 export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
   let key: string;
   for (key in target) {

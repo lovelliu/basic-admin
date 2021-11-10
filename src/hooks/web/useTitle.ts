@@ -13,6 +13,7 @@ import { REDIRECT_NAME } from '/@/router/constant';
 export function useTitle() {
   const { title } = useGlobSetting();
   const { t } = useI18n();
+
   const { currentRoute } = useRouter();
   const localeStore = useLocaleStore();
 

@@ -14,7 +14,7 @@ export function useGo(_router?: Router) {
   let router;
   if (!_router) {
     router = useRouter();
-    console.log(router);
+    // console.log(router);
   }
   const { push, replace } = _router || router;
   function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {

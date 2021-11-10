@@ -8,21 +8,24 @@ import type {
 import type { BeforeMiniState } from '/#/store';
 
 import { defineStore } from 'pinia';
-import { store } from '..';
+import { store } from '/@/store';
+
 import { ThemeEnum } from '/@/enums/appEnum';
 import { APP_DARK_MODE_KEY_, PROJ_CFG_KEY } from '/@/enums/cacheEnum';
 import { Persistent } from '/@/utils/cache/persistent';
 import { darkMode } from '/@/settings/designSetting';
+import { resetRouter } from '/@/router';
 import { deepMerge } from '/@/utils';
-// import { resetRouter } from '/@/router';
 
 interface AppState {
   darkMode?: ThemeEnum;
+  // Page loading status
   pageLoading: boolean;
+  // project config
   projectConfig: ProjectConfig | null;
+  // When the window shrinks, remember some states, and restore these states when the window is restored
   beforeMiniInfo: BeforeMiniState;
 }
-
 let timeId: TimeoutHandle;
 export const useAppStore = defineStore({
   id: 'app',
@@ -36,26 +39,29 @@ export const useAppStore = defineStore({
     getPageLoading(): boolean {
       return this.pageLoading;
     },
-    getDarkMode(): 'light' | 'night' | string {
+    getDarkMode(): 'light' | 'dark' | string {
       return this.darkMode || localStorage.getItem(APP_DARK_MODE_KEY_) || darkMode;
     },
+
     getBeforeMiniInfo(): BeforeMiniState {
       return this.beforeMiniInfo;
     },
+
     getProjectConfig(): ProjectConfig {
       return this.projectConfig || ({} as ProjectConfig);
     },
+
     getHeaderSetting(): HeaderSetting {
       return this.getProjectConfig.headerSetting;
     },
     getMenuSetting(): MenuSetting {
       return this.getProjectConfig.menuSetting;
     },
-    getMultiTabsSetting(): MultiTabsSetting {
-      return this.getProjectConfig.multiTabsSetting;
-    },
     getTransitionSetting(): TransitionSetting {
       return this.getProjectConfig.transitionSetting;
+    },
+    getMultiTabsSetting(): MultiTabsSetting {
+      return this.getProjectConfig.multiTabsSetting;
     },
   },
   actions: {
@@ -78,14 +84,13 @@ export const useAppStore = defineStore({
     },
 
     async resetAllState() {
-      // resetRouter();
+      resetRouter();
       Persistent.clearAll();
     },
-
     async setPageLoadingAction(loading: boolean): Promise<void> {
       if (loading) {
         clearTimeout(timeId);
-
+        // Prevent flicker
         timeId = setTimeout(() => {
           this.setPageLoading(loading);
         }, 50);
@@ -97,6 +102,7 @@ export const useAppStore = defineStore({
   },
 });
 
+// Need to be used outside the setup
 export function useAppStoreWithOut() {
   return useAppStore(store);
 }
