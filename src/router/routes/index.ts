@@ -30,8 +30,7 @@ export const RootRoute: AppRouteRecordRaw = {
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
   name: 'Login',
-  // component: () => import('/@/views/sys/login/Login.vue'),
-  component: () => import('/@/layouts/default/index.vue'),
+  component: () => import('/@/views/login/Login.vue'),
   meta: {
     title: t('routes.basic.login'),
   },
@@ -39,8 +38,8 @@ export const LoginRoute: AppRouteRecordRaw = {
 
 // Basic routing without permission
 export const basicRoutes = [
-  LoginRoute,
   RootRoute,
+  LoginRoute,
   // ...mainOutRoutes,
   // REDIRECT_ROUTE,
   // PAGE_NOT_FOUND_ROUTE,
