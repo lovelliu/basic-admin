@@ -1,4 +1,4 @@
-import { RoleInfo } from '../src/api/sys/model/userModel';
+// import { RoleInfo } from '../src/api/sys/model/userModel';
 import { ErrorTypeEnum } from '/@/enums/exceptionEnum';
 import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
 
@@ -19,13 +19,9 @@ export interface ErrorLogInfo {
 }
 
 export interface UserInfo {
-  userId: string | number;
-  username: string;
-  realName: string;
-  avatar: string;
-  desc?: string;
-  homePath?: string;
-  roles: RoleInfo[];
+  userName: string;
+  isUpdatedPassword: boolean;
+  portrait: string;
 }
 
 export interface BeforeMiniState {

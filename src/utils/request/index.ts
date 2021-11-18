@@ -12,7 +12,7 @@ import { RequestEnum, ContentTypeEnum } from '/@/enums/httpEnum';
 import { isString } from '/@/utils/is';
 import { getToken } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
-import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
+// import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
 // import { useUserStoreWithOut } from '/@/store/modules/user';
@@ -43,16 +43,17 @@ const transform: AxiosTransform = {
     // 错误的时候返回
 
     const { data } = res;
+
     if (!data) {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     // 这里为后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    if ((data as OtherResult).content) {
+    if ('content' in (data as OtherResult)) {
       const { state, content, message, success } = data as OtherResult;
 
       // 这里逻辑可以根据项目进行修改
-      const hasSuccess = data && Reflect.has(data, 'success') && success && state === 0;
+      const hasSuccess = data && Reflect.has(data, 'success') && success && state === 1;
       if (hasSuccess) {
         return content;
       } else {
@@ -149,6 +150,7 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = getToken();
+
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
@@ -170,8 +172,9 @@ const transform: AxiosTransform = {
    */
   responseInterceptorsCatch: (error: any) => {
     const { t } = useI18n();
-    const errorLogStore = useErrorLogStoreWithOut();
-    errorLogStore.addAjaxErrorInfo(error);
+    // const errorLogStore = useErrorLogStoreWithOut();
+    // errorLogStore.addAjaxErrorInfo(error);
+
     const { response, code, message, config } = error || {};
     const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
     const msg: string = response?.data?.error?.message ?? '';
@@ -254,15 +257,15 @@ export const defHttp = createAxios();
 
 // other api url
 export const otherHttp = createAxios({
-  headers: { 'Content-Type': ContentTypeEnum.JSON },
+  headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
   timeout: 10 * 1000,
   transform,
   requestOptions: {
     apiUrl: '/front-api',
-    urlPrefix: '/front',
+    urlPrefix: '/front/user',
     isTransformResponse: true,
     isReturnNativeResponse: false,
-    withToken: false,
+    withToken: true,
     ignoreCancelToken: true,
     joinTime: true,
     formatDate: true,

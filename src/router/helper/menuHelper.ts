@@ -1,6 +1,8 @@
-import type { Menu, MenuModule } from '/@/router/types';
+import type { Menu, MenuModule, AppRouteRecordRaw } from '/@/router/types';
+import { AppRouteModule } from '/@/router/types';
 
-import { findPath } from '/@/utils/helper/treeHelper';
+import { cloneDeep } from 'lodash-es';
+import { findPath, treeMap } from '/@/utils/helper/treeHelper';
 import { isUrl } from '/@/utils/is';
 
 export function getAllParentPath<T = Recordable>(treeData: T[], path: string) {
@@ -28,4 +30,38 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
 
   joinParentPath(menuList);
   return menuList[0];
+}
+
+export function transformRouteToMenu(routeModList: AppRouteModule[], routerMapping = false) {
+  const cloneRouteModList = cloneDeep(routeModList);
+  const routeList: AppRouteRecordRaw[] = [];
+
+  cloneRouteModList.forEach((item) => {
+    if (routerMapping && item.meta.hideChildrenInMenu && typeof item.redirect === 'string') {
+      item.path = item.redirect;
+    }
+    if (item.meta?.single) {
+      const realItem = item?.children?.[0];
+      realItem && routeList.push(realItem);
+    } else {
+      routeList.push(item);
+    }
+  });
+
+  const list = treeMap(routeList, {
+    conversion: (node: AppRouteRecordRaw) => {
+      const { meta: { title, hideMenu = false } = {} } = node;
+
+      return {
+        ...(node.meta || {}),
+        meta: node.meta,
+        name: title,
+        hideMenu,
+        path: node.path,
+        ...(node.redirect ? { redirect: node.redirect } : {}),
+      };
+    },
+  });
+  joinParentPath(list);
+  return cloneDeep(list);
 }

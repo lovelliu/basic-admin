@@ -1,6 +1,9 @@
 // token key
 export const TOKEN_KEY = 'TOKEN__';
 
+// refresh token key
+export const RETOKEN_KEY = 'RETOKEN__';
+
 export const LOCALE_KEY = 'LOCALE__';
 
 // user info key

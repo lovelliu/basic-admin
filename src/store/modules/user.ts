@@ -4,22 +4,23 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { RETOKEN_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+import { LoginParams } from '/@/api/sys/model/userModel';
+import { doLogout, getUserInfo, loginApi, refreshToken } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
-// import { usePermissionStore } from '/@/store/modules/permission';
-// import { RouteRecordRaw } from 'vue-router';
+import { usePermissionStore } from '/@/store/modules/permission';
+import { RouteRecordRaw } from 'vue-router';
 // import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-import { isArray } from '/@/utils/is';
+// import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
   token?: string;
+  refreshToken?: string;
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
@@ -32,6 +33,8 @@ export const useUserStore = defineStore({
     userInfo: null,
     // token
     token: undefined,
+    // refresh token
+    refreshToken: undefined,
     // roleList
     roleList: [],
     // Whether the login expired
@@ -45,6 +48,9 @@ export const useUserStore = defineStore({
     },
     getToken(): string {
       return this.token || getAuthCache<string>(TOKEN_KEY);
+    },
+    getRefreshToken(): string {
+      return this.refreshToken || getAuthCache<string>(RETOKEN_KEY);
     },
     getRoleList(): RoleEnum[] {
       return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
@@ -60,6 +66,10 @@ export const useUserStore = defineStore({
     setToken(info: string | undefined) {
       this.token = info ? info : ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
+    },
+    setRefreshToken(info: string | undefined) {
+      this.refreshToken = info ? info : '';
+      setAuthCache(RETOKEN_KEY, info);
     },
     setRoleList(roleList: RoleEnum[]) {
       this.roleList = roleList;
@@ -87,20 +97,44 @@ export const useUserStore = defineStore({
         goHome?: boolean;
         mode?: ErrorMessageMode;
       },
-    ): Promise<GetUserInfoModel | null> {
+    ): Promise<UserInfo | null> {
+      const { createMessage } = useMessage();
       try {
         const { goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        const res = await loginApi(loginParams, mode);
+        if (!res) {
+          createMessage.warning('result is null');
+          return null;
+        }
+        const data = JSON.parse(res);
+
+        const { access_token, refresh_token } = data;
 
         // save token
-        this.setToken(token);
+        this.setToken(access_token);
+        this.setRefreshToken(refresh_token);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
       }
     },
-    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+
+    async toTefreshToken() {
+      const { createMessage } = useMessage();
+      const res = await refreshToken({ refreshtoken: this.getRefreshToken });
+      if (!res) {
+        createMessage.warning('result is null');
+      }
+      const data = JSON.parse(res);
+
+      const { access_token, refresh_token } = data;
+
+      // save token
+      this.setToken(access_token);
+      this.setRefreshToken(refresh_token);
+    },
+
+    async afterLoginAction(goHome?: boolean): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       // get user info
       const userInfo = await this.getUserInfoAction();
@@ -109,30 +143,31 @@ export const useUserStore = defineStore({
       if (sessionTimeout) {
         this.setSessionTimeout(false);
       } else {
-        // const permissionStore = usePermissionStore();
-        // if (!permissionStore.isDynamicAddedRoute) {
-        //   const routes = await permissionStore.buildRoutesAction();
-        //   routes.forEach((route) => {
-        //     router.addRoute(route as unknown as RouteRecordRaw);
-        //   });
-        //   router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
-        //   permissionStore.setDynamicAddedRoute(true);
-        // }
-        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
+        const permissionStore = usePermissionStore();
+        if (!permissionStore.isDynamicAddedRoute) {
+          const routes = await permissionStore.buildRoutesAction();
+          routes.forEach((route) => {
+            router.addRoute(route as unknown as RouteRecordRaw);
+          });
+          // router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
+          permissionStore.setDynamicAddedRoute(true);
+        }
+        goHome && (await router.replace(PageEnum.BASE_HOME));
       }
       return userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      const { roles = [] } = userInfo;
-      if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
-        this.setRoleList(roleList);
-      } else {
-        userInfo.roles = [];
-        this.setRoleList([]);
-      }
+      // const { roles = [] } = userInfo;
+
+      // if (isArray(roles)) {
+      //   const roleList = roles.map((item) => item.value) as RoleEnum[];
+      //   this.setRoleList(roleList);
+      // } else {
+      //   userInfo.roles = [];
+      //   this.setRoleList([]);
+      // }
       this.setUserInfo(userInfo);
       return userInfo;
     },

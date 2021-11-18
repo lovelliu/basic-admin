@@ -1,26 +1,29 @@
 import { otherHttp } from '/@/utils/request';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+import { LoginParams } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
+import { UserInfo } from '/#/store';
 
 enum Api {
   Login = '/login',
   Logout = '/logout',
-  GetUserInfo = '/getUserInfo',
+  GetUserInfo = '/getInfo',
   GetPermCode = '/getPermCode',
+  RefreshToken = '/refresh_token',
 }
 
 /**
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return otherHttp.post<LoginResultModel>(
+  return otherHttp.post<string>(
     {
       url: Api.Login,
       params,
     },
     {
       errorMessageMode: mode,
+      withToken: false,
     },
   );
 }
@@ -29,7 +32,7 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return otherHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+  return otherHttp.get<UserInfo>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
 }
 
 export function getPermCode() {
@@ -37,5 +40,9 @@ export function getPermCode() {
 }
 
 export function doLogout() {
-  return otherHttp.get({ url: Api.Logout });
+  return otherHttp.post({ url: Api.Logout });
+}
+
+export function refreshToken(params: { refreshtoken: string }) {
+  return otherHttp.post({ url: Api.RefreshToken, params });
 }
