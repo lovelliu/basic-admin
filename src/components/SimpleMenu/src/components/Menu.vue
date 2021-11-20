@@ -18,7 +18,7 @@
   import mitt from '/@/utils/mitt';
 
   export default defineComponent({
-    name: 'MenuR',
+    name: 'Menu',
     props: {
       theme: propTypes.oneOf(['light', 'dark']).def('light'),
       activeName: propTypes.oneOfType([propTypes.string, propTypes.number]),

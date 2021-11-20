@@ -53,12 +53,12 @@ export function treeMapEach(
   if (haveChildren) {
     return {
       ...conversionData,
-      [children]: data[children].map((i: number) => {
+      [children]: data[children].map((i: number) =>
         treeMapEach(i, {
           children,
           conversion,
-        });
-      }),
+        }),
+      ),
     };
   } else {
     return {

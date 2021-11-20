@@ -124,7 +124,7 @@ export const usePermissionStore = defineStore({
        * */
       const patchHomeAffix = (routes: AppRouteRecordRaw[]) => {
         if (!routes || routes.length === 0) return;
-        let homePath: string = userStore.getUserInfo.homePath || PageEnum.BASE_HOME;
+        let homePath: string = PageEnum.BASE_HOME;
         function patcher(routes: AppRouteRecordRaw[], parentPath = '') {
           if (parentPath) parentPath = parentPath + '/';
           routes.forEach((route: AppRouteRecordRaw) => {
@@ -148,6 +148,7 @@ export const usePermissionStore = defineStore({
         }
         return;
       };
+
       switch (permissionMode) {
         case PermissionModeEnum.ROLE:
           routes = filter(asyncRoutes, routeFilter);
@@ -158,6 +159,7 @@ export const usePermissionStore = defineStore({
 
         case PermissionModeEnum.ROUTE_MAPPING:
           routes = filter(asyncRoutes, routeFilter);
+
           routes = routes.filter(routeFilter);
           const menuList = transformRouteToMenu(routes, true);
           routes = filter(routes, routeRemoveIgnoreFilter);

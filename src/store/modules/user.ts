@@ -121,17 +121,21 @@ export const useUserStore = defineStore({
 
     async toTefreshToken() {
       const { createMessage } = useMessage();
-      const res = await refreshToken({ refreshtoken: this.getRefreshToken });
-      if (!res) {
-        createMessage.warning('result is null');
+      try {
+        const res = await refreshToken({ refreshtoken: this.getRefreshToken });
+        if (!res) {
+          createMessage.warning('result is null');
+        }
+        const data = JSON.parse(res);
+
+        const { access_token, refresh_token } = data;
+
+        // save token
+        this.setToken(access_token);
+        this.setRefreshToken(refresh_token);
+      } catch (error: any) {
+        createMessage.error(error.message);
       }
-      const data = JSON.parse(res);
-
-      const { access_token, refresh_token } = data;
-
-      // save token
-      this.setToken(access_token);
-      this.setRefreshToken(refresh_token);
     },
 
     async afterLoginAction(goHome?: boolean): Promise<UserInfo | null> {
