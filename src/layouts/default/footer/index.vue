@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
     <div :class="`${prefixCls}__links`">
       <a @click="openWindow(SITE_URL)">{{ t('layout.footer.onlinePreview') }}</a>
@@ -92,4 +92,4 @@
       }
     }
   }
-</style> -->
+</style>

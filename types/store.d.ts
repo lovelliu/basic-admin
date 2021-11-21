@@ -22,6 +22,7 @@ export interface UserInfo {
   userName: string;
   isUpdatedPassword: boolean;
   portrait: string;
+  userId?: string;
 }
 
 export interface BeforeMiniState {

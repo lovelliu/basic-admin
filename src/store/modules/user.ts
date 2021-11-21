@@ -24,6 +24,7 @@ interface UserState {
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
+  userId?: string;
 }
 
 export const useUserStore = defineStore({
@@ -33,6 +34,7 @@ export const useUserStore = defineStore({
     userInfo: null,
     // token
     token: undefined,
+    userId: undefined,
     // refresh token
     refreshToken: undefined,
     // roleList
@@ -77,6 +79,7 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
+      this.userInfo!.userId = this.userId;
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(USER_INFO_KEY, info);
     },
@@ -108,11 +111,12 @@ export const useUserStore = defineStore({
         }
         const data = JSON.parse(res);
 
-        const { access_token, refresh_token } = data;
+        const { access_token, refresh_token, user_id } = data;
 
         // save token
         this.setToken(access_token);
         this.setRefreshToken(refresh_token);
+        this.userId = user_id;
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
