@@ -26,7 +26,7 @@ export function findPath<T = any>(
     const node = list[0];
     if (visitedSet.has(node)) {
       path.pop();
-      list.unshift();
+      list.shift();
     } else {
       visitedSet.add(node);
       node[children!] && list.unshift(...node[children!]);
