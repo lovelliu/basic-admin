@@ -1,7 +1,6 @@
 import type { RouteRecordRaw, RouteMeta } from 'vue-router';
-// import { RoleEnum } from '../enums/roleEnum';
+import { RoleEnum } from '/@/enums/roleEnum';
 import { defineComponent } from 'vue';
-import { RoleEnum } from '../enums/roleEnum';
 
 export type Component<T = any> =
   | ReturnType<typeof defineComponent>
@@ -27,15 +26,26 @@ export interface MenuTag {
 
 export interface Menu {
   name: string;
+
   icon?: string;
+
   path: string;
-  paramsPath?: string;
+
+  // path contains param, auto assignment.
+  paramPath?: string;
+
   disabled?: boolean;
+
   children?: Menu[];
+
   orderNo?: number;
-  roles?: RoleEnum;
+
+  roles?: RoleEnum[];
+
   meta?: Partial<RouteMeta>;
+
   tag?: MenuTag;
+
   hideMenu?: boolean;
 }
 
@@ -44,4 +54,5 @@ export interface MenuModule {
   menu: Menu;
 }
 
+// export type AppRouteModule = RouteModule | AppRouteRecordRaw;
 export type AppRouteModule = AppRouteRecordRaw;

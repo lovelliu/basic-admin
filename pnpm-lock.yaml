@@ -37,6 +37,7 @@ specifiers:
   lint-staged: ^11.2.6
   lodash-es: ^4.17.21
   moment: ^2.29.1
+  nprogress: ^0.2.0
   path-to-regexp: ^6.2.0
   pinia: ^2.0.3
   postcss: ^8.3.11
@@ -79,6 +80,7 @@ dependencies:
   crypto-js: 4.1.1
   lodash-es: 4.17.21
   moment: 2.29.1
+  nprogress: 0.2.0
   path-to-regexp: 6.2.0
   pinia: 2.0.3_typescript@4.4.4+vue@3.2.21
   qs: 6.10.1
@@ -4514,6 +4516,10 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha1-y480xTIT2JVyP8urkH6UIq28r7E=}
+    dev: false
 
   /nth-check/2.0.1:
     resolution: {integrity: sha512-it1vE95zF6dTT9lBsYbxvqh0Soy4SPowchj0UBGj/V6cTPnXXtQOPUbhZ6CmGzAD/rW22LQK6E96pcdJXk4A4w==}

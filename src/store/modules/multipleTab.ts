@@ -8,12 +8,11 @@ import { useGo, useRedo } from '/@/hooks/web/usePage';
 import { Persistent } from '/@/utils/cache/persistent';
 
 import { PageEnum } from '/@/enums/pageEnum';
-// import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '/@/router/routes/basic';
+import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '/@/router/routes/basic';
 import { getRawRoute } from '/@/utils';
 import { MULTIPLE_TABS_KEY } from '/@/enums/cacheEnum';
 
 import projectSetting from '/@/settings/projectSetting';
-import { useUserStore } from '/@/store/modules/user';
 
 export interface MultipleTabState {
   cacheTabList: Set<string>;
@@ -124,8 +123,8 @@ export const useMultipleTabStore = defineStore({
       if (
         path === PageEnum.ERROR_PAGE ||
         path === PageEnum.BASE_LOGIN ||
-        !name
-        // [REDIRECT_ROUTE.name, PAGE_NOT_FOUND_ROUTE.name].includes(name as string)
+        !name ||
+        [REDIRECT_ROUTE.name, PAGE_NOT_FOUND_ROUTE.name].includes(name as string)
       ) {
         return;
       }
@@ -199,8 +198,7 @@ export const useMultipleTabStore = defineStore({
       if (index === 0) {
         // There is only one tab, then jump to the homepage, otherwise jump to the right tab
         if (this.tabList.length === 1) {
-          const userStore = useUserStore();
-          toTarget = userStore.getUserInfo.homePath || PageEnum.BASE_HOME;
+          toTarget = PageEnum.BASE_HOME;
         } else {
           //  Jump to the right tab
           const page = this.tabList[index + 1];
