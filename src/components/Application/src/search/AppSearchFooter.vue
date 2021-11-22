@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div :class="`${prefixCls}`">
     <AppSearchKeyItem :class="`${prefixCls}-item`" icon="ant-design:enter-outlined" />
     <span>{{ t('component.app.toSearch') }}</span>
@@ -53,4 +53,4 @@
       }
     }
   }
-</style> -->
+</style>

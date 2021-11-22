@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <Teleport to="body">
     <transition name="zoom-fade" mode="out-in">
       <div :class="getClass" @click.stop v-if="visible">
@@ -264,4 +264,4 @@
       }
     }
   }
-</style> -->
+</style>

@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <span :class="$attrs.class">
     <Icon :icon="icon" />
   </span>
@@ -8,4 +8,4 @@
   defineProps({
     icon: String,
   });
-</script> -->
+</script>

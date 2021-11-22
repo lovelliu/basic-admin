@@ -1,4 +1,4 @@
-<!-- <script lang="tsx">
+<script lang="tsx">
   import { defineComponent, ref, unref } from 'vue';
   import { Tooltip } from 'ant-design-vue';
   import { SearchOutlined } from '@ant-design/icons-vue';
@@ -30,4 +30,4 @@
       };
     },
   });
-</script> -->
+</script>
