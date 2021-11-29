@@ -44,6 +44,10 @@ export function isString(val: unknown): val is string {
   return is(val, 'String');
 }
 
+export function isMap(val: unknown): val is Map<any, any> {
+  return is(val, 'Map');
+}
+
 export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
