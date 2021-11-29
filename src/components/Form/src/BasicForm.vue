@@ -262,5 +262,3 @@
     </Row>
   </Form>
 </template>
-
-<style lang="less" scoped></style>
