@@ -9,6 +9,8 @@
 
   import { reactive, ref, computed, unref, watch, useAttrs, nextTick, onMounted } from 'vue';
   import { Form, Row } from 'ant-design-vue';
+  import FormItem from './components/FormItem.vue';
+  import FormAction from './components/FormAction.vue';
   import { useDesign } from '/@/hooks/web/useDesign';
 
   import { dateItemType } from './helper';
@@ -235,7 +237,7 @@
       <template v-for="schema in getSchema" :key="schema.field">
         <FormItem
           :tableAction="tableAction"
-          :formActionType="formActionType"
+          :formActionType="formActionType as any"
           :schema="schema"
           :formProps="getProps"
           :allDefaultValues="defaultValueRef"
