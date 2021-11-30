@@ -198,7 +198,7 @@
     }
   }
 
-  const formActionType: Partial<FormActionType> = {
+  const formActionType: any = {
     getFieldsValue,
     setFieldsValue,
     resetFields,
@@ -237,7 +237,7 @@
       <template v-for="schema in getSchema" :key="schema.field">
         <FormItem
           :tableAction="tableAction"
-          :formActionType="formActionType as any"
+          :formActionType="formActionType"
           :schema="schema"
           :formProps="getProps"
           :allDefaultValues="defaultValueRef"
@@ -262,3 +262,50 @@
     </Row>
   </Form>
 </template>
+<style lang="less">
+  @prefix-cls: ~'@{namespace}-basic-form';
+
+  .@{prefix-cls} {
+    .ant-form-item {
+      &-label label::after {
+        margin: 0 6px 0 2px;
+      }
+
+      &-with-help {
+        margin-bottom: 0;
+      }
+
+      &:not(.ant-form-item-with-help) {
+        margin-bottom: 20px;
+      }
+
+      &.suffix-item {
+        .ant-form-item-children {
+          display: flex;
+        }
+
+        .ant-form-item-control {
+          margin-top: 4px;
+        }
+
+        .suffix {
+          display: inline-flex;
+          padding-left: 6px;
+          margin-top: 1px;
+          line-height: 1;
+          align-items: center;
+        }
+      }
+    }
+
+    .ant-form-explain {
+      font-size: 14px;
+    }
+
+    &--compact {
+      .ant-form-item {
+        margin-bottom: 8px !important;
+      }
+    }
+  }
+</style>
