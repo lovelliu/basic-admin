@@ -13,7 +13,7 @@ import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
-// import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
+import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 // import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
@@ -128,15 +128,16 @@ export const useUserStore = defineStore({
       try {
         const res = await refreshToken({ refreshtoken: this.getRefreshToken });
         if (!res) {
-          createMessage.warning('result is null');
+          this.logout(true);
+        } else {
+          const data = JSON.parse(res);
+
+          const { access_token, refresh_token } = data;
+
+          // save token
+          this.setToken(access_token);
+          this.setRefreshToken(refresh_token);
         }
-        const data = JSON.parse(res);
-
-        const { access_token, refresh_token } = data;
-
-        // save token
-        this.setToken(access_token);
-        this.setRefreshToken(refresh_token);
       } catch (error: any) {
         createMessage.error(error.message);
       }
@@ -157,7 +158,7 @@ export const useUserStore = defineStore({
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
-          // router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
+          router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
         goHome && (await router.replace(PageEnum.BASE_HOME));

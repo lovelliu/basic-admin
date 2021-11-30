@@ -34,11 +34,7 @@ export function checkStatus(
       if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
         userStore.setSessionTimeout(true);
       } else {
-        if (!userStore.getRefreshToken) {
-          userStore.logout(true);
-        } else {
-          userStore.toTefreshToken();
-        }
+        userStore.toTefreshToken();
       }
       break;
     case 403:
