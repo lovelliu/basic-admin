@@ -31,7 +31,7 @@
     const treeData = await getEditMenuInfo();
     updateSchema({
       field: 'parentId',
-      componentProps: { treeData: treeData.parentMenuList },
+      componentProps: { treeData: [...treeData.parentMenuList, { name: '无上级菜单', id: -1 }] },
     });
   });
 
