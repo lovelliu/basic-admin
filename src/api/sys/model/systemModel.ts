@@ -32,6 +32,25 @@ export interface MenuItem {
   level: number;
 }
 
+export type ResourceList = ResourceItem[];
+export interface ResourceParams {
+  id: number;
+  name: string;
+  url: string;
+  current: number;
+  size: number;
+  categoryId: number;
+}
+export type ResourceCateList = ResourceCate[];
+
+export interface AddOrUpdateResourceParams {
+  id?: number;
+  name: string;
+  url: string;
+  categoryId: number;
+  description?: string;
+}
+
 interface MenuTreeItem {
   id: number;
   createdBy: string;
@@ -49,4 +68,30 @@ interface MenuTreeItem {
   level: number;
   selected: boolean;
   subMenuList: Nullable<MenuTreeItem>;
+}
+
+interface ResourceItem {
+  id: number;
+  createdBy: string;
+  updatedBy: string;
+  createdTime: string;
+  updatedTime: string;
+  operatorId: null;
+  name: string;
+  categoryId: number;
+  url: string;
+  description: string;
+  selected: boolean;
+}
+
+interface ResourceCate {
+  id: number;
+  createdBy: string;
+  updatedBy: string;
+  createdTime: string;
+  updatedTime: string;
+  operatorId: Nullable<number>;
+  name: string;
+  sort: number;
+  selected: boolean;
 }

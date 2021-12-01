@@ -12,7 +12,7 @@ import { RequestEnum, ContentTypeEnum } from '/@/enums/httpEnum';
 import { isString } from '/@/utils/is';
 import { getToken } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
-// import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
+import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
 // import { useUserStoreWithOut } from '/@/store/modules/user';
@@ -61,7 +61,7 @@ const transform: AxiosTransform = {
       }
     } else {
       const { code, mesg, data: result } = data as Result;
-      if (code === '0') {
+      if (code === '0' || code === '000000') {
         return result;
       } else {
         createErrorModal({ title: t('sys.api.errorTip'), content: mesg });
@@ -150,7 +150,6 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = getToken();
-
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
@@ -172,8 +171,8 @@ const transform: AxiosTransform = {
    */
   responseInterceptorsCatch: (error: any) => {
     const { t } = useI18n();
-    // const errorLogStore = useErrorLogStoreWithOut();
-    // errorLogStore.addAjaxErrorInfo(error);
+    const errorLogStore = useErrorLogStoreWithOut();
+    errorLogStore.addAjaxErrorInfo(error);
 
     const { response, code, message, config } = error || {};
     const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
