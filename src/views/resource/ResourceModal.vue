@@ -2,7 +2,7 @@
   import { ref, unref, computed } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form';
-  import { accountFormSchema } from './data';
+  import { ResourceFormSchema } from './data';
   import { addOrUpdate } from '/@/api/sys/resource';
   import { useMessage } from '/@/hooks/web/useMessage';
 
@@ -13,7 +13,7 @@
 
   const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
     labelWidth: 100,
-    schemas: accountFormSchema,
+    schemas: ResourceFormSchema,
     showActionButtonGroup: false,
     actionColOptions: {
       span: 23,
@@ -31,7 +31,6 @@
         ...data.record,
       });
     }
-    console.log(data.resourceCate);
 
     updateSchema([
       {
@@ -53,7 +52,7 @@
       if (res) {
         isUpdate.value ? createMessage.success('修改成功') : createMessage.success('添加成功');
         closeModal();
-        emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
+        emit('success', { isUpdate: unref(isUpdate) });
       }
     } finally {
       setModalProps({ confirmLoading: false });

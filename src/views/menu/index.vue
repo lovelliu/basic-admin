@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="MenuManagement">
   import { nextTick } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { deleteMenu, getMenuList } from '/@/api/sys/menu';
@@ -46,6 +46,7 @@
     const res = await deleteMenu(record.id);
     if (res) {
       createMessage.success('删除成功');
+      reload();
     }
   }
 

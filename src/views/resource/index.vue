@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="ResourceManagement">
   import { deleteResource, getResourceCate, getResourceList } from '/@/api/sys/resource';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useModal } from '/@/components/Modal';
@@ -6,7 +6,9 @@
   import { onMounted, ref } from 'vue';
   import ResourceModal from './ResourceModal.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useGo } from '/@/hooks/web/usePage';
 
+  const go = useGo();
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, getForm }] = useTable({
     title: '资源列表',
@@ -86,7 +88,7 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 添加资源 </a-button>
-        <a-button type="primary"> 新增资源分类 </a-button>
+        <a-button type="primary" @click="go('/permission/resource_cate')"> 资源分类 </a-button>
       </template>
       <template #action="{ record }">
         <TableAction

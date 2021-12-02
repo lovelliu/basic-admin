@@ -66,6 +66,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
     optimizeDeps: {
       include: [
+        '@vue/runtime-core',
+        '@vue/shared',
         '@iconify/iconify',
         'ant-design-vue/es/locale/zh_CN',
         'moment/dist/locale/zh-cn',

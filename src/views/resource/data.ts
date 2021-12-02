@@ -55,7 +55,7 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const accountFormSchema: FormSchema[] = [
+export const ResourceFormSchema: FormSchema[] = [
   {
     field: 'name',
     label: '资源名称',
@@ -78,5 +78,43 @@ export const accountFormSchema: FormSchema[] = [
     field: 'description',
     label: '描述',
     component: 'InputTextArea',
+  },
+];
+
+export const ResourceCateColumns: BasicColumn[] = [
+  {
+    title: '编号',
+    dataIndex: 'id',
+    width: 50,
+  },
+  {
+    title: '名称',
+    dataIndex: 'name',
+    width: 100,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createdTime',
+    width: 100,
+  },
+  {
+    title: '排序',
+    dataIndex: 'sort',
+    width: 25,
+  },
+];
+
+export const ResourceCateFormSchema: FormSchema[] = [
+  {
+    field: 'name',
+    label: '名称',
+    component: 'Input',
+    required: true,
+  },
+  {
+    field: 'sort',
+    label: '排序',
+    component: 'InputNumber',
+    required: true,
   },
 ];
