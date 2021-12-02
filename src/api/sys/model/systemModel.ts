@@ -51,6 +51,12 @@ export interface AddOrUpdateResourceParams {
   description?: string;
 }
 
+export interface AddOrUpdateResourceCate {
+  id?: number;
+  name: string;
+  sort: number;
+}
+
 interface MenuTreeItem {
   id: number;
   createdBy: string;
