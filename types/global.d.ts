@@ -33,6 +33,8 @@ declare global {
     target: HTMLInputElement;
   }
 
+  declare function parseInt(s: string | number, radix?: number): number;
+
   namespace JSX {
     // tslint:disable no-empty-interface
     type Element = VNode;
