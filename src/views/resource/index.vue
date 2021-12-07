@@ -26,7 +26,6 @@
       autoSubmitOnEnter: true,
     },
     pagination: true,
-    striped: false,
     bordered: true,
     showIndexColumn: false,
     canResize: true,

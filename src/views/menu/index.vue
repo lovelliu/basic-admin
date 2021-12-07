@@ -13,7 +13,6 @@
     api: getMenuList,
     columns,
     pagination: false,
-    striped: false,
     bordered: true,
     showIndexColumn: false,
     canResize: false,
