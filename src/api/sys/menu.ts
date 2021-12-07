@@ -6,6 +6,8 @@ enum Api {
   GetEditMenuInfo = '/menu/getEditMenuInfo',
   AddOrUpdateMenu = '/menu/saveOrUpdate',
   Menu = '/menu',
+  GetRoleMenus = '/menu/getRoleMenus',
+  AllocateRoleMenus = '/menu/allocateRoleMenus',
 }
 
 export const getMenuList = () => defHttp.get<MenuList>({ url: Api.GetMenuList });
@@ -19,3 +21,12 @@ export const AddOrUpdateMenu = (data: AddOrUpdateMenuParams) =>
 export const deleteMenu = (id) => defHttp.delete({ url: `${Api.Menu}/${id}` });
 
 export const getMenuById = (id) => defHttp.get<MenuItem>({ url: `${Api.Menu}/${id}` });
+
+export const getRoleMenus = (id: number) =>
+  defHttp.get<EditMenuInfo['parentMenuList'] & { selected: boolean }>({
+    url: Api.GetRoleMenus,
+    params: { roleId: id },
+  });
+
+export const allocateRoleMenus = (data: { roleId: number; menuIdList: number[] }) =>
+  defHttp.post({ url: Api.AllocateRoleMenus, data });

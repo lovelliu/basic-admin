@@ -4,6 +4,7 @@ import {
   ResourceCateList,
   ResourceList,
   ResourceParams,
+  RoleResourceList,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/request';
 
@@ -14,6 +15,9 @@ enum Api {
   DeleteResource = '/resource',
   AddOrUpdateResourceCate = '/resource/category/saveOrderUpdate',
   DeleteResourceCate = '/resource/category',
+  GetAllResource = '/resource/getAll',
+  GetRoleResource = '/resource/getRoleResources',
+  AllocateRoleResource = '/resource/allocateRoleResources',
 }
 
 export const getResourceList = (data: Partial<ResourceParams>) =>
@@ -32,3 +36,14 @@ export const addOrUpdateCate = (data: AddOrUpdateResourceCate) =>
 
 export const deleteResourceCate = (id: number) =>
   defHttp.delete({ url: `${Api.DeleteResourceCate}/${id}` });
+
+export const getAllResource = () => defHttp.get<ResourceList>({ url: Api.GetAllResource });
+
+export const getRoleResource = (id: number) =>
+  defHttp.get<RoleResourceList>({
+    url: Api.GetRoleResource,
+    params: { roleId: id },
+  });
+
+export const allocateRoleResource = (data: { roleId: number; resourceIdList: number[] }) =>
+  defHttp.post({ url: Api.AllocateRoleResource, data });

@@ -33,6 +33,7 @@ export interface MenuItem {
 }
 
 export type ResourceList = ResourceItem[];
+export type RoleResourceList = (ResourceItem & { resourceList: ResourceList })[];
 export interface ResourceParams {
   id: number;
   name: string;
@@ -57,6 +58,36 @@ export interface AddOrUpdateResourceCate {
   sort: number;
 }
 
+export type RoleList = RoleItem[];
+
+export type RoleParms = Partial<Omit<ResourceParams, 'url' & 'categoryId'>>;
+
+export interface AddOrUpdateRoleParams {
+  id?: number;
+  code: number;
+  name: string;
+  description?: string;
+}
+
+export interface GetUserListParams {
+  phone: number;
+  userId: number;
+  startCreateTime: string;
+  endCreateTime: string;
+}
+
+interface RoleItem {
+  id: number;
+  createdBy: string;
+  updatedBy: string;
+  createdTime: string;
+  updatedTime: string;
+  operatorId: Nullable<number>;
+  code: string;
+  name: string;
+  description: string;
+}
+
 interface MenuTreeItem {
   id: number;
   createdBy: string;
@@ -73,7 +104,7 @@ interface MenuTreeItem {
   shown: boolean;
   level: number;
   selected: boolean;
-  subMenuList: Nullable<MenuTreeItem>;
+  subMenuList: Nullable<MenuTreeItem[]>;
 }
 
 interface ResourceItem {
@@ -100,4 +131,5 @@ interface ResourceCate {
   name: string;
   sort: number;
   selected: boolean;
+  children: Array<{ label: string; value: number }>;
 }
