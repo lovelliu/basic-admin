@@ -76,6 +76,12 @@ export interface GetUserListParams {
   endCreateTime: string;
 }
 
+export interface RoleWithPermission {
+  id: number;
+  name: string;
+  hasPermission: boolean;
+}
+
 interface RoleItem {
   id: number;
   createdBy: string;

@@ -1,8 +1,9 @@
-import { otherHttp } from '/@/utils/request';
+import { defHttp, otherHttp } from '/@/utils/request';
 import { LoginParams } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
 import { UserInfo } from '/#/store';
+import { GetUserListParams } from './model/systemModel';
 
 enum Api {
   Login = '/login',
@@ -10,6 +11,9 @@ enum Api {
   GetUserInfo = '/getInfo',
   GetPermCode = '/getPermCode',
   RefreshToken = '/refresh_token',
+  GetUserPages = '/user/getUserPages',
+  ForbidUser = '/user/forbidUser',
+  EnableUser = '/user/enableUser',
 }
 
 /**
@@ -46,3 +50,16 @@ export function doLogout() {
 export function refreshToken(params: { refreshtoken: string }) {
   return otherHttp.post({ url: Api.RefreshToken, params });
 }
+
+export const getUserList = (data: Partial<GetUserListParams>) =>
+  defHttp.post({ url: Api.GetUserPages, data });
+
+export const forbidUser = (data: { userId: number }) => defHttp.post({ url: Api.ForbidUser, data });
+
+export const enableUser = (id: number) =>
+  defHttp.get({
+    url: Api.EnableUser,
+    params: {
+      userId: id,
+    },
+  });
