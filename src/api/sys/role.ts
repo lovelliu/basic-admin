@@ -1,4 +1,9 @@
-import { AddOrUpdateRoleParams, RoleList, RoleParms } from './model/systemModel';
+import {
+  AddOrUpdateRoleParams,
+  RoleList,
+  RoleParms,
+  RoleWithPermission,
+} from './model/systemModel';
 import { defHttp } from '/@/utils/request';
 
 enum Api {
@@ -6,6 +11,8 @@ enum Api {
   GetAllRole = '/role/all',
   GetSearchRole = '/role/getRolePages',
   DeleteRole = '/role',
+  GetRolesWithUserPermission = '/role/getRolesWithUserPermission',
+  AllocateRole = '/role/allocateUserRoles',
 }
 
 export const getRoleList = () => defHttp.get<RoleList>({ url: Api.GetAllRole });
@@ -16,3 +23,12 @@ export const addOrUpdateRole = (data: AddOrUpdateRoleParams) =>
   defHttp.post({ url: Api.AddOrUpdateRole, data }, { isTransformResponse: false });
 
 export const deleteRole = (id: number) => defHttp.delete({ url: `${Api.DeleteRole}/${id}` });
+
+export const getRolesById = (id: number) =>
+  defHttp.get<RoleWithPermission[]>({
+    url: Api.GetRolesWithUserPermission,
+    params: { userId: id },
+  });
+
+export const allocateRole = (data: { userId: number; roleIdList: number[] }) =>
+  defHttp.post({ url: Api.AllocateRole, data });
