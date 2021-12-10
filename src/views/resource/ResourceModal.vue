@@ -48,11 +48,11 @@
     try {
       const values = await validate();
       setModalProps({ confirmLoading: true });
-      const res = await addOrUpdate(values);
+      const res = await addOrUpdate({ id: rowId.value, ...values });
       if (res) {
         isUpdate.value ? createMessage.success('修改成功') : createMessage.success('添加成功');
         closeModal();
-        emit('success', { isUpdate: unref(isUpdate) });
+        emit('success');
       }
     } finally {
       setModalProps({ confirmLoading: false });

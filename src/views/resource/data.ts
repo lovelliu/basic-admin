@@ -27,10 +27,7 @@ export const columns: BasicColumn[] = [
     title: '添加时间',
     dataIndex: 'createdTime',
     width: 150,
-    customRender: ({ record }) => {
-      record.createdTime = formatToDateTime(record.createdTime);
-      return record.createdTime;
-    },
+    customRender: ({ record }) => formatToDateTime(record.createdTime),
   },
 ];
 
