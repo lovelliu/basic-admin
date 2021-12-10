@@ -26,7 +26,7 @@ import RadioButtonGroup from './components/RadioButtonGroup.vue';
 import ApiSelect from './components/ApiSelect.vue';
 import ApiTreeSelect from './components/ApiTreeSelect.vue';
 import ApiCascader from './components/ApiCascader.vue';
-// import { BasicUpload } from '/@/components/Upload';
+import { BasicUpload } from '/@/components/Upload';
 // import { StrengthMeter } from '/@/components/StrengthMeter';
 import { IconPicker } from '/@/components/Icon';
 // import { CountdownInput } from '/@/components/CountDown';
@@ -65,7 +65,7 @@ componentMap.set('TimePicker', TimePicker);
 componentMap.set('IconPicker', IconPicker);
 // componentMap.set('InputCountDown', CountdownInput);
 
-// componentMap.set('Upload', BasicUpload);
+componentMap.set('Upload', BasicUpload);
 componentMap.set('Divider', Divider);
 
 export function add(compName: ComponentType, component: Component) {
