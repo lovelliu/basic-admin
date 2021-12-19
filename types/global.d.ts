@@ -12,6 +12,10 @@ declare global {
     __: unknown;
   }
 
+  interface Window {
+    AliyunUpload: any;
+  }
+
   declare interface ViteEnv {
     VITE_PORT: number;
     VITE_USE_MOCK: boolean;
