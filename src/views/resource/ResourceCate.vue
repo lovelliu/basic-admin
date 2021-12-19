@@ -37,9 +37,10 @@
     reload();
   }
 
-  function handleEdit() {
+  function handleEdit(record: Recordable) {
     openModal(true, {
       isUpdate: true,
+      record,
     });
   }
 
