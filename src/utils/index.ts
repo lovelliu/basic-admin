@@ -1,5 +1,7 @@
 import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import type { App, Plugin } from 'vue';
+
+import { unref } from 'vue';
 import { isObject } from './is';
 
 export const noop = () => {};
@@ -51,6 +53,17 @@ export function openWindow(
   noreferrer && feature.push('noreferrer=yes');
 
   window.open(url, target, feature.join(','));
+}
+
+// dynamic use hook props
+export function getDynamicProps<T, U>(props: T): Partial<U> {
+  const ret: Recordable = {};
+
+  Object.keys(props).map((key) => {
+    ret[key] = unref((props as Recordable)[key]);
+  });
+
+  return ret as Partial<U>;
 }
 
 export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormalized {
