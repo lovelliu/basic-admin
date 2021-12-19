@@ -84,7 +84,7 @@ export function useForm(props?: Props): UseFormReturnType {
     },
 
     // TODO promisify
-    getFieldsValue: <T>() => {
+    getFieldsValue: async <T>() => {
       return unref(formRef)?.getFieldsValue() as T;
     },
 

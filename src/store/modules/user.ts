@@ -79,7 +79,9 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
-      this.userInfo!.userId = this.userId;
+      if (this.userInfo) {
+        this.userInfo.userId = this.userId;
+      }
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(USER_INFO_KEY, info);
     },
@@ -127,19 +129,16 @@ export const useUserStore = defineStore({
       const { createMessage } = useMessage();
       try {
         const res = await refreshToken({ refreshtoken: this.getRefreshToken });
-        if (!res) {
-          this.logout(true);
-        } else {
-          const data = JSON.parse(res);
+        const data = JSON.parse(res);
 
-          const { access_token, refresh_token } = data;
+        const { access_token, refresh_token } = data;
 
-          // save token
-          this.setToken(access_token);
-          this.setRefreshToken(refresh_token);
-        }
+        // save token
+        this.setToken(access_token);
+        this.setRefreshToken(refresh_token);
       } catch (error: any) {
         createMessage.error(error.message);
+        this.logout(true);
       }
     },
 

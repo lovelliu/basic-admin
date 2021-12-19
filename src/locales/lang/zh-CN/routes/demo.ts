@@ -163,10 +163,17 @@ export default {
     moduleName: '系统管理',
     account: '账号管理',
     account_detail: '账号详情',
+    resource: '资源管理',
     password: '修改密码',
-    dept: '部门管理',
     menu: '菜单管理',
     role: '角色管理',
+    resource_cate: '资源分类',
+    user: '用户管理',
+  },
+  course: {
+    course: '课程管理',
+    edit_course: '编辑课程',
+    lesson: '课时管理',
   },
   table: {
     table: 'Table',

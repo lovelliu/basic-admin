@@ -504,11 +504,11 @@
       width: 100%;
       padding-right: 10px;
 
-      &:hover {
-        .@{prefix-cls}__action {
-          visibility: visible;
-        }
-      }
+      // &:hover {
+      //   .@{prefix-cls}__action {
+      //     visibility: visible;
+      //   }
+      // }
     }
 
     &__content {
@@ -524,7 +524,7 @@
 
     &__action {
       margin-left: 4px;
-      visibility: hidden;
+      // visibility: hidden;
     }
   }
 </style>
