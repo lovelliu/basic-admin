@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, watchPostEffect } from 'vue';
   import { CheckboxGroup } from 'ant-design-vue';
   import { allocateRoleMenus, getEditMenuInfo, getRoleMenus } from '/@/api/sys/menu';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
@@ -28,7 +28,6 @@
 
     isMenu.value = data.allocateMenu;
     const arr: number[] = [];
-
     roleId.value = data.record.id;
     let isAddParentId = true;
     function getId<T>(menuList: T, children = 'subMenuList') {
@@ -49,9 +48,9 @@
     }
     if (isMenu.value) {
       const res = await Promise.all([getEditMenuInfo(), getRoleMenus(roleId.value)]);
-      treeData.value = res[0].parentMenuList;
       getId<EditMenuInfo['parentMenuList']>(res[1]);
-      selectedArr.value = arr;
+      treeData.value = res[0].parentMenuList;
+      watchPostEffect(() => (selectedArr.value = arr));
     } else {
       const res = await Promise.all([
         getAllResource(),
