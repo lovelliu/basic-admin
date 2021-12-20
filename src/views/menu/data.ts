@@ -28,7 +28,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'shown',
     width: 80,
-    customRender: ({ record }) => {
+    customRender: ({ record }: { record: any }) => {
       const shown = record.shown;
       const color = shown ? 'green' : 'red';
       const text = shown ? '启用' : '停用';
@@ -58,8 +58,8 @@ export const formSchema: FormSchema[] = [
     label: '上级菜单',
     component: 'TreeSelect',
     componentProps: {
-      replaceFields: {
-        title: 'name',
+      fieldNames: {
+        label: 'name',
         key: 'id',
         value: 'id',
         children: 'subMenuList',

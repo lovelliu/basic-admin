@@ -1,10 +1,9 @@
-import type { Ref, ComputedRef } from 'vue';
-
-import { unref } from 'vue';
-import { set } from 'lodash-es';
-import { isArray, isFunction, isNullOrUndef, isObject, isString } from '/@/utils/is';
+import { isArray, isFunction, isObject, isString, isNullOrUndef } from '/@/utils/is';
 import { dateUtil } from '/@/utils/dateUtil';
-import { FormSchema, FormProps } from '../types/form';
+import { unref } from 'vue';
+import type { Ref, ComputedRef } from 'vue';
+import type { FormProps, FormSchema } from '../types/form';
+import { set } from 'lodash-es';
 
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>;
@@ -12,7 +11,6 @@ interface UseFormValuesContext {
   getProps: ComputedRef<FormProps>;
   formModel: Recordable;
 }
-
 export function useFormValues({
   defaultValueRef,
   getSchema,
@@ -35,7 +33,8 @@ export function useFormValues({
       if (isObject(value)) {
         value = transformDateFunc?.(value);
       }
-      if (isArray(value) && value[0]?._isAMomentObject && value[1]?._isAMomentObject) {
+
+      if (isArray(value) && value[0]?.format && value[1]?.format) {
         value = value.map((item) => transformDateFunc?.(item));
       }
       // Remove spaces

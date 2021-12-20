@@ -2,7 +2,7 @@ import type { ComputedRef, Ref } from 'vue';
 import type { FormProps, FormSchema, FormActionType } from '../types/form';
 import type { NamePath } from 'ant-design-vue/lib/form/interface';
 
-import { unref, toRaw } from 'vue';
+import { unref, toRaw, nextTick } from 'vue';
 import { isArray, isFunction, isObject, isString } from '/@/utils/is';
 import { dateItemType, handleInputNumberValue } from '../helper';
 import { dateUtil } from '/@/utils/dateUtil';
@@ -41,7 +41,7 @@ export function useFormEvents({
     Object.keys(formModel).forEach((key) => {
       formModel[key] = defaultValueRef.value[key];
     });
-    clearValidate();
+    nextTick(() => clearValidate());
     emit('reset', toRaw(formModel));
     submitOnReset && handleSubmit();
   }

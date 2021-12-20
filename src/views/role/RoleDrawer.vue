@@ -120,7 +120,7 @@
       title="菜单分配"
       toolbar
       checkable
-      :replace-fields="
+      :field-names="
         isMenu
           ? { title: 'name', key: 'id', children: 'subMenuList' }
           : { title: 'name', children: 'resourceList', key: 'id' }

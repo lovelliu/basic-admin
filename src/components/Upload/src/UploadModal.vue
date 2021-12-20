@@ -9,7 +9,7 @@
     :closeFunc="handleCloseFunc"
     :maskClosable="false"
     :keyboard="false"
-    wrapClassName="upload-modal"
+    class="upload-modal"
     :okButtonProps="getOkButtonProps"
     :cancelButtonProps="{ disabled: isUploadingRef }"
   >
@@ -31,6 +31,7 @@
         :accept="getStringAccept"
         :multiple="multiple"
         :before-upload="beforeUpload"
+        :show-upload-list="false"
         class="upload-modal-toolbar__btn"
       >
         <a-button type="primary">

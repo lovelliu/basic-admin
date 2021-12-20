@@ -57,6 +57,7 @@ export interface LessonData {
   createTime: string;
   updateTime: string;
   isVisible: boolean;
+  key: number;
   isDe: boolean;
   level: number;
   orderNum: number;

@@ -8,7 +8,6 @@ import { configStyleImportPlugin } from './styleImport';
 import { configHtmlPlugin } from './html';
 import { configSvgIconsPlugin } from './svgSprite';
 import { configThemePlugin } from './theme';
-import { configHmrPlugin } from './hmr';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [vue(), vueJsx(), vueSetupExtend()];
@@ -19,7 +18,6 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   vitePlugins.push(configSvgIconsPlugin(isBuild));
   vitePlugins.push(configThemePlugin(isBuild));
   vitePlugins.push(purgeIcons());
-  !isBuild && vitePlugins.push(configHmrPlugin);
 
   return vitePlugins;
 }

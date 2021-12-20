@@ -4,10 +4,7 @@
  */
 import styleImport from 'vite-plugin-style-import';
 
-export function configStyleImportPlugin(isBuild: boolean) {
-  if (!isBuild) {
-    return [];
-  }
+export function configStyleImportPlugin(_isBuild: boolean) {
   const styleImportPlugin = styleImport({
     libs: [
       {
@@ -19,6 +16,7 @@ export function configStyleImportPlugin(isBuild: boolean) {
             'anchor-link',
             'sub-menu',
             'menu-item',
+            'menu-divider',
             'menu-item-group',
             'breadcrumb-item',
             'breadcrumb-separator',

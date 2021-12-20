@@ -17,7 +17,6 @@
           });
         },
       );
-
       return () => {
         const { columns, actionColumn, dataSource } = props;
         const columnList = [...columns, actionColumn];

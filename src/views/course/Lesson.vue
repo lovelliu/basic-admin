@@ -6,7 +6,7 @@
   import { useRoute } from 'vue-router';
   import { PageWrapper } from '/@/components/Page';
   import { useModal } from '/@/components/Modal';
-  import { BasicTree, ActionItem } from '/@/components/Tree';
+  import { BasicTree, TreeActionItem } from '/@/components/Tree';
   import { Button } from '/@/components/Button';
   import { getLessonInfoById } from '/@/api/business/course';
   import { useGo } from '/@/hooks/web/usePage';
@@ -21,7 +21,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerUploadModal, { openModal: openUploadModal }] = useModal();
 
-  const actionList: ActionItem[] = [
+  const actionList: TreeActionItem[] = [
     {
       render: (node: LessonData) => {
         return h(
@@ -69,6 +69,8 @@
 
   function repalceTitle(data) {
     data.forEach((item) => {
+      item.key = item.id;
+
       if (item.lessonDTOS) {
         repalceTitle(item.lessonDTOS);
       }
@@ -78,6 +80,8 @@
   if (route.query.id) {
     getLessonInfoById(route.query.id).then((res) => {
       repalceTitle(res);
+      console.log(res);
+
       treeData.value = res;
     });
   } else {
@@ -95,12 +99,11 @@
 <template>
   <PageWrapper @back="go('/course/index')" title="内容管理">
     <BasicTree
-      :replace-fields="{
+      :field-names="{
         title: 'sectionName',
         children: 'lessonDTOS',
         key: 'id',
       }"
-      :selectable="false"
       :tree-data="treeData"
       :action-list="actionList"
     />
