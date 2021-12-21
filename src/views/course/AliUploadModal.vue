@@ -29,11 +29,11 @@
   const route = useRoute();
 
   const [registerModal, { closeModal }] = useModalInner(async (data) => {
+    const { createMessage } = useMessage();
     courseName.value = route.query.name as string;
     theme.value = data.theme;
     uploadPercent.value = 0;
     transCodePercent.value = 0;
-    const { createMessage } = useMessage();
     uploader.value = new window.AliyunUpload.Vod({
       userId: 1618139964448548,
       region: 'cn-shanghai',
@@ -43,6 +43,7 @@
       retryDuration: 2,
       onUploadstarted: async (uploadInfo) => {
         uploadStatus.value = 'active';
+        createMessage.loading('开始上传中，请耐心等待');
         let uploadAuthInfo;
         if (uploadInfo.isImage) {
           // Obtain picture uploading certificate
@@ -93,6 +94,7 @@
         createMessage.success('文件上传成功');
         // tranform code
         transCodeStatus.value = 'active';
+        createMessage.loading('开始转码，请耐心等待');
         try {
           await aliyunUploadTransCode({
             lessonId: data.id,

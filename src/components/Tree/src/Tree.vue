@@ -334,6 +334,7 @@
 
       function renderAction(node: TreeItem) {
         const { actionList } = props;
+
         if (!actionList || actionList.length === 0) return;
         return actionList.map((item, index) => {
           let nodeShow = true;

@@ -70,11 +70,15 @@
   function repalceTitle(data) {
     data.forEach((item) => {
       item.key = item.id;
-
+      item.title = item.sectionName || item.theme;
       if (item.lessonDTOS) {
+        item.children = item.lessonDTOS;
         repalceTitle(item.lessonDTOS);
       }
-      if (item.theme) item.sectionName = item.theme;
+      if (item.theme) {
+        item.sectionName = item.theme;
+        item.level = 2;
+      } else item.level = 1;
     });
   }
   if (route.query.id) {
@@ -98,15 +102,7 @@
 
 <template>
   <PageWrapper @back="go('/course/index')" title="内容管理">
-    <BasicTree
-      :field-names="{
-        title: 'sectionName',
-        children: 'lessonDTOS',
-        key: 'id',
-      }"
-      :tree-data="treeData"
-      :action-list="actionList"
-    />
+    <BasicTree :tree-data="treeData" :action-list="actionList" />
     <LessonModal @register="registerModal" @success="reload" />
     <AliUploadModal @register="registerUploadModal" />
   </PageWrapper>
