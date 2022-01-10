@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { Card } from 'ant-design-vue';
+  import VisitAnalysis from './VisitAnalysis.vue';
+  import VisitAnalysisBar from './VisitAnalysisBar.vue';
 
   const activeKey = ref('tab1');
 
@@ -27,8 +29,12 @@
     :active-tab-key="activeKey"
     @tab-change="onTabChange"
   >
-    <p v-if="activeKey === 'tab1'"></p>
-    <p v-if="activeKey === 'tab2'"></p>
+    <p v-if="activeKey === 'tab1'">
+      <VisitAnalysis />
+    </p>
+    <p v-if="activeKey === 'tab2'">
+      <VisitAnalysisBar />
+    </p>
   </Card>
 </template>
 
