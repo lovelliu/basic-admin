@@ -12,7 +12,7 @@
   const { getAntdLocale } = useLocale();
   useTitle();
   const { setDarkMode } = useRootSetting();
-  if (window.matchMedia('(prefers-color-scheme: dark)')) {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     setDarkMode(ThemeEnum.DARK);
     updateDarkTheme(ThemeEnum.DARK);
     updateHeaderBgColor();

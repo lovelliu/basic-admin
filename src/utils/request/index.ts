@@ -2,7 +2,7 @@
 // The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
 
 import type { AxiosResponse } from 'axios';
-import type { OtherResult, RequestOptions, Result } from '/#/axios';
+import type { RequestOptions, Result } from '/#/axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { clone } from 'lodash-es';
 import { VAxios } from './Axios';
@@ -11,7 +11,7 @@ import { useGlobSetting } from '/@/hooks/setting';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { RequestEnum, ContentTypeEnum } from '/@/enums/httpEnum';
 import { isString } from '/@/utils/is';
-import { getToken } from '/@/utils/auth';
+import { getRefreshToken, getToken } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -29,7 +29,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 处理请求数据。如果数据不是预期格式，可直接抛出错误
    */
-  transformRequestHook: (res: AxiosResponse<Result | OtherResult>, options: RequestOptions) => {
+  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { t } = useI18n();
     const { isTransformResponse, isReturnNativeResponse } = options;
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
@@ -49,24 +49,11 @@ const transform: AxiosTransform = {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
     }
-    // 这里为后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    if ('content' in (data as OtherResult)) {
-      const { state, content, message, success } = data as OtherResult;
 
-      // 这里逻辑可以根据项目进行修改
-      const hasSuccess = data && Reflect.has(data, 'success') && success && state === 1;
-      if (hasSuccess) {
-        return content;
-      } else {
-        createErrorModal({ title: t('sys.api.errorTip'), content: message });
-      }
-    } else {
-      const { code, mesg, data: result } = data as Result;
-      if (code === '0' || code === '000000') {
-        return result;
-      } else {
-        createErrorModal({ title: t('sys.api.errorTip'), content: mesg });
-      }
+    if ('result' in (data as Result)) {
+      const { status, message, result } = data as Result;
+      if (status === 'success') return result;
+      else createErrorModal({ title: t('sys.api.errorTip'), content: message });
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
@@ -150,7 +137,7 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理config
-    const token = getToken();
+    const token = config.url === '/basic-api/auth/refreshToken' ? getRefreshToken() : getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
@@ -212,13 +199,12 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
-        // authenticationScheme: 'Bearer',
-        authenticationScheme: '',
+        authenticationScheme: 'Bearer',
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 
-        headers: { 'Content-Type': ContentTypeEnum.JSON },
+        headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式
@@ -254,20 +240,3 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   );
 }
 export const defHttp = createAxios();
-
-// other api url
-export const otherHttp = createAxios({
-  headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
-  timeout: 10 * 1000,
-  transform,
-  requestOptions: {
-    apiUrl: '/front-api',
-    urlPrefix: '/front/user',
-    isTransformResponse: true,
-    isReturnNativeResponse: false,
-    withToken: true,
-    ignoreCancelToken: true,
-    joinTime: true,
-    formatDate: true,
-  },
-});

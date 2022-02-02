@@ -7,14 +7,13 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { RETOKEN_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi, refreshToken } from '/@/api/sys/user';
+import { getUserInfo, loginApi, refreshToken } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-// import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
@@ -24,7 +23,7 @@ interface UserState {
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
-  userId?: string;
+  userId?: number;
 }
 
 export const useUserStore = defineStore({
@@ -111,9 +110,7 @@ export const useUserStore = defineStore({
           createMessage.warning('result is null');
           return null;
         }
-        const data = JSON.parse(res);
-
-        const { access_token, refresh_token, user_id } = data;
+        const { access_token, refresh_token, user_id } = res;
 
         // save token
         this.setToken(access_token);
@@ -128,10 +125,8 @@ export const useUserStore = defineStore({
     async toTefreshToken() {
       const { createMessage } = useMessage();
       try {
-        const res = await refreshToken({ refreshtoken: this.getRefreshToken });
-        const data = JSON.parse(res);
-
-        const { access_token, refresh_token } = data;
+        const res = await refreshToken();
+        const { access_token, refresh_token } = res;
 
         // save token
         this.setToken(access_token);
@@ -183,13 +178,6 @@ export const useUserStore = defineStore({
      * @description: logout
      */
     async logout(goLogin = false) {
-      if (this.getToken) {
-        try {
-          await doLogout();
-        } catch {
-          console.log('注销Token失败');
-        }
-      }
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);

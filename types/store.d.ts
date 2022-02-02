@@ -20,9 +20,9 @@ export interface ErrorLogInfo {
 
 export interface UserInfo {
   userName: string;
-  isUpdatedPassword: boolean;
   portrait: string;
-  userId?: string;
+  userId?: number;
+  desc?: string;
 }
 
 export interface BeforeMiniState {

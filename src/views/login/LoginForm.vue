@@ -24,8 +24,8 @@
 
   const formRef = ref();
   const formData = reactive({
-    phone: '18201288771',
-    password: '111111',
+    username: 'admin',
+    password: 'password',
   });
   const rememberMe = ref(false);
   const loading = ref(false);
@@ -40,7 +40,7 @@
     try {
       loading.value = true;
       const userInfo = await userStore.login({
-        phone: data.phone,
+        username: data.username,
         password: data.password,
         mode: 'none',
       });
@@ -73,11 +73,11 @@
     v-show="getShow"
     :rules="getFormRules"
   >
-    <FormItem name="phone" class="enter-x">
+    <FormItem name="username" class="enter-x">
       <Input
         size="large"
-        v-model:value="formData.phone"
-        :placeholder="t('sys.login.mobilePlaceholder')"
+        v-model:value="formData.username"
+        :placeholder="t('sys.login.accountPlaceholder')"
         class="fix-auto-fill"
       />
     </FormItem>
