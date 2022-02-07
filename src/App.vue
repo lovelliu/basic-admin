@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import 'dayjs/locale/zh-cn';
   import { ConfigProvider } from 'ant-design-vue';
   import { AppProvider } from '/@/components/Application';
   import { useRootSetting } from './hooks/setting/useRootSetting';
@@ -6,22 +7,33 @@
   import { updateHeaderBgColor, updateSidebarBgColor } from '/@/logics/theme/updateBackground';
   import { updateDarkTheme } from '/@/logics/theme/dark';
   import { useLocale } from '/@/locales/useLocale';
-  import 'dayjs/locale/zh-cn';
   import { ThemeEnum } from './enums/appEnum';
 
   const { getAntdLocale } = useLocale();
   useTitle();
   const { setDarkMode } = useRootSetting();
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    setDarkMode(ThemeEnum.DARK);
-    updateDarkTheme(ThemeEnum.DARK);
-    updateHeaderBgColor();
-    updateSidebarBgColor();
-  } else {
-    setDarkMode(ThemeEnum.LIGHT);
-    updateDarkTheme(ThemeEnum.LIGHT);
-    updateHeaderBgColor();
-    updateSidebarBgColor();
+  const lihgtMedia = window.matchMedia('(prefers-color-scheme: light)');
+  const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+  if (
+    typeof darkMedia.addEventListener === 'function' ||
+    typeof lihgtMedia.addEventListener === 'function'
+  ) {
+    lihgtMedia.addEventListener('change', (e) => {
+      if (e.matches) {
+        setDarkMode(ThemeEnum.LIGHT);
+        updateDarkTheme(ThemeEnum.LIGHT);
+        updateHeaderBgColor();
+        updateSidebarBgColor();
+      }
+    });
+    darkMedia.addEventListener('change', (e) => {
+      if (e.matches) {
+        setDarkMode(ThemeEnum.DARK);
+        updateDarkTheme(ThemeEnum.DARK);
+        updateHeaderBgColor();
+        updateSidebarBgColor();
+      }
+    });
   }
 </script>
 <template>
