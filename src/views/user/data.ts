@@ -5,8 +5,9 @@ import { FormSchema } from '/@/components/Form';
 import { formatToDateTime } from '/@/utils/dateUtil';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { enableUser, forbidUser } from '/@/api/sys/user';
+import { UserInfo } from '/@/api/sys/model/userModel';
 
-export const columns: BasicColumn[] = [
+export const columns: BasicColumn<UserInfo>[] = [
   {
     title: '用户ID',
     dataIndex: 'id',
@@ -20,12 +21,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '用户名',
-    dataIndex: 'name',
-    width: 80,
-  },
-  {
-    title: '手机号',
-    dataIndex: 'phone',
+    dataIndex: 'username',
     width: 80,
   },
   {
@@ -42,26 +38,28 @@ export const columns: BasicColumn[] = [
       if (!Reflect.has(record, 'pendingStatus')) record.pendingStatus = false;
 
       return h(Switch, {
-        checked: record.status === 'ENABLE',
+        checked: record.status,
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? 'ENABLE' : 'UNENABLE';
+          const newStatus = checked ? true : false;
           const { createMessage } = useMessage();
-          if (newStatus === 'ENABLE') {
+          if (newStatus === true) {
             enableUser(record.id)
               .then((res) => {
-                if (res) {
+                if (res.data.status === 'success') {
                   createMessage.success('修改成功');
+                  record.status = true;
                 }
               })
               .finally(() => (record.pendingStatus = false));
           } else {
-            forbidUser({ userId: record.id })
+            forbidUser(record.id)
               .then((res) => {
-                if (res) {
+                if (res.data.status === 'success') {
+                  record.status = false;
                   createMessage.success('修改成功');
                 }
               })

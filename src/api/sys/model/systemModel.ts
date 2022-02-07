@@ -71,7 +71,7 @@ export interface AddOrUpdateRoleParams {
 
 export interface GetUserListParams {
   phone: number;
-  userId: number;
+  id: number;
   startCreateTime: string;
   endCreateTime: string;
 }

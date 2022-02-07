@@ -10,23 +10,23 @@ import { error } from '/@/utils/log';
 
 type Props = Partial<DynamicProps<BasicTableProps>>;
 
-type UseTableMethod = TableActionType & {
+type UseTableMethod = TableActionType<unknown> & {
   getForm: () => FormActionType;
 };
 
 export function useTable(tableProps?: Props): [
-  (instance: TableActionType, formInstance: UseTableMethod) => void,
-  TableActionType & {
+  (instance: TableActionType<unknown>, formInstance: UseTableMethod) => void,
+  TableActionType<unknown> & {
     getForm: () => FormActionType;
   },
 ] {
-  const tableRef = ref<Nullable<TableActionType>>(null);
+  const tableRef = ref<Nullable<TableActionType<unknown>>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
   const formRef = ref<Nullable<UseTableMethod>>(null);
 
   let stopWatch: WatchStopHandle;
 
-  function register(instance: TableActionType, formInstance: UseTableMethod) {
+  function register(instance: TableActionType<unknown>, formInstance: UseTableMethod) {
     isProdMode() &&
       onUnmounted(() => {
         tableRef.value = null;
@@ -54,17 +54,17 @@ export function useTable(tableProps?: Props): [
     );
   }
 
-  function getTableInstance(): TableActionType {
+  function getTableInstance(): TableActionType<unknown> {
     const table = unref(tableRef);
     if (!table) {
       error(
         'The table instance has not been obtained yet, please make sure the table is presented when performing the table operation!',
       );
     }
-    return table as TableActionType;
+    return table as TableActionType<unknown>;
   }
 
-  const methods: TableActionType & {
+  const methods: TableActionType<unknown> & {
     getForm: () => FormActionType;
   } = {
     reload: async (opt?: FetchParams) => {
@@ -89,7 +89,7 @@ export function useTable(tableProps?: Props): [
       const columns = getTableInstance().getColumns({ ignoreIndex }) || [];
       return toRaw(columns);
     },
-    setColumns: (columns: BasicColumn[]) => {
+    setColumns: (columns: BasicColumn<unknown>[]) => {
       getTableInstance().setColumns(columns);
     },
     setTableData: (values: any[]) => {

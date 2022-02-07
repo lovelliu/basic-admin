@@ -271,7 +271,7 @@
         innerPropsRef.value = { ...unref(innerPropsRef), ...props };
       }
 
-      const tableAction: TableActionType = {
+      const tableAction: TableActionType<unknown> = {
         reload,
         getSelectRows,
         clearSelectedRowKeys,

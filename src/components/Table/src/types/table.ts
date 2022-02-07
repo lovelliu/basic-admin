@@ -82,7 +82,7 @@ export interface GetColumnsParams {
 
 export type SizeType = 'default' | 'middle' | 'small' | 'large';
 
-export interface TableActionType {
+export interface TableActionType<T> {
   reload: (opt?: FetchParams) => Promise<void>;
   getSelectRows: <T = Recordable>() => T[];
   clearSelectedRowKeys: () => void;
@@ -97,8 +97,8 @@ export interface TableActionType {
   deleteTableDataRecord: (rowKey: string | number | string[] | number[]) => void;
   insertTableDataRecord: (record: Recordable, index?: number) => Recordable | void;
   findTableDataRecord: (rowKey: string | number) => Recordable | void;
-  getColumns: (opt?: GetColumnsParams) => BasicColumn[];
-  setColumns: (columns: BasicColumn[] | string[]) => void;
+  getColumns: (opt?: GetColumnsParams) => BasicColumn<T>[];
+  setColumns: (columns: BasicColumn<T>[] | string[]) => void;
   getDataSource: <T = Recordable>() => T[];
   getRawDataSource: <T = Recordable>() => T;
   setLoading: (loading: boolean) => void;
@@ -108,12 +108,12 @@ export interface TableActionType {
   getPaginationRef: () => PaginationProps | boolean;
   getSize: () => SizeType;
   getRowSelection: () => TableRowSelection<Recordable>;
-  getCacheColumns: () => BasicColumn[];
+  getCacheColumns: () => BasicColumn<T>[];
   emit?: EmitType;
   updateTableData: (index: number, key: string, value: any) => Recordable;
   setShowPagination: (show: boolean) => Promise<void>;
   getShowPagination: () => boolean;
-  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
+  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn<T>) => void;
 }
 
 export interface FetchSetting {
@@ -182,12 +182,12 @@ export interface BasicTableProps<T = any> {
   // 表单配置
   formConfig?: Partial<FormProps>;
   // 列配置
-  columns: BasicColumn[];
+  columns: BasicColumn<T>[];
   // 是否显示序号列
   showIndexColumn?: boolean;
   // 序号列配置
-  indexColumnProps?: BasicColumn;
-  actionColumn?: BasicColumn;
+  indexColumnProps?: BasicColumn<T>;
+  actionColumn?: BasicColumn<T>;
   // 文本超过宽度是否显示。。。
   ellipsis?: boolean;
   // 是否可以自适应高度
@@ -409,8 +409,8 @@ export type CellFormat =
   | Map<string | number, any>;
 
 // @ts-ignore
-export interface BasicColumn extends ColumnProps {
-  children?: BasicColumn[];
+export interface BasicColumn<T> extends ColumnProps<T> {
+  children?: BasicColumn<T>[];
   filters?: {
     text: string;
     value: string;
@@ -445,7 +445,7 @@ export interface BasicColumn extends ColumnProps {
   // 权限编码控制是否显示
   auth?: RoleEnum | RoleEnum[] | string | string[];
   // 业务控制是否显示
-  ifShow?: boolean | ((column: BasicColumn) => boolean);
+  ifShow?: boolean | ((column: BasicColumn<T>) => boolean);
 }
 
 export type ColumnChangeParam = {

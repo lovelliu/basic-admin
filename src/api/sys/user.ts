@@ -10,7 +10,7 @@ enum Api {
   GetUserInfo = '/user/getInfo',
   GetPermCode = '/getPermCode',
   RefreshToken = '/auth/refreshToken',
-  GetUserPages = '/user/getUserPages',
+  GetUserPages = '/user/getAll',
   ForbidUser = '/user/forbidUser',
   EnableUser = '/user/enableUser',
 }
@@ -47,14 +47,18 @@ export function refreshToken() {
 }
 
 export const getUserList = (data: Partial<GetUserListParams>) =>
-  defHttp.post({ url: Api.GetUserPages, data });
+  defHttp.get({ url: Api.GetUserPages, data });
 
-export const forbidUser = (data: { userId: number }) => defHttp.post({ url: Api.ForbidUser, data });
+export const forbidUser = (id: number) =>
+  defHttp.post({ url: Api.ForbidUser, params: { id } }, { isReturnNativeResponse: true });
 
 export const enableUser = (id: number) =>
-  defHttp.get({
-    url: Api.EnableUser,
-    params: {
-      userId: id,
+  defHttp.post(
+    {
+      url: Api.EnableUser,
+      params: {
+        id,
+      },
     },
-  });
+    { isReturnNativeResponse: true },
+  );
