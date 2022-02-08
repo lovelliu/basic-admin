@@ -1,6 +1,5 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
-import type { RequestOptions, Result, UploadFileParams } from '/#/axios';
-import type { CreateAxiosOptions } from './axiosTransform';
+import type { RequestOptions, Result, UploadFileParams, CreateAxiosOptions } from '/#/axios';
 import axios from 'axios';
 import qs from 'qs';
 import { AxiosCanceler } from './axiosCancel';
@@ -8,7 +7,6 @@ import { isFunction } from '../is';
 import { cloneDeep } from 'lodash-es';
 import { ContentTypeEnum, RequestEnum } from '/@/enums/httpEnum';
 
-// export * from './axiosTransform';
 /**
  * @description: axios module
  */
@@ -145,7 +143,6 @@ export class VAxios {
   supportFormData(config: AxiosRequestConfig) {
     const headers = config.headers || this.options.headers;
     const contentType = headers?.['Content-Type'] || headers?.['content-type'];
-
     if (
       contentType !== ContentTypeEnum.FORM_URLENCODED ||
       !Reflect.has(config, 'data') ||
@@ -188,7 +185,6 @@ export class VAxios {
     }
     conf.requestOptions = opt;
     conf = this.supportFormData(conf);
-
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)

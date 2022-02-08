@@ -10,9 +10,12 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { formatRequestDate, joinTimestamp } from './helper';
 import { setObjToUrlParams } from '..';
 import { isString } from '../is';
+import { useUserStoreWithOut } from '/@/store/modules/user';
+import { defHttp } from '.';
 
 const { createErrorModal, createMessage } = useMessage();
-
+let isRefreshing = false;
+let requests: Function[] = [];
 /**
  * @description: 数据处理，方便区分多种处理方式
  */
@@ -180,8 +183,28 @@ export const transform: AxiosTransform = {
     } catch (error) {
       throw new Error(error as unknown as string);
     }
-
+    if (error.response.status === 401) {
+      const userStore = useUserStoreWithOut();
+      if (!userStore.getToken) userStore.logout();
+      if (!isRefreshing) {
+        isRefreshing = true;
+        return userStore
+          .toTefreshToken()
+          .then(() => {
+            requests.forEach((cb) => cb());
+            requests = [];
+            return defHttp.getAxios()(error.config);
+          })
+          .finally(() => (isRefreshing = false));
+      }
+      return new Promise((resolve) => {
+        requests.push(() => {
+          resolve(defHttp.request(error.config));
+        });
+      });
+    }
     checkStatus(error?.response?.status, msg, errorMessageMode);
+
     return Promise.reject(error);
   },
 };

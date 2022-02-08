@@ -4,6 +4,7 @@ import { LoginParams, LoginResultModel } from './model/userModel';
 import { ErrorMessageMode } from '/#/axios';
 import { UserInfo } from '/#/store';
 import { GetUserListParams } from './model/systemModel';
+import { VAxios } from '/@/utils/request/Axios';
 
 enum Api {
   Login = '/auth/login',
@@ -42,8 +43,8 @@ export function getPermCode() {
   return defHttp.get<string[]>({ url: Api.GetPermCode });
 }
 
-export function refreshToken() {
-  return defHttp.get({ url: Api.RefreshToken });
+export function refreshToken(axiosInstance: VAxios) {
+  return axiosInstance.get({ url: Api.RefreshToken });
 }
 
 export const getUserList = (data: Partial<GetUserListParams>) =>

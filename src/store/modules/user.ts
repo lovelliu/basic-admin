@@ -1,5 +1,7 @@
 import type { UserInfo } from '/#/store';
 import type { ErrorMessageMode } from '/#/axios';
+
+import { h } from 'vue';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -14,7 +16,7 @@ import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-import { h } from 'vue';
+import { createAxios } from '/@/utils/request';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -125,12 +127,13 @@ export const useUserStore = defineStore({
     async toTefreshToken() {
       const { createMessage } = useMessage();
       try {
-        const res = await refreshToken();
+        const res = await refreshToken(createAxios());
         const { access_token, refresh_token } = res;
 
         // save token
         this.setToken(access_token);
         this.setRefreshToken(refresh_token);
+        return true;
       } catch (error: any) {
         createMessage.error(error.message);
         this.logout(true);

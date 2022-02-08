@@ -12,7 +12,7 @@ import { deepMerge } from '/@/utils';
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
 
-function createAxios(opt?: Partial<CreateAxiosOptions>) {
+export function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
     deepMerge(
       {
