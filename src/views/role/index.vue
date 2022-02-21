@@ -1,59 +1,56 @@
 <script lang="ts" setup>
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { useModal } from '/@/components/Modal';
-  import { deleteRole, getSearchRole } from '/@/api/sys/role';
+  import { deleteRole, getAllRoles } from '/@/api/sys/role';
   import { columns, searchFormSchema } from './data';
-  import RoleModal from './RoleModal.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
+  import { usePermission } from '/@/hooks/web/usePermission';
 
-  const [registerModal, { openModal }] = useModal();
+  const { hasPermission } = usePermission();
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, updateTableDataRecord }] = useTable({
     title: '角色列表',
-    api: getSearchRole,
+    api: getAllRoles,
+    rowKey: 'id',
     columns,
     showTableSetting: true,
-    canResize: false,
     showIndexColumn: false,
     useSearchForm: true,
     pagination: true,
-    fetchSetting: {
-      listField: 'records',
-      pageField: 'current',
-      sizeField: 'size',
-    },
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
-
       autoSubmitOnEnter: true,
     },
     bordered: true,
     actionColumn: {
       slots: { customRender: 'action' },
       title: '操作',
-      width: 120,
+      width: 90,
       dataIndex: 'action',
     },
   });
 
   function handleCreate() {
-    openModal(true, {
+    openDrawer(true, {
       isUpdate: false,
     });
   }
 
-  function handleSuccess() {
-    reload();
-  }
-
   function handleEdit(record: Recordable) {
-    openModal(true, {
+    openDrawer(true, {
       isUpdate: true,
       record,
     });
+  }
+
+  function handleSuccess({ isUpdate, values }) {
+    if (isUpdate) {
+      updateTableDataRecord(values.id, values);
+    } else {
+      reload();
+    }
   }
 
   const { createMessage } = useMessage();
@@ -64,27 +61,18 @@
       reload();
     }
   }
-
-  function handleAssign(record: Recordable) {
-    openDrawer(true, {
-      allocateMenu: true,
-      record,
-    });
-  }
-
-  function handleAllocateResource(record: Recordable) {
-    openDrawer(true, {
-      record,
-      allocateMenu: false,
-    });
-  }
 </script>
 
 <template>
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar
-        ><a-button type="primary" @click="handleCreate">新增角色</a-button></template
+        ><a-button
+          type="primary"
+          @click="handleCreate"
+          :disabled="!hasPermission('api:role:add')"
+          >新增角色</a-button
+        ></template
       >
       <template #action="{ record }">
         <TableAction
@@ -92,28 +80,21 @@
             {
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
+              disabled: !hasPermission('api:role:update'),
             },
             {
               icon: 'ant-design:delete-outline',
               color: 'error',
+              disabled: !hasPermission('api:role:delete'),
               popConfirm: {
                 title: '是否要删除',
                 confirm: handleDelete.bind(null, record),
               },
             },
-            {
-              label: '分配菜单',
-              onClick: handleAssign.bind(null, record),
-            },
-            {
-              label: '分配资源',
-              onClick: handleAllocateResource.bind(null, record),
-            },
           ]"
         />
       </template>
     </BasicTable>
-    <RoleModal @register="registerModal" @success="handleSuccess" />
-    <RoleDrawer @register="registerDrawer" />
+    <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>

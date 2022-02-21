@@ -1,24 +1,33 @@
 <script lang="ts" setup name="MenuManagement">
   import { nextTick } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { deleteMenu, getMenuList } from '/@/api/sys/menu';
+  import { deleteMenu, getAllMenu } from '/@/api/sys/menu';
   import { columns } from './data';
   import MenuDrawer from './MenuDrawer.vue';
   import { useDrawer } from '/@/components/Drawer';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { searchFormSchema } from './data';
 
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerTable, { reload, expandAll }] = useTable({
     title: '菜单列表',
-    api: getMenuList,
+    api: getAllMenu,
     columns,
     pagination: false,
     bordered: true,
+    rowKey: 'id',
     showIndexColumn: false,
+    isTreeTable: true,
     canResize: false,
     showTableSetting: true,
+    useSearchForm: true,
+    formConfig: {
+      labelWidth: 120,
+      schemas: searchFormSchema,
+      autoSubmitOnEnter: true,
+    },
     actionColumn: {
-      width: 80,
+      width: 50,
       title: '操作',
       dataIndex: 'action',
       slots: { customRender: 'action' },

@@ -4,12 +4,12 @@
   import { BasicForm, useForm } from '/@/components/Form';
   import { formSchema } from './data';
 
-  import { AddOrUpdateMenu, getEditMenuInfo } from '/@/api/sys/menu';
+  import { addMenu, getAllMenu, updateMenu } from '/@/api/sys/menu';
   import { useMessage } from '/@/hooks/web/useMessage';
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);
-  const id = ref<Nullable<number>>(null);
+  const rowId = ref(-1);
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     labelWidth: 100,
     schemas: formSchema,
@@ -17,39 +17,44 @@
     baseColProps: { lg: 12, md: 24 },
   });
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
-    setDrawerProps({ confirmLoading: false });
-    isUpdate.value = !!data?.isUpdate;
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+    async (data) => {
+      resetFields();
+      setDrawerProps({ confirmLoading: false });
+      isUpdate.value = !!data?.isUpdate;
 
-    if (unref(isUpdate)) {
-      id.value = data.record.id;
-      setFieldsValue({
-        ...data.record,
+      if (unref(isUpdate)) {
+        rowId.value = data.record.id;
+        setFieldsValue({
+          ...data.record,
+        });
+      }
+      const treeData = await getAllMenu();
+      updateSchema({
+        field: 'parent_id',
+        componentProps: { treeData },
       });
-    }
-    const treeData = await getEditMenuInfo();
-    updateSchema({
-      field: 'parentId',
-      componentProps: { treeData: [...treeData.parentMenuList, { name: '无上级菜单', id: -1 }] },
-    });
-  });
+    },
+  );
 
-  const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));
+  const getTitle = computed(() => (!unref(isUpdate) ? '添加菜单' : '更新菜单'));
 
   const { createMessage } = useMessage();
   async function handleSubmit() {
     try {
       const values = await validate();
       setDrawerProps({ confirmLoading: true });
-
-      const res = await AddOrUpdateMenu({ ...values, id: unref(id) });
+      const res = unref(isUpdate)
+        ? await updateMenu({ ...values, id: unref(rowId) })
+        : await addMenu(values);
       if (res) {
-        isUpdate.value
-          ? createMessage.success('修改菜单成功')
-          : createMessage.success('新增菜单成功');
+        const msg = unref(isUpdate) ? '更新菜单成功' : '添加菜单成功';
+        createMessage.success(msg);
         closeDrawer();
-        emit('success');
+        emit('success', {
+          isUpdate: unref(isUpdate),
+          values: { ...values },
+        });
       }
     } finally {
       setDrawerProps({ confirmLoading: false });

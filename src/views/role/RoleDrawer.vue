@@ -1,105 +1,62 @@
 <script lang="ts" setup>
-  import { ref, watchPostEffect } from 'vue';
-  import { CheckboxGroup } from 'ant-design-vue';
-  import { allocateRoleMenus, getEditMenuInfo, getRoleMenus } from '/@/api/sys/menu';
+  import { computed, ref, unref } from 'vue';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { EditMenuInfo } from '/@/api/sys/model/systemModel';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import {
-    allocateRoleResource,
-    getAllResource,
-    getResourceCate,
-    getRoleResource,
-  } from '/@/api/sys/resource';
+  import { getAllMenu } from '/@/api/sys/menu';
+  import BasicForm from '/@/components/Form/src/BasicForm.vue';
+  import { useForm } from '/@/components/Form';
+  import { addRole, updateRole } from '/@/api/sys/role';
+  import { RoleFormSchema } from './data';
 
   const treeData = ref<TreeItem[]>([]);
-  const checkedList = ref<number[]>([]);
-  const checkboxData = ref();
-  const isMenu = ref(true);
-  const roleId = ref<number>(-1);
-  const selectedArr = ref<number[]>([]);
-  defineEmits(['register']);
+  const isUpdate = ref(true);
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    setDrawerProps({ confirmLoading: false });
-    treeData.value = [];
-    checkedList.value = [];
+  const emit = defineEmits(['register', 'success']);
 
-    isMenu.value = data.allocateMenu;
-    const arr: number[] = [];
-    roleId.value = data.record.id;
-    let isAddParentId = true;
-    function getId<T>(menuList: T, children = 'subMenuList') {
-      if (Array.isArray(menuList)) {
-        menuList.forEach((item) => {
-          if (item[children]) {
-            getId(item[children]);
-            isAddParentId && item.selected && arr.push(item.id);
-            isAddParentId = true;
-            return;
-          }
-          if (item.selected) {
-            isAddParentId = false;
-            arr.push(item.id);
-          }
-        });
+  // register drawer
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+    async (data) => {
+      setDrawerProps({ confirmLoading: false });
+      resetFields();
+      if (unref(treeData).length === 0) {
+        treeData.value = (await getAllMenu()) as unknown as TreeItem[];
       }
-    }
-    if (isMenu.value) {
-      const res = await Promise.all([getEditMenuInfo(), getRoleMenus(roleId.value)]);
-      getId<EditMenuInfo['parentMenuList']>(res[1]);
-      treeData.value = res[0].parentMenuList;
-      watchPostEffect(() => (selectedArr.value = arr));
-    } else {
-      const res = await Promise.all([
-        getAllResource(),
-        getResourceCate(),
-        getRoleResource(roleId.value),
-      ]);
-      res[1].forEach((item) => {
-        item.children = [];
-      });
-      res[0].forEach((item) => {
-        res[1].forEach((cate) => {
-          if (cate.id === item.categoryId) {
-            cate.children.push({ label: item.name, value: item.id });
-          }
-        });
-      });
-      checkboxData.value = res[1];
-      res[2].forEach((item) => {
-        if (item.resourceList) {
-          item.resourceList.forEach((resource) => {
-            resource.selected && checkedList.value.push(resource.id);
-          });
-        }
-      });
-    }
+      isUpdate.value = !!data?.isUpdate;
+      if (unref(isUpdate)) {
+        setFieldsValue({ ...data.record });
+      }
+    },
+  );
+
+  // register form
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+    showActionButtonGroup: false,
+    schemas: RoleFormSchema,
+    labelWidth: 90,
   });
 
+  const getTitle = computed(() => (!unref(isUpdate) ? '添加角色' : '更新角色'));
+
   const { createMessage } = useMessage();
+
+  // submit form
   async function handleSubmit() {
     try {
       setDrawerProps({ confirmLoading: true });
-      if (isMenu.value) {
-        const res = await allocateRoleMenus({
-          roleId: roleId.value,
-          menuIdList: selectedArr.value,
+      const values = await validate();
+      console.log(typeof values.id);
+
+      const res = unref(isUpdate) ? await updateRole(values) : await addRole(values);
+      if (res) {
+        const msg = !unref(isUpdate) ? '添加角色成功' : '更新角色成功';
+        createMessage.success(msg);
+        closeDrawer();
+
+        emit('success', {
+          isUpdate: unref(isUpdate),
+          values,
         });
-        if (res) {
-          createMessage.success('菜单分配成功');
-          closeDrawer();
-        }
-      } else {
-        const res = await allocateRoleResource({
-          roleId: roleId.value,
-          resourceIdList: checkedList.value,
-        });
-        if (res) {
-          createMessage.success('资源分配成功');
-          closeDrawer();
-        }
       }
     } finally {
       setDrawerProps({ confirmLoading: false });
@@ -112,29 +69,22 @@
     @register="registerDrawer"
     v-bind="$attrs"
     show-footer
-    width="500"
+    width="500px"
     @ok="handleSubmit"
+    :title="getTitle"
   >
-    <BasicTree
-      v-model:value="selectedArr"
-      title="菜单分配"
-      toolbar
-      checkable
-      :field-names="
-        isMenu
-          ? { title: 'name', key: 'id', children: 'subMenuList' }
-          : { title: 'name', children: 'resourceList', key: 'id' }
-      "
-      :tree-data="treeData"
-      default-expand-all
-      v-if="treeData.length"
-    />
-    <div v-show="!isMenu">
-      <div v-for="data of checkboxData" :key="data.id" class="mt-4">
-        <div class="border-b border-b-gray-400 text-lg"> {{ data.name }}</div>
-        <br />
-        <CheckboxGroup :options="data.children" v-model:value="checkedList" />
-      </div>
-    </div>
+    <BasicForm @register="registerForm">
+      <template #menu="{ model, field }">
+        <BasicTree
+          v-model:value="model[field]"
+          :tree-data="treeData"
+          :field-names="{ title: 'name', key: 'id' }"
+          checkable
+          check-strictly
+          toolbar
+          title="菜单分配（菜单对应查看权限）"
+        />
+      </template>
+    </BasicForm>
   </BasicDrawer>
 </template>

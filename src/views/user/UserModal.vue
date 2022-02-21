@@ -1,45 +1,60 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
-  import { Select } from 'ant-design-vue';
-  import { allocateRole, getRolesById } from '/@/api/sys/role';
+  import { computed, ref, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useForm } from '/@/components/Form';
+  import BasicForm from '/@/components/Form/src/BasicForm.vue';
+  import { userFormSchema } from './data';
+  import { addUser, updateUser } from '/@/api/sys/user';
 
-  defineEmits(['register', 'success']);
-  const selected = ref<number[]>([]);
-  const rowId = ref<number>(-1);
-  const selectArr = ref<{ label: string; value: number }[]>([]);
+  const emit = defineEmits(['register', 'success']);
+  const isUpdate = ref(true);
   const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    resetFields();
     setModalProps({ confirmLoading: false });
-    selectArr.value = [];
-    selected.value = [];
-    rowId.value = data.id;
-    const res = await getRolesById(data.id);
-    res.forEach((item) => {
-      selectArr.value.push({ label: item.name, value: item.id });
-      if (item.hasPermission) {
-        selected.value.push(item.id);
-      }
-    });
+    isUpdate.value = !!data?.isUpdate;
+    if (unref(isUpdate)) {
+      setFieldsValue({ ...data.record });
+    }
   });
+
+  const getTitle = computed(() => (!unref(isUpdate) ? '添加用户' : '更新用户'));
 
   async function handleSubmit() {
     try {
       setModalProps({ confirmLoading: true });
-      const res = await allocateRole({ userId: rowId.value, roleIdList: selected.value });
+      const data = await validate();
+      const res = unref(isUpdate) ? await updateUser(data) : await addUser(data);
       if (res) {
         const { createMessage } = useMessage();
-        createMessage.success('分配成功');
+        const msg = unref(isUpdate) ? '更新用户成功' : '添加用户成功';
+        createMessage.success(msg);
         closeModal();
+        emit('success', {
+          isUpdate: unref(isUpdate),
+          values: { ...data },
+        });
       }
     } finally {
       setModalProps({ confirmLoading: false });
     }
   }
+
+  // user form
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
+    schemas: userFormSchema,
+    showActionButtonGroup: false,
+    labelWidth: 80,
+  });
 </script>
 
 <template>
-  <BasicModal @register="registerModal" title="分配角色" @ok="handleSubmit">
-    <Select mode="multiple" :options="selectArr" v-model:value="selected" style="width: 100%" />
+  <BasicModal
+    @register="registerModal"
+    :title="getTitle"
+    v-bind="$attrs"
+    @ok="handleSubmit"
+  >
+    <BasicForm @register="registerForm" />
   </BasicModal>
 </template>

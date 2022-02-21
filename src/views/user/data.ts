@@ -4,8 +4,12 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Form';
 import { formatToDateTime } from '/@/utils/dateUtil';
 import { useMessage } from '/@/hooks/web/useMessage';
-import { enableUser, forbidUser } from '/@/api/sys/user';
+import { enableUser, forbidUser, isUserExist } from '/@/api/sys/user';
 import { UserInfo } from '/@/api/sys/model/userModel';
+import { getRoleList } from '/@/api/sys/role';
+import { usePermission } from '/@/hooks/web/usePermission';
+
+const { hasPermission } = usePermission();
 
 export const columns: BasicColumn<UserInfo>[] = [
   {
@@ -15,9 +19,9 @@ export const columns: BasicColumn<UserInfo>[] = [
   },
   {
     title: '头像',
-    dataIndex: 'portrait',
+    dataIndex: 'avatar',
     width: 30,
-    customRender: ({ record }) => h(Avatar, { src: record.portrait }),
+    customRender: ({ record }) => h(Avatar, { src: record.avatar }),
   },
   {
     title: '用户名',
@@ -25,10 +29,15 @@ export const columns: BasicColumn<UserInfo>[] = [
     width: 80,
   },
   {
-    title: '注册时间',
-    dataIndex: 'createTime',
+    title: '昵称',
+    dataIndex: 'nickname',
+    width: 100,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'create_at',
     width: 120,
-    customRender: ({ record }) => formatToDateTime(record.createTime),
+    customRender: ({ record }) => formatToDateTime(record.create_at),
   },
   {
     title: '状态',
@@ -42,6 +51,9 @@ export const columns: BasicColumn<UserInfo>[] = [
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
+        disabled: record.status
+          ? !hasPermission('api:user:forbid')
+          : !hasPermission('api:user:enable'),
         onChange(checked: boolean) {
           record.pendingStatus = true;
           const newStatus = checked ? true : false;
@@ -73,30 +85,85 @@ export const columns: BasicColumn<UserInfo>[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'phone',
-    label: '手机号',
+    field: 'username',
+    label: '用户名',
     component: 'Input',
     colProps: {
       span: 8,
     },
-    rules: [
+  },
+  {
+    field: 'status',
+    label: '状态',
+    component: 'Select',
+    componentProps: {
+      options: [
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 },
+      ],
+    },
+    colProps: {
+      span: 6,
+    },
+  },
+];
+let timer;
+export const userFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '',
+    component: 'InputNumber',
+    show: false,
+  },
+  {
+    field: 'username',
+    label: '用户名',
+    component: 'Input',
+    dynamicRules: ({ values }) => [
       {
-        validator: async (_, value) => {
-          if (!/\d+/.test(value) && value) {
-            return Promise.reject('请输入数字');
-          }
-          return Promise.resolve();
+        required: true,
+        message: '请输入用户名',
+      },
+      {
+        validator(_, value) {
+          return new Promise<void>((resolve, reject) => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+              isUserExist(value)
+                .then((isExist) => {
+                  isExist && isExist !== values.id
+                    ? reject('该用户名称已存在')
+                    : resolve();
+                })
+                .catch((err) => {
+                  reject(err.message || '验证失败');
+                });
+            }, 500);
+          });
         },
-        trigger: 'change',
       },
     ],
   },
   {
-    field: 'startCreateTime',
-    label: '注册时间',
-    component: 'RangePicker',
-    colProps: {
-      span: 10,
+    field: 'role',
+    label: '角色',
+    required: true,
+    component: 'ApiSelect',
+    defaultValue: 1,
+    componentProps: {
+      api: getRoleList,
+      labelField: 'name',
+      valueField: 'id',
     },
+  },
+  {
+    field: 'nickname',
+    label: '昵称',
+    component: 'Input',
+  },
+  {
+    field: 'desc',
+    label: '描述',
+    component: 'Input',
   },
 ];

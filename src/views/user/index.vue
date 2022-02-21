@@ -5,15 +5,13 @@
   import { searchFormSchema, columns } from './data';
   import { formatToDate } from '/@/utils/dateUtil';
   import UserModal from './UserModal.vue';
+  import { usePermission } from '/@/hooks/web/usePermission';
 
+  const { hasPermission } = usePermission();
   const [registerModal, { openModal }] = useModal();
-  const [registerTable] = useTable({
+  const [registerTable, { reload, updateTableDataRecord }] = useTable({
     title: '用户管理',
     api: getUserList,
-    fetchSetting: {
-      listField: 'records',
-      pageField: 'currentPage',
-    },
     handleSearchInfoFn: (params) => {
       if (!params.phone && !params.startCreateTime) return;
       return {
@@ -23,7 +21,7 @@
       };
     },
     showIndexColumn: false,
-    canResize: false,
+    rowKey: 'id',
     columns,
     bordered: true,
     showTableSetting: true,
@@ -44,27 +42,51 @@
     },
   });
 
-  function handleAllocate(record: Recordable) {
+  function handleAdd() {
     openModal(true, {
-      ...record,
+      isUpdate: false,
     });
+  }
+
+  function handleEdit(record: Recordable) {
+    openModal(true, {
+      record,
+      isUpdate: true,
+    });
+  }
+
+  function handleSuccess({ isUpdate, values }) {
+    if (isUpdate) {
+      updateTableDataRecord(values.id, values);
+    } else {
+      reload();
+    }
   }
 </script>
 
 <template>
   <div>
     <BasicTable @register="registerTable">
+      <template #toolbar>
+        <a-button
+          type="primary"
+          @click="handleAdd"
+          :disabled="!hasPermission('api:user:add')"
+          >新增用户</a-button
+        >
+      </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
-              label: '分配角色',
-              onClick: handleAllocate.bind(null, record),
+              label: '编辑',
+              onClick: handleEdit.bind(null, record),
+              disabled: !hasPermission('api:user:update'),
             },
           ]"
         />
       </template>
     </BasicTable>
-    <UserModal @register="registerModal" />
+    <UserModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
