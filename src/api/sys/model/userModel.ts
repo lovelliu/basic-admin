@@ -20,15 +20,14 @@ export interface LoginResultModel {
   user_id: number;
   access_token: string;
   refresh_token: string;
-  // role: RoleInfo;
 }
 
 export interface UserInfo {
   id: number;
   username: string;
-  portrait?: string;
+  avatar?: string;
   desc?: string;
   status: boolean;
-  createTime: Dayjs;
+  create_at: Dayjs;
   pendingStatus?: boolean;
 }

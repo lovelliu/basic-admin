@@ -1,24 +1,31 @@
-import { AddOrUpdateMenuParams, EditMenuInfo, MenuItem, MenuList } from './model/systemModel';
+import {
+  AddOrUpdateMenuParams,
+  EditMenuInfo,
+  MenuItem,
+  MenuList,
+} from './model/systemModel';
 import { defHttp } from '/@/utils/request';
 
 enum Api {
-  GetMenuList = '/menu/getAll',
-  GetEditMenuInfo = '/menu/getEditMenuInfo',
-  AddOrUpdateMenu = '/menu/saveOrUpdate',
+  GetAllMenu = '/menu/all',
+  AddMenu = '/menu/add',
+  UpdateMenu = '/menu/update',
+  DeleteMenu = '/menu/delete',
   Menu = '/menu',
   GetRoleMenus = '/menu/getRoleMenus',
   AllocateRoleMenus = '/menu/allocateRoleMenus',
 }
 
-export const getMenuList = () => defHttp.get<MenuList>({ url: Api.GetMenuList });
+export const getAllMenu = (params?) =>
+  defHttp.get<MenuList>({ url: Api.GetAllMenu, params });
 
-export const getEditMenuInfo = () =>
-  defHttp.get<EditMenuInfo>({ url: Api.GetEditMenuInfo, params: { id: -1 } });
+export const addMenu = (data: AddOrUpdateMenuParams) =>
+  defHttp.post<boolean>({ url: Api.AddMenu, data });
 
-export const AddOrUpdateMenu = (data: AddOrUpdateMenuParams) =>
-  defHttp.post<boolean>({ url: Api.AddOrUpdateMenu, data });
+export const updateMenu = (data: AddOrUpdateMenuParams) =>
+  defHttp.put<boolean>({ url: Api.UpdateMenu, data });
 
-export const deleteMenu = (id) => defHttp.delete({ url: `${Api.Menu}/${id}` });
+export const deleteMenu = (id) => defHttp.delete({ url: Api.DeleteMenu, data: { id } });
 
 export const getMenuById = (id) => defHttp.get<MenuItem>({ url: `${Api.Menu}/${id}` });
 

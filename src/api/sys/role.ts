@@ -1,34 +1,33 @@
-import {
-  AddOrUpdateRoleParams,
-  RoleList,
-  RoleParms,
-  RoleWithPermission,
-} from './model/systemModel';
+import { GetMenuListResultModel, RoleList, RoleItem } from './model/systemModel';
 import { defHttp } from '/@/utils/request';
 
 enum Api {
-  AddOrUpdateRole = '/role/saveOrUpdate',
-  GetAllRole = '/role/all',
-  GetSearchRole = '/role/getRolePages',
-  DeleteRole = '/role',
-  GetRolesWithUserPermission = '/role/getRolesWithUserPermission',
+  AddRole = '/role/add',
+  GetRoleList = '/role/list',
+  GetAllRoles = '/role/all',
+  DeleteRole = '/role/delete',
+  UpdateRole = '/role/update',
   AllocateRole = '/role/allocateUserRoles',
+  GetMenuList = '/role/menu',
+  GetPermCode = '/role/perms',
 }
 
-export const getRoleList = () => defHttp.get<RoleList>({ url: Api.GetAllRole });
+export const getRoleList = () => defHttp.get<RoleList>({ url: Api.GetRoleList });
 
-export const getSearchRole = (data: RoleParms) => defHttp.post({ url: Api.GetSearchRole, data });
+export const getAllRoles = () =>
+  defHttp.get<(RoleItem & { menus: number })[]>({ url: Api.GetAllRoles });
 
-export const addOrUpdateRole = (data: AddOrUpdateRoleParams) =>
-  defHttp.post({ url: Api.AddOrUpdateRole, data }, { isTransformResponse: false });
+export const getMenuList = () =>
+  defHttp.get<GetMenuListResultModel>({ url: Api.GetMenuList });
 
-export const deleteRole = (id: number) => defHttp.delete({ url: `${Api.DeleteRole}/${id}` });
+export const getPermCode = () => defHttp.get<string[]>({ url: Api.GetPermCode });
 
-export const getRolesById = (id: number) =>
-  defHttp.get<RoleWithPermission[]>({
-    url: Api.GetRolesWithUserPermission,
-    params: { userId: id },
-  });
+export const addRole = (data) => defHttp.post({ url: Api.AddRole, data });
+
+export const updateRole = (data) => defHttp.put({ url: Api.UpdateRole, data });
+
+export const deleteRole = (id: number) =>
+  defHttp.delete({ url: Api.DeleteRole, data: { id } });
 
 export const allocateRole = (data: { userId: number; roleIdList: number[] }) =>
   defHttp.post({ url: Api.AllocateRole, data });

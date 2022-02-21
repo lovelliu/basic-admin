@@ -9,11 +9,14 @@ import { VAxios } from '/@/utils/request/Axios';
 enum Api {
   Login = '/auth/login',
   GetUserInfo = '/user/getInfo',
-  GetPermCode = '/getPermCode',
   RefreshToken = '/auth/refreshToken',
-  GetUserPages = '/user/getAll',
-  ForbidUser = '/user/forbidUser',
-  EnableUser = '/user/enableUser',
+  GetUserPages = '/user/All',
+  ForbidUser = '/user/forbid',
+  EnableUser = '/user/enable',
+  isUserExist = '/user/exist',
+  AddUser = '/user/add',
+  UpdateUser = '/user/update',
+  GetUsername = '/user',
 }
 
 /**
@@ -39,22 +42,18 @@ export function getUserInfo() {
   return defHttp.get<UserInfo>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
 }
 
-export function getPermCode() {
-  return defHttp.get<string[]>({ url: Api.GetPermCode });
-}
-
 export function refreshToken(axiosInstance: VAxios) {
   return axiosInstance.get({ url: Api.RefreshToken });
 }
 
-export const getUserList = (data: Partial<GetUserListParams>) =>
-  defHttp.get({ url: Api.GetUserPages, data });
+export const getUserList = (params: Partial<GetUserListParams>) =>
+  defHttp.get({ url: Api.GetUserPages, params });
 
 export const forbidUser = (id: number) =>
-  defHttp.post({ url: Api.ForbidUser, params: { id } }, { isReturnNativeResponse: true });
+  defHttp.patch({ url: Api.ForbidUser, params: { id } }, { isReturnNativeResponse: true });
 
 export const enableUser = (id: number) =>
-  defHttp.post(
+  defHttp.patch(
     {
       url: Api.EnableUser,
       params: {
@@ -63,3 +62,12 @@ export const enableUser = (id: number) =>
     },
     { isReturnNativeResponse: true },
   );
+
+export const isUserExist = (username: string) =>
+  defHttp.post({ url: Api.isUserExist, data: { username } });
+
+export const addUser = (data) => defHttp.post({ url: Api.AddUser, data });
+
+export const updateUser = (data) => defHttp.put({ url: Api.UpdateUser, data });
+
+export const getUsername = (id) => defHttp.get({ url: `${Api.GetUsername}/${id}` });

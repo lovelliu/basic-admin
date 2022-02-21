@@ -1,3 +1,20 @@
+import type { RouteMeta } from 'vue-router';
+export interface RouteItem {
+  path: string;
+  component: any;
+  meta: RouteMeta;
+  name?: string;
+  alias?: string | string[];
+  redirect?: string;
+  caseSensitive?: boolean;
+  children?: RouteItem[];
+}
+
+/**
+ * @description: Get menu return value
+ */
+export type GetMenuListResultModel = RouteItem[];
+
 export type MenuList = MenuItem[];
 export interface EditMenuInfo {
   menuInfo: null;
@@ -6,42 +23,34 @@ export interface EditMenuInfo {
 
 export interface AddOrUpdateMenuParams {
   id?: number;
-  parentId: number;
+  parent_id?: number;
   name: string;
-  href: string;
+  route?: string;
   icon?: string;
-  description?: string;
-  shown?: boolean;
-  orderNum?: number;
+  status: boolean;
+  order_num: number;
+  component?: string;
+  is_ext?: boolean;
+  type: 0 | 1 | 2;
 }
 
 export interface MenuItem {
   id: number;
-  createdBy: string;
-  updatedBy: string;
-  createdTime: string;
-  updatedTime: string;
-  operatorId: Nullable<number>;
-  parentId: number;
+  created_at: string;
+  updated_at: string;
+  parent_id: Nullable<number>;
+  is_ext: boolean;
   name: string;
-  href: string;
-  icon: string;
-  orderNum: number;
-  description: string;
-  shown: boolean;
-  level: number;
+  route: string;
+  icon?: string;
+  order_num: number;
+  type: 0 | 1 | 2;
+  status: boolean;
+  keepalive: boolean;
 }
 
 export type ResourceList = ResourceItem[];
 export type RoleResourceList = (ResourceItem & { resourceList: ResourceList })[];
-export interface ResourceParams {
-  id: number;
-  name: string;
-  url: string;
-  current: number;
-  size: number;
-  categoryId: number;
-}
 export type ResourceCateList = ResourceCate[];
 
 export interface AddOrUpdateResourceParams {
@@ -60,20 +69,9 @@ export interface AddOrUpdateResourceCate {
 
 export type RoleList = RoleItem[];
 
-export type RoleParms = Partial<Omit<ResourceParams, 'url' & 'categoryId'>>;
-
-export interface AddOrUpdateRoleParams {
-  id?: number;
-  code: number;
-  name: string;
-  description?: string;
-}
-
 export interface GetUserListParams {
-  phone: number;
-  id: number;
-  startCreateTime: string;
-  endCreateTime: string;
+  username?: string;
+  status: boolean;
 }
 
 export interface RoleWithPermission {
@@ -82,16 +80,14 @@ export interface RoleWithPermission {
   hasPermission: boolean;
 }
 
-interface RoleItem {
+export interface RoleItem {
   id: number;
-  createdBy: string;
-  updatedBy: string;
-  createdTime: string;
-  updatedTime: string;
-  operatorId: Nullable<number>;
-  code: string;
+  create_at: string;
+  update_at: string;
+  label: string;
+  status: boolean;
   name: string;
-  description: string;
+  desc?: string;
 }
 
 interface MenuTreeItem {
