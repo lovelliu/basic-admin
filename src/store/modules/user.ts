@@ -17,6 +17,7 @@ import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { createAxios } from '/@/utils/request';
+import { isArray } from '/@/utils/is';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -56,7 +57,9 @@ export const useUserStore = defineStore({
       return this.refreshToken || getAuthCache<string>(RETOKEN_KEY);
     },
     getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+      return this.roleList.length > 0
+        ? this.roleList
+        : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
@@ -165,15 +168,15 @@ export const useUserStore = defineStore({
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      // const { roles = [] } = userInfo;
+      const { roles = [] } = userInfo;
 
-      // if (isArray(roles)) {
-      //   const roleList = roles.map((item) => item.value) as RoleEnum[];
-      //   this.setRoleList(roleList);
-      // } else {
-      //   userInfo.roles = [];
-      //   this.setRoleList([]);
-      // }
+      if (isArray(roles)) {
+        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        this.setRoleList(roleList);
+      } else {
+        userInfo.roles = [];
+        this.setRoleList([]);
+      }
       this.setUserInfo(userInfo);
       return userInfo;
     },

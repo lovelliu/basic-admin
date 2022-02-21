@@ -54,7 +54,8 @@
       });
 
       const getMenuClass = computed(() => {
-        const align = props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
+        const align =
+          props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
         return [
           prefixCls,
           `justify-${align}`,
@@ -70,7 +71,9 @@
 
         const inlineCollapseOptions: { inlineCollapsed?: boolean } = {};
         if (isInline) {
-          inlineCollapseOptions.inlineCollapsed = props.mixSider ? false : unref(getCollapsed);
+          inlineCollapseOptions.inlineCollapsed = props.mixSider
+            ? false
+            : unref(getCollapsed);
         }
         return inlineCollapseOptions;
       });
@@ -145,7 +148,7 @@
     :openKeys="getOpenKeys"
     :inlineIndent="inlineIndent"
     :theme="theme"
-    @openChange="handleOpenChange"
+    @open-change="handleOpenChange"
     :class="getMenuClass"
     @click="handleMenuClick"
     :subMenuOpenDelay="0.2"

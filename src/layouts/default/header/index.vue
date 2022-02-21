@@ -11,7 +11,8 @@
       />
       <LayoutTrigger
         v-if="
-          (getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar) || getIsMobile
+          (getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar) ||
+          getIsMobile
         "
         :theme="getHeaderTheme"
         :sider="false"
@@ -48,7 +49,7 @@
         :class="`${prefixCls}-action__item`"
       />
 
-      <!-- <UserDropDown :theme="getHeaderTheme" /> -->
+      <UserDropDown :theme="getHeaderTheme" />
 
       <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
     </div>
@@ -75,6 +76,7 @@
   import { AppLocalePicker } from '/@/components/Application';
 
   // import { UserDropDown, LayoutBreadcrumb, FullScreen, Notify, ErrorAction } from './components';
+  import { UserDropDown } from './components';
   import { LayoutBreadcrumb } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -90,15 +92,18 @@
       LayoutTrigger,
       LayoutBreadcrumb,
       LayoutMenu,
-      // UserDropDown,
+      UserDropDown,
       AppLocalePicker,
       // FullScreen,
       // Notify,
       // AppSearch,
       // ErrorAction,
-      SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue'), {
-        loading: true,
-      }),
+      SettingDrawer: createAsyncComponent(
+        () => import('/@/layouts/default/setting/index.vue'),
+        {
+          loading: true,
+        },
+      ),
     },
     props: {
       fixed: propTypes.bool,

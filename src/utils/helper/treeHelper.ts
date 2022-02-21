@@ -9,10 +9,14 @@ const DEFAULT_CONFIG: TreeHelperConfig = {
   pid: 'pid',
 };
 
-const getConfig = (config: Partial<TreeHelperConfig>) => Object.assign({}, DEFAULT_CONFIG, config);
+const getConfig = (config: Partial<TreeHelperConfig>) =>
+  Object.assign({}, DEFAULT_CONFIG, config);
 
 // tree from list
-export function listToTree<T = any>(list: any[], config: Partial<TreeHelperConfig> = {}): T[] {
+export function listToTree<T = any>(
+  list: any[],
+  config: Partial<TreeHelperConfig> = {},
+): T[] {
   const conf = getConfig(config) as TreeHelperConfig;
   const nodeMap = new Map();
   const result: T[] = [];
@@ -158,7 +162,10 @@ export function forEach<T = any>(
 /**
  * @description: Extract tree specified structure
  */
-export function treeMap<T = any>(treeData: T[], opt: { children?: string; conversion: Fn }): T[] {
+export function treeMap<T = any>(
+  treeData: T[],
+  opt: { children?: string; conversion: Fn },
+): T[] {
   return treeData.map((item) => treeMapEach(item, opt));
 }
 

@@ -22,7 +22,10 @@ function joinParentPath(menus: Menu[], parentPath = '') {
       menu.path = `${parentPath}/${menu.path}`;
     }
     if (menu?.children?.length) {
-      joinParentPath(menu.children, menu.meta?.hidePathForChildren ? parentPath : menu.path);
+      joinParentPath(
+        menu.children,
+        menu.meta?.hidePathForChildren ? parentPath : menu.path,
+      );
     }
   }
 }
@@ -37,12 +40,19 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
   return menuList[0];
 }
 
-export function transformRouteToMenu(routeModList: AppRouteModule[], routerMapping = false) {
+export function transformRouteToMenu(
+  routeModList: AppRouteModule[],
+  routerMapping = false,
+) {
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
 
   cloneRouteModList.forEach((item) => {
-    if (routerMapping && item.meta.hideChildrenInMenu && typeof item.redirect === 'string') {
+    if (
+      routerMapping &&
+      item.meta.hideChildrenInMenu &&
+      typeof item.redirect === 'string'
+    ) {
       item.path = item.redirect;
     }
     if (item.meta?.single) {
