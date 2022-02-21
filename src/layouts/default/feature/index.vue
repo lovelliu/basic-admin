@@ -15,13 +15,19 @@
     name: 'LayoutFeatures',
     components: {
       BackTop,
-      // LayoutLockPage: createAsyncComponent(() => import('/@/views/sys/lock/index.vue')),
-      SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue')),
+      LayoutLockPage: createAsyncComponent(() => import('/@/views/lock/index.vue')),
+      SettingDrawer: createAsyncComponent(
+        () => import('/@/layouts/default/setting/index.vue'),
+      ),
       SessionTimeoutLogin,
     },
     setup() {
-      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition, getFullContent } =
-        useRootSetting();
+      const {
+        getUseOpenBackTop,
+        getShowSettingButton,
+        getSettingButtonPosition,
+        getFullContent,
+      } = useRootSetting();
       const userStore = useUserStoreWithOut();
       const { prefixCls } = useDesign('setting-drawer-fearure');
       const { getShowHeader } = useHeaderSetting();
@@ -52,7 +58,7 @@
 </script>
 
 <template>
-  <!-- <LayoutLockPage /> -->
+  <LayoutLockPage />
   <BackTop v-if="getUseOpenBackTop" :target="getTarget" />
   <SettingDrawer v-if="getIsFixedSettingDrawer" :class="prefixCls" />
   <SessionTimeoutLogin v-if="getIsSessionTimeout" />
