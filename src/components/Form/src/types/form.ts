@@ -149,7 +149,7 @@ export interface FormSchema {
   componentProps?:
     | ((opt: {
         schema: FormSchema;
-        tableAction: TableActionType;
+        tableAction: TableActionType<unknown>;
         formActionType: FormActionType;
         formModel: Recordable;
       }) => Recordable)
@@ -185,7 +185,9 @@ export interface FormSchema {
   render?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
 
   // Rendering col content requires outer wrapper form-item
-  renderColContent?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
+  renderColContent?: (
+    renderCallbackParams: RenderCallbackParams,
+  ) => VNode | VNode[] | string;
 
   renderComponentContent?:
     | ((renderCallbackParams: RenderCallbackParams) => any)

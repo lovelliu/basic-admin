@@ -37,6 +37,9 @@ declare global {
     target: HTMLInputElement;
   }
 
+  declare type TimeoutHandle = ReturnType<typeof setTimeout>;
+  declare type IntervalHandle = ReturnType<typeof setInterval>;
+
   declare function parseInt(s: string | number, radix?: number): number;
 
   namespace JSX {

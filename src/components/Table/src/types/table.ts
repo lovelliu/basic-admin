@@ -25,7 +25,12 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when select/deselect one row
    * @type Function
    */
-  onSelect?: (record: T, selected: boolean, selectedRows: Object[], nativeEvent: Event) => any;
+  onSelect?: (
+    record: T,
+    selected: boolean,
+    selectedRows: Object[],
+    nativeEvent: Event,
+  ) => any;
 
   /**
    * Callback executed when select/deselect all rows
@@ -93,7 +98,10 @@ export interface TableActionType<T> {
   deleteSelectRowByKey: (key: string) => void;
   setPagination: (info: Partial<PaginationProps>) => void;
   setTableData: <T = Recordable>(values: T[]) => void;
-  updateTableDataRecord: (rowKey: string | number, record: Recordable) => Recordable | void;
+  updateTableDataRecord: (
+    rowKey: string | number,
+    record: Recordable,
+  ) => Recordable | void;
   deleteTableDataRecord: (rowKey: string | number | string[] | number[]) => void;
   insertTableDataRecord: (record: Recordable, index?: number) => Recordable | void;
   findTableDataRecord: (rowKey: string | number) => Recordable | void;
@@ -416,7 +424,9 @@ export interface BasicColumn<T> extends ColumnProps<T> {
     value: string;
     children?:
       | unknown[]
-      | (((props: Record<string, unknown>) => unknown[]) & (() => unknown[]) & (() => unknown[]));
+      | (((props: Record<string, unknown>) => unknown[]) &
+          (() => unknown[]) &
+          (() => unknown[]));
   }[];
 
   //
