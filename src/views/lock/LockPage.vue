@@ -14,7 +14,10 @@
     </div>
 
     <div class="flex w-screen h-screen justify-center items-center">
-      <div :class="`${prefixCls}__hour`" class="relative mr-5 md:mr-20 w-2/5 h-2/5 md:h-4/5">
+      <div
+        :class="`${prefixCls}__hour`"
+        class="relative mr-5 md:mr-20 w-2/5 h-2/5 md:h-4/5"
+      >
         <span>{{ hour }}</span>
         <span class="meridiem absolute left-5 top-5 text-md xl:text-xl" v-show="showDate">
           {{ meridiem }}
@@ -28,7 +31,10 @@
       <div :class="`${prefixCls}-entry`" v-show="!showDate">
         <div :class="`${prefixCls}-entry-content`">
           <div :class="`${prefixCls}-entry__header enter-x`">
-            <img :src="userinfo.portrait || headerImg" :class="`${prefixCls}-entry__header-img`" />
+            <img
+              :src="userinfo.portrait || headerImg"
+              :class="`${prefixCls}-entry__header-img`"
+            />
             <p :class="`${prefixCls}-entry__header-name`">
               {{ userinfo.userName }}
             </p>
@@ -60,7 +66,13 @@
             >
               {{ t('sys.lock.backToLogin') }}
             </a-button>
-            <a-button class="mt-2" type="link" size="small" @click="unLock()" :loading="loading">
+            <a-button
+              class="mt-2"
+              type="link"
+              size="small"
+              @click="unLock()"
+              :loading="loading"
+            >
               {{ t('sys.lock.entry') }}
             </a-button>
           </div>
@@ -68,7 +80,9 @@
       </div>
     </transition>
 
-    <div class="absolute bottom-5 w-full text-gray-300 xl:text-xl 2xl:text-3xl text-center enter-y">
+    <div
+      class="absolute bottom-5 w-full text-gray-300 xl:text-xl 2xl:text-3xl text-center enter-y"
+    >
       <div class="text-5xl mb-4 enter-x" v-show="!showDate">
         {{ hour }}:{{ minute }} <span class="text-3xl">{{ meridiem }}</span>
       </div>

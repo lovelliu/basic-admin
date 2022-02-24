@@ -84,16 +84,16 @@ export const basicProps = {
     default: null,
   },
   columns: {
-    type: [Array] as PropType<BasicColumn[]>,
+    type: [Array] as PropType<BasicColumn<any>[]>,
     default: () => [],
   },
   showIndexColumn: { type: Boolean, default: true },
   indexColumnProps: {
-    type: Object as PropType<BasicColumn>,
+    type: Object as PropType<BasicColumn<any>>,
     default: null,
   },
   actionColumn: {
-    type: Object as PropType<BasicColumn>,
+    type: Object as PropType<BasicColumn<any>>,
     default: null,
   },
   ellipsis: { type: Boolean, default: true },
