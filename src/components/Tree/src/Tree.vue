@@ -1,6 +1,13 @@
 <script lang="tsx">
   import type { CSSProperties } from 'vue';
-  import type { FieldNames, TreeState, TreeItem, KeyType, CheckKeys, TreeActionType } from './tree';
+  import type {
+    FieldNames,
+    TreeState,
+    TreeItem,
+    KeyType,
+    CheckKeys,
+    TreeActionType,
+  } from './tree';
 
   import {
     defineComponent,
@@ -84,7 +91,10 @@
             let currentValue = toRaw(state.checkedKeys) as KeyType[];
             if (isArray(currentValue) && searchState.startSearch) {
               const { key } = unref(getFieldNames);
-              currentValue = difference(currentValue, getChildrenKeys(e.node.$attrs.node[key]));
+              currentValue = difference(
+                currentValue,
+                getChildrenKeys(e.node.$attrs.node[key]),
+              );
               if (e.checked) {
                 currentValue.push(e.node.$attrs.node[key]);
               }
@@ -370,7 +380,10 @@
 
           const searchIdx = searchText ? title.indexOf(searchText) : -1;
           const isHighlight =
-            searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
+            searchState.startSearch &&
+            !isEmpty(searchText) &&
+            highlight &&
+            searchIdx !== -1;
           const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
 
           const titleDom = isHighlight ? (
@@ -430,7 +443,11 @@
             <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound)}>
               <Tree {...unref(getBindValues)} showIcon={false} treeData={treeData.value} />
             </ScrollContainer>
-            <Empty v-show={unref(getNotFound)} image={Empty.PRESENTED_IMAGE_SIMPLE} class="!mt-4" />
+            <Empty
+              v-show={unref(getNotFound)}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              class="!mt-4"
+            />
           </div>
         );
       };

@@ -45,14 +45,12 @@
     try {
       setDrawerProps({ confirmLoading: true });
       const values = await validate();
-      console.log(typeof values.id);
-
+      if (values.menus.checked) values.menus = values.menus.checked;
       const res = unref(isUpdate) ? await updateRole(values) : await addRole(values);
       if (res) {
         const msg = !unref(isUpdate) ? '添加角色成功' : '更新角色成功';
         createMessage.success(msg);
         closeDrawer();
-
         emit('success', {
           isUpdate: unref(isUpdate),
           values,

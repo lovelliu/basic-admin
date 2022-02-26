@@ -1,7 +1,6 @@
 import { defHttp } from '/@/utils/request';
 import { LoginParams, LoginResultModel } from './model/userModel';
 
-import { ErrorMessageMode } from '/#/axios';
 import { UserInfo } from '/#/store';
 import { GetUserListParams } from './model/systemModel';
 import { VAxios } from '/@/utils/request/Axios';
@@ -22,14 +21,13 @@ enum Api {
 /**
  * @description: user login api
  */
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
+export function loginApi(params: LoginParams) {
   return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
       params,
     },
     {
-      errorMessageMode: mode,
       withToken: false,
     },
   );

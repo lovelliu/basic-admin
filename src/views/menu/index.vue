@@ -7,7 +7,9 @@
   import { useDrawer } from '/@/components/Drawer';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { searchFormSchema } from './data';
+  import { usePermission } from '/@/hooks/web/usePermission';
 
+  const { hasPermission } = usePermission();
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerTable, { reload, expandAll }] = useTable({
     title: '菜单列表',
@@ -72,7 +74,12 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增菜单</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          :disabled="!hasPermission('api:menu:add')"
+          >新增菜单</a-button
+        >
       </template>
       <template #action="{ record }">
         <TableAction
@@ -80,6 +87,7 @@
             {
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
+              disabled: !hasPermission('api:menu:update'),
             },
             {
               icon: 'ant-design:delete-outlined',
@@ -88,6 +96,7 @@
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
               },
+              disabled: !hasPermission('api:menu:delete'),
             },
           ]"
         />

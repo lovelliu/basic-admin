@@ -9,7 +9,6 @@
 
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useFormValid, useLoginState, useFormRules } from './useLogin';
-  import { useDesign } from '/@/hooks/web/useDesign';
 
   const ACol = Col;
   const ARow = Row;
@@ -19,8 +18,7 @@
   const { t } = useI18n();
   const userStore = useUserStore();
   const { getFormRules } = useFormRules();
-  const { notification, createErrorModal } = useMessage();
-  const { prefixCls } = useDesign('login');
+  const { notification } = useMessage();
 
   const formRef = ref();
   const formData = reactive({
@@ -42,7 +40,6 @@
       const userInfo = await userStore.login({
         username: data.username,
         password: data.password,
-        mode: 'none',
       });
 
       if (userInfo) {
@@ -51,12 +48,6 @@
           description: `${t('sys.login.loginSuccessDesc') + ': ' + userInfo.userName}`,
         });
       }
-    } catch (error) {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: (error as Error).message || t('sys.api.networkExceptionMsg'),
-        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-      });
     } finally {
       loading.value = false;
     }

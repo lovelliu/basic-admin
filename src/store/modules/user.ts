@@ -109,8 +109,8 @@ export const useUserStore = defineStore({
     ): Promise<UserInfo | null> {
       const { createMessage } = useMessage();
       try {
-        const { goHome = true, mode, ...loginParams } = params;
-        const res = await loginApi(loginParams, mode);
+        const { goHome = true, ...loginParams } = params;
+        const res = await loginApi(loginParams);
         if (!res) {
           createMessage.warning('result is null');
           return null;
