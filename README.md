@@ -1,11 +1,61 @@
-# Vue 3 + Typescript + Vite
+<div align="center"> <a href="https://github.com/lhj-web/edu-cms"> <img alt="EduCMS Logo" width="200" height="200" src="https://my-picture-bed-1304169582.cos.ap-nanjing.myqcloud.com/picture/logo.png"> </a> <br> <br>
+[![GitHub license](https://img.shields.io/github/license/lhj-web/edu-cms)](https://github.com/lhj-web/edu-cms/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/lhj-web/edu-cms)](https://github.com/lhj-web/edu-cms/stargazers)
+<h1>Edu Cms</h1>
+</div>
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 介绍
 
-## Recommended IDE Setup
+一个基于**Vue3+Typescript+Vite+Less+WindiCSS**开发的课程后台管理系统，采用动态权限设计，前端路由由后台进行返回，菜单有三种类型：目录、菜单和按钮，菜单对应查看权限，按钮对应增加｜修改｜删除权限，由前端(按钮控制)和后台(用户拥有权限验证)共同控制权限。
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## 为什么要做这个项目
 
-## Type Support For `.vue` Imports in TS
+本着对新技术的热爱发现了[vue-vben-admin](https://github.com/vbenjs/vue-vben-admin)这个仓库，让我学习到了与 Vue3 相关的新技术以及中后台系统的设计方案(感谢作者的开源)，为了更好的吸收这些知识准备了这个项目进行实践。为了确保前后端接口类型的统一，使用了对 TS 支持最好的 Nest 框架作为后端开发框架，该项目目前只实现了系统的基本功能，将会继续进行更新。
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+## 后台项目
+
+[edu-cms-api](https://github.com/lhj-web/edu-cms-api) - 使用 Nestjs+Mongodb+Redis 开发的课程管理系统后台。
+
+| 用户名 | 密码     | 说明                         |
+| ------ | -------- | ---------------------------- |
+| admin  | password | 管理员账号，拥有所有权限     |
+| test   | 123456   | 测试用户，拥有查看和添加权限 |
+
+## 安装使用
+
+- 获取项目代码
+
+```bash
+git clone https://github.com/lhj-web/edu-cms.git
+```
+
+- 安装依赖
+
+```bash
+cd edu-cms
+
+pnpm install
+
+```
+
+- 运行
+
+```bash
+pnpm serve
+```
+
+- 打包
+
+```bash
+pnpm build
+```
+
+## 浏览器支持
+
+本地开发推荐使用`Chrome 80+` 浏览器
+
+支持现代浏览器, 不支持 IE
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :-: | :-: | :-: | :-: | :-: |
+| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
