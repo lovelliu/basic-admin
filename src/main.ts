@@ -12,10 +12,6 @@ import { initAppConfigStore } from '/@/logics/initAppConfig';
 import { registerGlobComp } from '/@/components/registerGlobComp';
 import { setupRouterGuard } from './router/guard';
 
-// if (import.meta.env.DEV) {
-//   import('ant-design-vue/dist/antd.less');
-// }
-
 async function bootstrap() {
   const app = createApp(App);
 

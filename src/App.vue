@@ -4,7 +4,10 @@
   import { AppProvider } from '/@/components/Application';
   import { useRootSetting } from './hooks/setting/useRootSetting';
   import { useTitle } from '/@/hooks/web/useTitle';
-  import { updateHeaderBgColor, updateSidebarBgColor } from '/@/logics/theme/updateBackground';
+  import {
+    updateHeaderBgColor,
+    updateSidebarBgColor,
+  } from '/@/logics/theme/updateBackground';
   import { updateDarkTheme } from '/@/logics/theme/dark';
   import { useLocale } from '/@/locales/useLocale';
   import { ThemeEnum } from './enums/appEnum';
