@@ -7,6 +7,7 @@ import { getRefreshToken, getToken } from '/@/utils/auth';
 import { checkStatus } from './checkStatus';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { useGlobSetting } from '/@/hooks/setting';
 import { formatRequestDate, joinTimestamp } from './helper';
 import { setObjToUrlParams } from '..';
 import { isString } from '../is';
@@ -16,6 +17,8 @@ import { defHttp } from '.';
 const { createErrorModal, createMessage } = useMessage();
 let isRefreshing = false;
 let requests: Function[] = [];
+const { apiUrl } = useGlobSetting();
+
 /**
  * @description: 数据处理，方便区分多种处理方式
  */
@@ -143,7 +146,10 @@ export const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token =
-      config.url === '/basic-api/api/auth/refreshToken' ? getRefreshToken() : getToken();
+      config.url ===
+      `${process.env.NODE_ENV === 'development' ? apiUrl : ''}/api/auth/refreshToken`
+        ? getRefreshToken()
+        : getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
@@ -194,9 +200,11 @@ export const transform: AxiosTransform = {
     } catch (error) {
       throw new Error(error as unknown as string);
     }
+
+    // token过期启用刷新token获取新的token
     if (error.response.status === 401) {
       const userStore = useUserStoreWithOut();
-      if (!userStore.getToken) userStore.logout();
+      if (!userStore.getToken) userStore.logout(true);
       if (!isRefreshing) {
         isRefreshing = true;
         return userStore
