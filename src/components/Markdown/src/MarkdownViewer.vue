@@ -16,7 +16,7 @@
   const getHtmlData = computed(() => converter.makeHtml(props.value || ''));
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .markdown-viewer {
     width: 100%;
   }

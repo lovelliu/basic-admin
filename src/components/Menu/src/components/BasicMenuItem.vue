@@ -12,5 +12,3 @@
     <MenuItemContent v-bind="$props" :item="item" />
   </MenuItem>
 </template>
-
-<style lang="less" scoped></style>

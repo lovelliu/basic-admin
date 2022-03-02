@@ -37,5 +37,3 @@
     </p>
   </Card>
 </template>
-
-<style lang="less" scoped></style>

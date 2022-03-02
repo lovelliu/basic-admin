@@ -34,7 +34,7 @@ git clone https://github.com/lhj-web/edu-cms.git
 ```bash
 cd edu-cms
 
-pnpm install
+pnpm i
 
 ```
 

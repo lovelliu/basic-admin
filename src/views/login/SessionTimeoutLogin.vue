@@ -18,7 +18,7 @@
   const userStore = useUserStore();
   const permissionStore = usePermissionStore();
   const appStore = useAppStore();
-  const userId = ref<Nullable<string | undefined>>('');
+  const userId = ref<Nullable<number | undefined>>();
 
   const isBackMode = () => {
     return appStore.getProjectConfig.permissionMode === PermissionModeEnum.BACK;
