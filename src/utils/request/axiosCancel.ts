@@ -4,7 +4,8 @@ import { isFunction } from '../is';
 
 let pendingMap = new Map<string, Canceler>();
 
-export const getPendingUrl = (config: AxiosRequestConfig) => [config.method, config.url].join('&');
+export const getPendingUrl = (config: AxiosRequestConfig) =>
+  [config.method, config.url].join('&');
 
 export class AxiosCanceler {
   /**

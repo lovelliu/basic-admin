@@ -204,7 +204,8 @@ export const transform: AxiosTransform = {
     // token过期启用刷新token获取新的token
     if (error.response.status === 401) {
       const userStore = useUserStoreWithOut();
-      if (!userStore.getToken) userStore.logout(true);
+      if (!userStore.getToken || /\/refreshToken/.test(error.response.config.url))
+        userStore.logout(true);
       if (!isRefreshing) {
         isRefreshing = true;
         return userStore
@@ -214,6 +215,7 @@ export const transform: AxiosTransform = {
             requests = [];
             return defHttp.getAxios()(error.config);
           })
+          .catch(() => userStore.logout(true))
           .finally(() => (isRefreshing = false));
       }
       return new Promise((resolve) => {

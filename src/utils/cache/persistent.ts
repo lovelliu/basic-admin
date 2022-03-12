@@ -74,7 +74,11 @@ export class Persistent {
     return sessionMemory.get(key)?.value as Nullable<T>;
   }
 
-  static setSession(key: SessionKeys, value: SessionStore[SessionKeys], immediate = false): void {
+  static setSession(
+    key: SessionKeys,
+    value: SessionStore[SessionKeys],
+    immediate = false,
+  ): void {
     sessionMemory.set(key, toRaw(value));
     immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory.getCache);
   }

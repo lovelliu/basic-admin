@@ -15,7 +15,9 @@ export function useTransitionSetting() {
     return !!appStore.getTransitionSetting?.openPageLoading;
   });
 
-  const getBasicTransition = computed(() => appStore.getTransitionSetting?.basicTransition);
+  const getBasicTransition = computed(
+    () => appStore.getTransitionSetting?.basicTransition,
+  );
 
   function setTransitionSetting(transitionSetting: Partial<TransitionSetting>) {
     appStore.setProjectConfig({ transitionSetting });
