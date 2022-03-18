@@ -10,6 +10,9 @@
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useFormValid, useLoginState, useFormRules } from './useLogin';
 
+  import { getCaptcha } from '/@/api/sys/user';
+  import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
+
   const ACol = Col;
   const ARow = Row;
   const FormItem = Form.Item;
@@ -24,13 +27,24 @@
   const formData = reactive({
     username: 'admin',
     password: 'password',
+    verifyCode: '',
+    captchaId: '',
   });
+  const imgSrc = ref('');
   const rememberMe = ref(false);
   const loading = ref(false);
   const { validForm } = useFormValid<typeof formData>(formRef);
 
   const { getLoginState, setLoginState } = useLoginState();
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+
+  onMountedOrActivated(getCaptchaImg);
+
+  async function getCaptchaImg() {
+    const { id, img } = await getCaptcha();
+    formData.captchaId = id;
+    imgSrc.value = img;
+  }
 
   async function handleLogin() {
     const data = await validForm();
@@ -40,6 +54,8 @@
       const userInfo = await userStore.login({
         username: data.username,
         password: data.password,
+        captchaId: formData.captchaId,
+        verifyCode: data.verifyCode,
       });
 
       if (userInfo) {
@@ -76,8 +92,24 @@
       <InputPassword
         size="large"
         v-model:value="formData.password"
-        :placeholder="t('sys.login.password')"
+        :placeholder="t('sys.login.passwordPlaceholder')"
       />
+    </FormItem>
+    <FormItem name="verifyCode" class="">
+      <Input
+        size="large"
+        v-model:value="formData.verifyCode"
+        :placeholder="t('sys.login.smsPlaceholder')"
+      >
+        <template #suffix>
+          <img
+            :src="imgSrc"
+            alt="captcha"
+            style="height: 30px; cursor: pointer"
+            @click="getCaptchaImg"
+          />
+        </template>
+      </Input>
     </FormItem>
 
     <ARow>

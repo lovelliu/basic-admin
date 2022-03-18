@@ -1,11 +1,12 @@
 import { defHttp } from '/@/utils/request';
-import { LoginParams, LoginResultModel } from './model/userModel';
+import { CaptchaModel, LoginParams, LoginResultModel } from './model/userModel';
 
 import { UserInfo } from '/#/store';
 import { GetUserListParams } from './model/systemModel';
 import { VAxios } from '/@/utils/request/Axios';
 
 enum Api {
+  GetCaptcha = '/auth/captcha/img',
   Login = '/auth/login',
   GetUserInfo = '/user/getInfo',
   RefreshToken = '/auth/refreshToken',
@@ -17,6 +18,19 @@ enum Api {
   UpdateUser = '/user/update',
   GetUsername = '/user',
 }
+
+/**
+ * @description: get captcha img
+ */
+export const getCaptcha = () =>
+  defHttp.get<CaptchaModel>(
+    {
+      url: Api.GetCaptcha,
+    },
+    {
+      withToken: false,
+    },
+  );
 
 /**
  * @description: user login api

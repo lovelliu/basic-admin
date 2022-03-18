@@ -23,7 +23,10 @@ export function useCopyToClipboard(initial?: string) {
   return { clipboardRef, isSuccessRef, copiedRef };
 }
 
-export function copyTextToClipboard(input: string, { target = document.body }: Options = {}) {
+export function copyTextToClipboard(
+  input: string,
+  { target = document.body }: Options = {},
+) {
   const element = document.createElement('textarea');
   const previouslyFocusedElement = document.activeElement;
 

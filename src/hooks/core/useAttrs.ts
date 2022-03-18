@@ -20,14 +20,19 @@ export function useAttrs(params: Params = {}): Ref<Recordable> | {} {
 
   const { excludeListeners = false, excludeKeys = [], excludeDefaultKeys = true } = params;
   const attrs = shallowRef({});
-  const allExcludeKeys = excludeKeys.concat(excludeDefaultKeys ? DEFAULT_EXCLUDE_KEYS : []);
+  const allExcludeKeys = excludeKeys.concat(
+    excludeDefaultKeys ? DEFAULT_EXCLUDE_KEYS : [],
+  );
 
   // Since attrs are not reactive, make it reactive instead of doing in `onUpdated` hook for better performance
   instance.attrs = reactive(instance.attrs);
 
   watchEffect(() => {
     const res = entries(instance.attrs).reduce((acm, [key, val]) => {
-      if (!allExcludeKeys.includes(key) && !(excludeListeners && LISTENER_PREFIX.test(key))) {
+      if (
+        !allExcludeKeys.includes(key) &&
+        !(excludeListeners && LISTENER_PREFIX.test(key))
+      ) {
         acm[key] = val;
       }
 

@@ -1,11 +1,18 @@
 import { Dayjs } from 'dayjs';
 
+export interface CaptchaModel {
+  img: string;
+  id: string;
+}
+
 /**
  * @description: Login interface parameters
  */
 export interface LoginParams {
   username: string;
   password: string;
+  captchaId: string;
+  verifyCode: string;
 }
 
 export interface RoleInfo {

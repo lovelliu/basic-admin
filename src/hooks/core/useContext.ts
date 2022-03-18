@@ -34,7 +34,11 @@ export function createContext<T>(
 }
 
 export function useContext<T>(key: InjectionKey<T>, native?: boolean): T;
-export function useContext<T>(key: InjectionKey<T>, defaultValue?: any, native?: boolean): T;
+export function useContext<T>(
+  key: InjectionKey<T>,
+  defaultValue?: any,
+  native?: boolean,
+): T;
 
 export function useContext<T>(
   key: InjectionKey<T> = Symbol(),

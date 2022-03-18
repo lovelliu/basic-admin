@@ -115,7 +115,10 @@ export function useContentHeight(
 
     // upwardSpace
     let upwardSpaceHeight = 0;
-    function upward(element: Element | null, upwardLvlOrClass: number | string | null | undefined) {
+    function upward(
+      element: Element | null,
+      upwardLvlOrClass: number | string | null | undefined,
+    ) {
       if (element && upwardLvlOrClass) {
         const parent = element.parentElement;
         if (parent) {
