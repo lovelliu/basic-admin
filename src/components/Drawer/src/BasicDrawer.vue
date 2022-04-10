@@ -23,7 +23,12 @@
     >
       <slot></slot>
     </ScrollContainer>
-    <DrawerFooter v-bind="getProps" @close="onClose" @ok="handleOk" :height="getFooterHeight">
+    <DrawerFooter
+      v-bind="getProps"
+      @close="onClose"
+      @ok="handleOk"
+      :height="getFooterHeight"
+    >
       <template #[item]="data" v-for="item in Object.keys($slots)">
         <slot :name="item" v-bind="data || {}"></slot>
       </template>

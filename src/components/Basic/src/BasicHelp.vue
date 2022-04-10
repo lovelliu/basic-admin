@@ -50,7 +50,9 @@
         (): CSSProperties => ({ color: props.color, fontSize: props.fontSize }),
       );
 
-      const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
+      const getOverlayStyle = computed(
+        (): CSSProperties => ({ maxWidth: props.maxWidth }),
+      );
 
       function renderTitle() {
         const textList = props.text;

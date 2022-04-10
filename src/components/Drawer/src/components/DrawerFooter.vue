@@ -2,7 +2,12 @@
   <div :class="prefixCls" :style="getStyle" v-if="showFooter || $slots.footer">
     <template v-if="!$slots.footer">
       <slot name="insertFooter"></slot>
-      <a-button v-bind="cancelButtonProps" @click="handleClose" class="mr-2" v-if="showCancelBtn">
+      <a-button
+        v-bind="cancelButtonProps"
+        @click="handleClose"
+        class="mr-2"
+        v-if="showCancelBtn"
+      >
         {{ cancelText }}
       </a-button>
       <slot name="centerFooter"></slot>
