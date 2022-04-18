@@ -31,7 +31,13 @@ function getKey(
 
 export function useCustomRow(
   propsRef: ComputedRef<BasicTableProps>,
-  { setSelectedRowKeys, getSelectRowKeys, getAutoCreateKey, clearSelectedRowKeys, emit }: Options,
+  {
+    setSelectedRowKeys,
+    getSelectRowKeys,
+    getAutoCreateKey,
+    clearSelectedRowKeys,
+    emit,
+  }: Options,
 ) {
   const customRow = (record: Recordable, index: number) => {
     return {

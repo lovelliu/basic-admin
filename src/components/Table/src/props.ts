@@ -84,19 +84,20 @@ export const basicProps = {
     default: null,
   },
   columns: {
-    type: [Array] as PropType<BasicColumn<any>[]>,
+    type: [Array] as PropType<BasicColumn[]>,
     default: () => [],
   },
   showIndexColumn: { type: Boolean, default: true },
   indexColumnProps: {
-    type: Object as PropType<BasicColumn<any>>,
+    type: Object as PropType<BasicColumn>,
     default: null,
   },
   actionColumn: {
-    type: Object as PropType<BasicColumn<any>>,
+    type: Object as PropType<BasicColumn>,
     default: null,
   },
   ellipsis: { type: Boolean, default: true },
+  isCanResizeParent: { type: Boolean, default: false },
   canResize: { type: Boolean, default: true },
   clearSelectOnPageChange: propTypes.bool,
   resizeHeightOffset: propTypes.number.def(0),

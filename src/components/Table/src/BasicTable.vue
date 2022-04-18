@@ -1,6 +1,7 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
     <BasicForm
+      ref="formRef"
       submitOnReset
       v-bind="getFormProps"
       v-if="getBindValues.useSearchForm"
@@ -25,7 +26,11 @@
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
 
-      <template #[`header-${column.dataIndex}`] v-for="column in columns" :key="column.dataIndex">
+      <template
+        #[`header-${column.dataIndex}`]
+        v-for="(column, index) in columns"
+        :key="index"
+      >
         <HeaderCell :column="column" />
       </template>
     </Table>
@@ -52,7 +57,7 @@
   import { useLoading } from './hooks/useLoading';
   import { useRowSelection } from './hooks/useRowSelection';
   import { useTableScroll } from './hooks/useTableScroll';
-  import { useTableScrollTo } from './hooks/useTableScrollTo';
+  import { useTableScrollTo } from './hooks/useScrollTo';
   import { useCustomRow } from './hooks/useCustomRow';
   import { useTableStyle } from './hooks/useTableStyle';
   import { useTableHeader } from './hooks/useTableHeader';
@@ -97,6 +102,7 @@
       const tableData = ref<Recordable[]>([]);
 
       const wrapRef = ref(null);
+      const formRef = ref(null);
       const innerPropsRef = ref<Partial<BasicTableProps>>();
 
       const { prefixCls } = useDesign('basic-table');
@@ -185,6 +191,8 @@
         getColumnsRef,
         getRowSelectionRef,
         getDataSourceRef,
+        wrapRef,
+        formRef,
       );
 
       const { scrollTo } = useTableScrollTo(tableElRef, getDataSourceRef);
@@ -199,7 +207,11 @@
 
       const { getRowClassName } = useTableStyle(getProps, prefixCls);
 
-      const { getExpandOption, expandAll, collapseAll } = useTableExpand(getProps, tableData, emit);
+      const { getExpandOption, expandAll, expandRows, collapseAll } = useTableExpand(
+        getProps,
+        tableData,
+        emit,
+      );
 
       const handlers: InnerHandlers = {
         onColumnsChange: (data: ColumnChangeParam[]) => {
@@ -271,7 +283,7 @@
         innerPropsRef.value = { ...unref(innerPropsRef), ...props };
       }
 
-      const tableAction: TableActionType<unknown> = {
+      const tableAction: TableActionType = {
         reload,
         getSelectRows,
         clearSelectedRowKeys,
@@ -300,6 +312,7 @@
         getShowPagination,
         setCacheColumnsByField,
         expandAll,
+        expandRows,
         collapseAll,
         scrollTo,
         getSize: () => {
@@ -313,6 +326,7 @@
       emit('register', tableAction, formActions);
 
       return {
+        formRef,
         tableElRef,
         getBindValues,
         getLoading,
@@ -347,6 +361,7 @@
 
   .@{prefix-cls} {
     max-width: 100%;
+    height: 100%;
 
     &-row__striped {
       td {

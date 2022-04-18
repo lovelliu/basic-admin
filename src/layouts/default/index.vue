@@ -33,7 +33,9 @@
   export default defineComponent({
     name: 'DefaultLayout',
     components: {
-      LayoutFeatures: createAsyncComponent(() => import('/@/layouts/default/feature/index.vue')),
+      LayoutFeatures: createAsyncComponent(
+        () => import('/@/layouts/default/feature/index.vue'),
+      ),
       // LayoutFooter: createAsyncComponent(() => import('/@/layouts/default/footer/index.vue')),
       LayoutHeader,
       LayoutContent,

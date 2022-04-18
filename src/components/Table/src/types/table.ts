@@ -87,11 +87,12 @@ export interface GetColumnsParams {
 
 export type SizeType = 'default' | 'middle' | 'small' | 'large';
 
-export interface TableActionType<T> {
+export interface TableActionType {
   reload: (opt?: FetchParams) => Promise<void>;
   getSelectRows: <T = Recordable>() => T[];
   clearSelectedRowKeys: () => void;
   expandAll: () => void;
+  expandRows: (keys: string[]) => void;
   collapseAll: () => void;
   scrollTo: (pos: string) => void; // pos: id | "top" | "bottom"
   getSelectRowKeys: () => string[];
@@ -105,8 +106,8 @@ export interface TableActionType<T> {
   deleteTableDataRecord: (rowKey: string | number | string[] | number[]) => void;
   insertTableDataRecord: (record: Recordable, index?: number) => Recordable | void;
   findTableDataRecord: (rowKey: string | number) => Recordable | void;
-  getColumns: (opt?: GetColumnsParams) => BasicColumn<T>[];
-  setColumns: (columns: BasicColumn<T>[] | string[]) => void;
+  getColumns: (opt?: GetColumnsParams) => BasicColumn[];
+  setColumns: (columns: BasicColumn[] | string[]) => void;
   getDataSource: <T = Recordable>() => T[];
   getRawDataSource: <T = Recordable>() => T;
   setLoading: (loading: boolean) => void;
@@ -116,12 +117,12 @@ export interface TableActionType<T> {
   getPaginationRef: () => PaginationProps | boolean;
   getSize: () => SizeType;
   getRowSelection: () => TableRowSelection<Recordable>;
-  getCacheColumns: () => BasicColumn<T>[];
+  getCacheColumns: () => BasicColumn[];
   emit?: EmitType;
   updateTableData: (index: number, key: string, value: any) => Recordable;
   setShowPagination: (show: boolean) => Promise<void>;
   getShowPagination: () => boolean;
-  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn<T>) => void;
+  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
 }
 
 export interface FetchSetting {
@@ -190,14 +191,16 @@ export interface BasicTableProps<T = any> {
   // 表单配置
   formConfig?: Partial<FormProps>;
   // 列配置
-  columns: BasicColumn<T>[];
+  columns: BasicColumn[];
   // 是否显示序号列
   showIndexColumn?: boolean;
   // 序号列配置
-  indexColumnProps?: BasicColumn<T>;
-  actionColumn?: BasicColumn<T>;
+  indexColumnProps?: BasicColumn;
+  actionColumn?: BasicColumn;
   // 文本超过宽度是否显示。。。
   ellipsis?: boolean;
+  // 是否继承父级高度（父级高度-表单高度-padding高度）
+  isCanResizeParent?: boolean;
   // 是否可以自适应高度
   canResize?: boolean;
   // 自适应高度偏移， 计算结果-偏移量
@@ -417,8 +420,8 @@ export type CellFormat =
   | Map<string | number, any>;
 
 // @ts-ignore
-export interface BasicColumn<T> extends ColumnProps<T> {
-  children?: BasicColumn<T>[];
+export interface BasicColumn extends ColumnProps {
+  children?: BasicColumn[];
   filters?: {
     text: string;
     value: string;
@@ -448,14 +451,28 @@ export interface BasicColumn<T> extends ColumnProps<T> {
   editRow?: boolean;
   editable?: boolean;
   editComponent?: ComponentType;
-  editComponentProps?: Recordable;
+  editComponentProps?:
+    | ((opt: {
+        text: string | number | boolean | Recordable;
+        record: Recordable;
+        column: BasicColumn;
+        index: number;
+      }) => Recordable)
+    | Recordable;
   editRule?: boolean | ((text: string, record: Recordable) => Promise<string>);
   editValueMap?: (value: any) => string;
   onEditRow?: () => void;
   // 权限编码控制是否显示
   auth?: RoleEnum | RoleEnum[] | string | string[];
   // 业务控制是否显示
-  ifShow?: boolean | ((column: BasicColumn<T>) => boolean);
+  ifShow?: boolean | ((column: BasicColumn) => boolean);
+  // 自定义修改后显示的内容
+  editRender?: (opt: {
+    text: string | number | boolean | Recordable;
+    record: Recordable;
+    column: BasicColumn;
+    index: number;
+  }) => VNodeChild | JSX.Element;
 }
 
 export type ColumnChangeParam = {

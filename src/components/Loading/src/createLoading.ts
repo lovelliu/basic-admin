@@ -4,7 +4,11 @@ import type { LoadingProps } from './typing';
 import { createVNode, render, reactive, h } from 'vue';
 import Loading from './Loading.vue';
 
-export function createLoading(props?: Partial<LoadingProps>, target?: HTMLElement, wait = false) {
+export function createLoading(
+  props?: Partial<LoadingProps>,
+  target?: HTMLElement,
+  wait = false,
+) {
   let vm: Nullable<VNode> = null;
   const data = reactive({
     tip: '',

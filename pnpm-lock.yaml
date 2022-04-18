@@ -25,7 +25,7 @@ specifiers:
   '@vue/runtime-core': ^3.2.26
   '@vue/shared': ^3.2.26
   '@vueuse/core': 7.3.0
-  ant-design-vue: 3.0.0-beta.8
+  ant-design-vue: 3.1.1
   autoprefixer: ^10.4.2
   axios: 0.24.0
   chalk: ^5.0.0
@@ -90,7 +90,7 @@ dependencies:
   '@vue/runtime-core': 3.2.26
   '@vue/shared': 3.2.26
   '@vueuse/core': 7.3.0_vue@3.2.26
-  ant-design-vue: 3.0.0-beta.8_ae87cbba5ec93a01f3fe1197df446ca3
+  ant-design-vue: 3.1.1_vue@3.2.26
   axios: 0.24.0
   crypto-js: 4.1.1
   dayjs: 1.10.7
@@ -190,6 +190,16 @@ packages:
       '@ant-design/icons-svg': 4.2.1
       '@types/lodash': 4.14.178
       lodash: 4.17.21
+      vue: 3.2.26
+    dev: false
+
+  /@ant-design/icons-vue/6.1.0_vue@3.2.26:
+    resolution: {integrity: sha512-EX6bYm56V+ZrKN7+3MT/ubDkvJ5rK/O2t380WFRflDcVFgsvl3NLH7Wxeau6R8DbrO5jWR6DSTC3B6gYFp77AA==}
+    peerDependencies:
+      vue: '>=3.0.3'
+    dependencies:
+      '@ant-design/colors': 6.0.0
+      '@ant-design/icons-svg': 4.2.1
       vue: 3.2.26
     dev: false
 
@@ -1486,17 +1496,16 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /ant-design-vue/3.0.0-beta.8_ae87cbba5ec93a01f3fe1197df446ca3:
-    resolution: {integrity: sha512-3fgfg0pfIqvQ7VN5nKKZayqMH8V1T8nn+e3hWOz6QYdYa7gNydgm5GH+r8ZyhQitkmiAIYXbNDakcqrUdOPXOA==}
+  /ant-design-vue/3.1.1_vue@3.2.26:
+    resolution: {integrity: sha512-QcnESmPllfyPy4SavOlf1jml/bdmzCIcCgYWRwl0WKG5jbuuOQ0vhgfUCC2rI6R+84gb/qf4/0qoZnWcEyQziA==}
     peerDependencies:
-      '@vue/compiler-sfc': '>=3.1.0'
-      vue: '>=3.1.0'
+      vue: '>=3.2.0'
     dependencies:
       '@ant-design/colors': 6.0.0
-      '@ant-design/icons-vue': 6.0.1_vue@3.2.26
+      '@ant-design/icons-vue': 6.1.0_vue@3.2.26
       '@babel/runtime': 7.16.7
+      '@ctrl/tinycolor': 3.4.0
       '@simonwep/pickr': 1.8.2
-      '@vue/compiler-sfc': 3.2.26
       array-tree-filter: 2.1.0
       async-validator: 4.0.7
       dayjs: 1.10.7

@@ -1,4 +1,9 @@
-import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
+import type {
+  BasicColumn,
+  BasicTableProps,
+  CellFormat,
+  GetColumnsParams,
+} from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import type { ComputedRef } from 'vue';
 import { computed, Ref, ref, toRaw, unref, watch } from 'vue';
@@ -85,7 +90,10 @@ function handleIndexColumn(
   });
 }
 
-function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
+function handleActionColumn(
+  propsRef: ComputedRef<BasicTableProps>,
+  columns: BasicColumn[],
+) {
   const { actionColumn } = unref(propsRef);
   if (!actionColumn) return;
 
@@ -122,7 +130,9 @@ export function useColumns(
 
       handleItem(
         item,
-        Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
+        Reflect.has(item, 'ellipsis')
+          ? !!item.ellipsis
+          : !!ellipsis && !customRender && !slots,
       );
     });
     return columns;
@@ -182,7 +192,10 @@ export function useColumns(
     },
   );
 
-  function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
+  function setCacheColumnsByField(
+    dataIndex: string | undefined,
+    value: Partial<BasicColumn>,
+  ) {
     if (!dataIndex || !value) {
       return;
     }
@@ -285,7 +298,12 @@ function sortFixedColumn(columns: BasicColumn[]) {
 }
 
 // format cell
-export function formatCell(text: string, format: CellFormat, record: Recordable, index: number) {
+export function formatCell(
+  text: string,
+  format: CellFormat,
+  record: Recordable,
+  index: number,
+) {
   if (!format) {
     return text;
   }

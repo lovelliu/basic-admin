@@ -55,7 +55,8 @@
     } else {
       if (unref(isSetState)) {
         isSetState.value = false;
-        const { menuMode, menuCollapsed, menuType, menuSplit } = appStore.getBeforeMiniInfo;
+        const { menuMode, menuCollapsed, menuType, menuSplit } =
+          appStore.getBeforeMiniInfo;
         appStore.setProjectConfig({
           menuSetting: {
             type: menuType,

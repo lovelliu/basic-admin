@@ -5,13 +5,12 @@ import { FormSchema } from '/@/components/Form';
 import { formatToDateTime } from '/@/utils/dateUtil';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { enableUser, forbidUser, isUserExist } from '/@/api/sys/user';
-import { UserInfo } from '/@/api/sys/model/userModel';
 import { getRoleList } from '/@/api/sys/role';
 import { usePermission } from '/@/hooks/web/usePermission';
 
 const { hasPermission } = usePermission();
 
-export const columns: BasicColumn<UserInfo>[] = [
+export const columns: BasicColumn[] = [
   {
     title: '用户ID',
     dataIndex: 'id',

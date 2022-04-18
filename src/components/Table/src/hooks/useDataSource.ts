@@ -195,12 +195,14 @@ export function useDataSource(
     });
   }
 
-  function insertTableDataRecord(record: Recordable, index: number): Recordable | undefined {
-    if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
+  function insertTableDataRecord(
+    record: Recordable,
+    index: number,
+  ): Recordable | undefined {
+    // if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
     index = index ?? dataSourceRef.value?.length;
     unref(dataSourceRef).splice(index, 0, record);
-    unref(propsRef).dataSource?.splice(index, 0, record);
-    return unref(propsRef).dataSource;
+    return unref(dataSourceRef);
   }
 
   function findTableDataRecord(rowKey: string | number) {
@@ -261,7 +263,9 @@ export function useDataSource(
       );
       let pageParams: Recordable = {};
 
-      const { current = 1, pageSize = PAGE_SIZE } = unref(getPaginationInfo) as PaginationProps;
+      const { current = 1, pageSize = PAGE_SIZE } = unref(
+        getPaginationInfo,
+      ) as PaginationProps;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
@@ -293,7 +297,7 @@ export function useDataSource(
       const isArrayResult = Array.isArray(res);
 
       let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
-      const resultTotal: number = isArrayResult ? 0 : get(res, totalField);
+      const resultTotal: number = isArrayResult ? res.length : get(res, totalField);
 
       // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
       if (resultTotal) {

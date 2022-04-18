@@ -31,7 +31,7 @@
     "@vue/runtime-core": "^3.2.26",
     "@vue/shared": "^3.2.26",
     "@vueuse/core": "7.3.0",
-    "ant-design-vue": "3.0.0-beta.8",
+    "ant-design-vue": "3.1.1",
     "axios": "0.24.0",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.10.7",

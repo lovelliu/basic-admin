@@ -42,7 +42,8 @@ export function useRowSelection(
         const { rowSelection } = unref(propsRef);
         if (rowSelection) {
           const { onChange } = rowSelection;
-          if (onChange && isFunction(onChange)) onChange(getSelectRowKeys(), getSelectRows());
+          if (onChange && isFunction(onChange))
+            onChange(getSelectRowKeys(), getSelectRows());
         }
         emit('selection-change', {
           keys: getSelectRowKeys(),
@@ -73,7 +74,9 @@ export function useRowSelection(
     );
     const trueSelectedRows: any[] = [];
     rowKeys.forEach((key: string) => {
-      const found = allSelectedRows.find((item) => item[unref(getRowKey) as string] === key);
+      const found = allSelectedRows.find(
+        (item) => item[unref(getRowKey) as string] === key,
+      );
       found && trueSelectedRows.push(found);
     });
     selectedRowRef.value = trueSelectedRows;

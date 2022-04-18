@@ -41,7 +41,16 @@
   import type { AdvanceState } from './types/hooks';
   import type { Ref } from 'vue';
 
-  import { defineComponent, reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
+  import {
+    defineComponent,
+    reactive,
+    ref,
+    computed,
+    unref,
+    onMounted,
+    watch,
+    nextTick,
+  } from 'vue';
   import { Form, Row } from 'ant-design-vue';
   import FormItem from './components/FormItem.vue';
   import FormAction from './components/FormAction.vue';
@@ -131,7 +140,9 @@
           }
         }
         if (unref(getProps).showAdvancedButton) {
-          return schemas.filter((schema) => schema.component !== 'Divider') as FormSchema[];
+          return schemas.filter(
+            (schema) => schema.component !== 'Divider',
+          ) as FormSchema[];
         } else {
           return schemas as FormSchema[];
         }

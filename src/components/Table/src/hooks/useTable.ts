@@ -1,4 +1,9 @@
-import type { BasicTableProps, TableActionType, FetchParams, BasicColumn } from '../types/table';
+import type {
+  BasicTableProps,
+  TableActionType,
+  FetchParams,
+  BasicColumn,
+} from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import type { DynamicProps } from '/#/utils';
 import type { FormActionType } from '/@/components/Form';
@@ -10,23 +15,23 @@ import { error } from '/@/utils/log';
 
 type Props = Partial<DynamicProps<BasicTableProps>>;
 
-type UseTableMethod = TableActionType<unknown> & {
+type UseTableMethod = TableActionType & {
   getForm: () => FormActionType;
 };
 
 export function useTable(tableProps?: Props): [
-  (instance: TableActionType<unknown>, formInstance: UseTableMethod) => void,
-  TableActionType<unknown> & {
+  (instance: TableActionType, formInstance: UseTableMethod) => void,
+  TableActionType & {
     getForm: () => FormActionType;
   },
 ] {
-  const tableRef = ref<Nullable<TableActionType<unknown>>>(null);
+  const tableRef = ref<Nullable<TableActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
   const formRef = ref<Nullable<UseTableMethod>>(null);
 
   let stopWatch: WatchStopHandle;
 
-  function register(instance: TableActionType<unknown>, formInstance: UseTableMethod) {
+  function register(instance: TableActionType, formInstance: UseTableMethod) {
     isProdMode() &&
       onUnmounted(() => {
         tableRef.value = null;
@@ -54,17 +59,17 @@ export function useTable(tableProps?: Props): [
     );
   }
 
-  function getTableInstance(): TableActionType<unknown> {
+  function getTableInstance(): TableActionType {
     const table = unref(tableRef);
     if (!table) {
       error(
         'The table instance has not been obtained yet, please make sure the table is presented when performing the table operation!',
       );
     }
-    return table as TableActionType<unknown>;
+    return table as TableActionType;
   }
 
-  const methods: TableActionType<unknown> & {
+  const methods: TableActionType & {
     getForm: () => FormActionType;
   } = {
     reload: async (opt?: FetchParams) => {
@@ -89,7 +94,7 @@ export function useTable(tableProps?: Props): [
       const columns = getTableInstance().getColumns({ ignoreIndex }) || [];
       return toRaw(columns);
     },
-    setColumns: (columns: BasicColumn<unknown>[]) => {
+    setColumns: (columns: BasicColumn[]) => {
       getTableInstance().setColumns(columns);
     },
     setTableData: (values: any[]) => {
@@ -151,6 +156,9 @@ export function useTable(tableProps?: Props): [
     },
     expandAll: () => {
       getTableInstance().expandAll();
+    },
+    expandRows: (keys: string[]) => {
+      getTableInstance().expandRows(keys);
     },
     collapseAll: () => {
       getTableInstance().collapseAll();

@@ -48,7 +48,9 @@
 
       const { getBasicTransition, getEnableTransition } = useTransitionSetting();
 
-      const openCache = computed(() => unref(getOpenKeepAlive) && unref(getShowMultipleTab));
+      const openCache = computed(
+        () => unref(getOpenKeepAlive) && unref(getShowMultipleTab),
+      );
 
       const getCaches = computed((): string[] => {
         if (!unref(getOpenKeepAlive)) {

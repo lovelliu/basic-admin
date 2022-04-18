@@ -2,7 +2,10 @@
   import { computed, unref } from 'vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-  import { updateHeaderBgColor, updateSidebarBgColor } from '/@/logics/theme/updateBackground';
+  import {
+    updateHeaderBgColor,
+    updateSidebarBgColor,
+  } from '/@/logics/theme/updateBackground';
   import { updateDarkTheme } from '/@/logics/theme/dark';
   import { ThemeEnum } from '/@/enums/appEnum';
 
@@ -14,7 +17,8 @@
   const getClass = computed(() => [prefixCls, { [`${prefixCls}--dark`]: unref(isDark) }]);
 
   function toggleDarkMode() {
-    const darkMode = getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK;
+    const darkMode =
+      getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK;
     setDarkMode(darkMode);
     updateDarkTheme(darkMode);
     updateHeaderBgColor();

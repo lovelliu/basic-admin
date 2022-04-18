@@ -22,7 +22,9 @@ export function useTabs(_router?: Router) {
   function canIUseTabs(): boolean {
     const { show } = appStore.getMultiTabsSetting;
     if (!show) {
-      throw new Error('The multi-tab page is currently not open, please open it in the settings！');
+      throw new Error(
+        'The multi-tab page is currently not open, please open it in the settings！',
+      );
     }
     return !!show;
   }
@@ -98,6 +100,7 @@ export function useTabs(_router?: Router) {
     closeCurrent: () => handleTabAction(TableActionEnum.CLOSE_CURRENT),
     close: (tab?: RouteLocationNormalized) => handleTabAction(TableActionEnum.CLOSE, tab),
     setTitle: (title: string, tab?: RouteLocationNormalized) => updateTabTitle(title, tab),
-    updatePath: (fullPath: string, tab?: RouteLocationNormalized) => updateTabPath(fullPath, tab),
+    updatePath: (fullPath: string, tab?: RouteLocationNormalized) =>
+      updateTabPath(fullPath, tab),
   };
 }
