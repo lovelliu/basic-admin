@@ -1,3 +1,12 @@
+## [0.0.6](https://github.com/lhj-web/edu-cms/compare/v0.0.5...v0.0.6) (2022-07-11)
+
+
+### Features
+
+* update logo ([151c072](https://github.com/lhj-web/edu-cms/commit/151c072115276ae637d3a415e1b6221958c650cb))
+
+
+
 ## [0.0.5](https://github.com/lhj-web/edu-cms/compare/v0.0.4...v0.0.5) (2022-07-11)
 
 
