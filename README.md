@@ -1,4 +1,4 @@
-<div align="center"> <a href="https://github.com/lhj-web/edu-cms"> <img alt="EduCMS Logo" width="200" height="200" src="https://my-picture-bed-1304169582.cos.ap-nanjing.myqcloud.com/picture/logo.png"> </a> <br> <br>
+<div align="center"> <a href="https://github.com/lhj-web/edu-cms"> <img alt="EduCMS Logo" width="200" height="200" src="https://my-picture-bed-1304169582.cos.ap-nanjing.myqcloud.com/uPic/logo.png"> </a> <br> <br>
 <a href="https://github.com/lhj-web/edu-cms/blob/main/LICENSE"><img src="https://img.shields.io/github/license/lhj-web/edu-cms"></a>&nbsp;
 <a href="https://github.com/lhj-web/edu-cms/stargazers"><img src="https://img.shields.io/github/stars/lhj-web/edu-cms"></a>
 <h1>Edu Cms</h1>
