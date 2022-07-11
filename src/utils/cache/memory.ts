@@ -30,23 +30,23 @@ export class Memory<T = any, V = any> {
   set<K extends keyof T>(key: K, value: V, expires?: number) {
     let item = this.get(key);
 
-    if (!expires || (expires as number) <= 0) {
+    if (!expires || (expires as number) <= 0)
       expires = this.alive;
-    }
+
     if (item) {
       if (item.timeoutId) {
         clearTimeout(item.timeoutId);
         item.timeoutId = undefined;
       }
       item.value = value;
-    } else {
+    }
+    else {
       item = { value, alive: expires };
       this.cache[key] = item;
     }
 
-    if (!expires) {
+    if (!expires)
       return value;
-    }
 
     const now = new Date().getTime();
     item.time = now + this.alive;
@@ -70,21 +70,20 @@ export class Memory<T = any, V = any> {
   }
 
   resetCache(cache: { [key in keyof T]: Cache }) {
-    Object.keys(cache).forEach((key) => {
+    Object.keys(cache).forEach(key => {
       const k = key as any as keyof T;
       const item = cache[k];
       if (item && item.time) {
         const now = new Date().getTime();
         const expire = item.time;
-        if (expire > now) {
+        if (expire > now)
           this.set(k, item.value, expire);
-        }
       }
     });
   }
 
   clear() {
-    Object.keys(this.cache).forEach((key) => {
+    Object.keys(this.cache).forEach(key => {
       const item = this.cache[key];
       item.timeoutId && clearTimeout(item.timeoutId);
     });

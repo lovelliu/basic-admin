@@ -1,11 +1,9 @@
+import type { BasicColumn, FormSchema } from '/@/components/Table';
 import { Tag } from 'ant-design-vue';
 import { h } from 'vue';
-import { MenuItem } from '/@/api/sys/model/systemModel';
 import Icon from '/@/components/Icon';
-import { FormSchema } from '/@/components/Table';
-import { BasicColumn } from '/@/components/Table';
 
-export const columns: BasicColumn<MenuItem>[] = [
+export const columns: BasicColumn[] = [
   {
     title: '菜单ID',
     dataIndex: 'id',
@@ -23,7 +21,7 @@ export const columns: BasicColumn<MenuItem>[] = [
     title: '图标',
     dataIndex: 'icon',
     width: 30,
-    customRender: ({ record }) => {
+    customRender: ({ record }: any) => {
       return h(Icon, { icon: record.icon });
     },
   },
@@ -51,7 +49,7 @@ export const columns: BasicColumn<MenuItem>[] = [
     title: '状态',
     dataIndex: 'status',
     width: 30,
-    customRender: ({ record }) => {
+    customRender: ({ record }: any) => {
       const status = record.status;
       const color = status ? 'green' : 'red';
       const text = status ? '启用' : '停用';

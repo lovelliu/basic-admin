@@ -1,61 +1,61 @@
 <script lang="ts" setup>
-  import type { LocaleType } from '/#/config';
-  import type { DropMenu } from '/@/components/Dropdown';
-  import { ref, watchEffect, unref, computed } from 'vue';
-  import { Dropdown } from '/@/components/Dropdown';
-  import { Icon } from '/@/components/Icon';
-  import { useLocale } from '/@/locales/useLocale';
-  import { localeList } from '/@/settings/localeSetting';
+import type { LocaleType } from '/#/config';
+import type { DropMenu } from '/@/components/Dropdown';
+import { computed, ref, unref, watchEffect } from 'vue';
+import { Dropdown } from '/@/components/Dropdown';
+import { Icon } from '/@/components/Icon';
+import { useLocale } from '/@/locales/useLocale';
+import { localeList } from '/@/settings/localeSetting';
 
-  const props = defineProps({
-    /**
+const props = defineProps({
+  /**
      * Whether to display text
      */
-    showText: { type: Boolean, default: true },
-    /**
+  showText: { type: Boolean, default: true },
+  /**
      * Whether to refresh the interface when changing
      */
-    reload: { type: Boolean },
-  });
+  reload: { type: Boolean },
+});
 
-  const selectedKeys = ref<string[]>([]);
+const selectedKeys = ref<string[]>([]);
 
-  const { changeLocale, getLocale } = useLocale();
+const { changeLocale, getLocale } = useLocale();
 
-  const getLocaleText = computed(() => {
-    const key = selectedKeys.value[0];
-    if (!key) {
-      return '';
-    }
-    return localeList.find((item) => item.event === key)?.text;
-  });
+const getLocaleText = computed(() => {
+  const key = selectedKeys.value[0];
+  if (!key)
+    return '';
 
-  watchEffect(() => {
-    selectedKeys.value = [unref(getLocale)];
-  });
+  return localeList.find(item => item.event === key)?.text;
+});
 
-  async function toggleLocale(lang: LocaleType | string) {
-    await changeLocale(lang as LocaleType);
-    selectedKeys.value = [lang as string];
-    props.reload && location.reload();
-  }
+watchEffect(() => {
+  selectedKeys.value = [unref(getLocale)];
+});
 
-  function handleMenuEvent(menu: DropMenu) {
-    if (unref(getLocale) === menu.event) {
-      return;
-    }
-    toggleLocale(menu.event as string);
-  }
+async function toggleLocale(lang: LocaleType | string) {
+  await changeLocale(lang as LocaleType);
+  selectedKeys.value = [lang as string];
+  props.reload && location.reload();
+}
+
+function handleMenuEvent(menu: DropMenu) {
+  if (unref(getLocale) === menu.event)
+    return;
+
+  toggleLocale(menu.event as string);
+}
 </script>
 
 <template>
   <Dropdown
     placement="bottomCenter"
     :trigger="['click']"
-    :dropMenuList="localeList"
-    :selectedKeys="selectedKeys"
+    :drop-menu-list="localeList"
+    :selected-keys="selectedKeys"
+    overlay-class-name="app-locale-picker-overlay"
     @menu-event="handleMenuEvent"
-    overlayClassName="app-locale-picker-overlay"
   >
     <span class="cursor-pointer flex items-center">
       <Icon icon="ion:language" />

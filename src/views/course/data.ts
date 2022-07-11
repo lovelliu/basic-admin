@@ -2,7 +2,7 @@ import { Switch } from 'ant-design-vue';
 import { h } from 'vue';
 import { changeCourseState, uploadImg } from '/@/api/business/course';
 import { MarkDown } from '/@/components/Markdown';
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import type { BasicColumn, FormSchema } from '/@/components/Table';
 import { useMessage } from '/@/hooks/web/useMessage';
 
 export const columns: BasicColumn[] = [
@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
     title: '价格',
     dataIndex: 'price',
     width: 50,
-    customRender: ({ record }) => {
+    customRender: ({ record }: any) => {
       return `¥${record.price}`;
     },
   },
@@ -33,10 +33,10 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 50,
-    customRender: ({ record }) => {
-      if (!Reflect.has(record, 'pendingStatus')) {
+    customRender: ({ record }: any) => {
+      if (!Reflect.has(record, 'pendingStatus'))
         record.pendingStatus = false;
-      }
+
       return h(Switch, {
         checked: record.status === 1,
         checkedChildren: '上架',

@@ -22,7 +22,7 @@ export const BAR_MAP: BarMap = {
   },
 };
 
-// @ts-ignore
+// @ts-expect-error
 export function renderThumbStyle({ move, size, bar }) {
   const style = {} as any;
   const translate = `translate${bar.axis}(${move}%)`;
@@ -42,9 +42,8 @@ function extend<T, K>(to: T, _from: K): T & K {
 export function toObject<T>(arr: Array<T>): Recordable<T> {
   const res = {};
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i]) {
+    if (arr[i])
       extend(res, arr[i]);
-    }
   }
   return res;
 }

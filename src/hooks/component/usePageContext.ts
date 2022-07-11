@@ -1,4 +1,4 @@
-import type { InjectionKey, ComputedRef, Ref } from 'vue';
+import type { ComputedRef, InjectionKey, Ref } from 'vue';
 import { createContext, useContext } from '/@/hooks/core/useContext';
 
 export interface PageContextProps {
@@ -7,7 +7,7 @@ export interface PageContextProps {
   setPageHeight: (height: number) => Promise<void>;
 }
 
-const key: InjectionKey<PageContextProps> = Symbol();
+const key: InjectionKey<PageContextProps> = Symbol('');
 
 export function createPageContext(context: PageContextProps) {
   return createContext<PageContextProps>(context, key, { native: true });

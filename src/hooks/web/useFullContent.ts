@@ -13,9 +13,9 @@ export const useFullContent = () => {
   const getFullContent = computed(() => {
     const route = unref(currentRoute);
     const query = route.query;
-    if (query && Reflect.has(query, '__full__')) {
+    if (query && Reflect.has(query, '__full__'))
       return true;
-    }
+
     return appStore.getProjectConfig.fullContent;
   });
 

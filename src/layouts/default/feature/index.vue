@@ -1,60 +1,60 @@
 <script lang="ts">
-  import { defineComponent, computed, unref } from 'vue';
-  import { BackTop } from 'ant-design-vue';
+import { computed, defineComponent, unref } from 'vue';
+import { BackTop } from 'ant-design-vue';
 
-  import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-  import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useUserStoreWithOut } from '/@/store/modules/user';
+import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
+import { useDesign } from '/@/hooks/web/useDesign';
+import { useUserStoreWithOut } from '/@/store/modules/user';
 
-  import { SettingButtonPositionEnum } from '/@/enums/appEnum';
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+import { SettingButtonPositionEnum } from '/@/enums/appEnum';
+import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  import SessionTimeoutLogin from '/@/views/login/SessionTimeoutLogin.vue';
-  export default defineComponent({
-    name: 'LayoutFeatures',
-    components: {
-      BackTop,
-      LayoutLockPage: createAsyncComponent(() => import('/@/views/lock/index.vue')),
-      SettingDrawer: createAsyncComponent(
-        () => import('/@/layouts/default/setting/index.vue'),
-      ),
-      SessionTimeoutLogin,
-    },
-    setup() {
-      const {
-        getUseOpenBackTop,
-        getShowSettingButton,
-        getSettingButtonPosition,
-        getFullContent,
-      } = useRootSetting();
-      const userStore = useUserStoreWithOut();
-      const { prefixCls } = useDesign('setting-drawer-fearure');
-      const { getShowHeader } = useHeaderSetting();
+import SessionTimeoutLogin from '/@/views/login/SessionTimeoutLogin.vue';
+export default defineComponent({
+  name: 'LayoutFeatures',
+  components: {
+    BackTop,
+    LayoutLockPage: createAsyncComponent(() => import('/@/views/lock/index.vue')),
+    SettingDrawer: createAsyncComponent(
+      () => import('/@/layouts/default/setting/index.vue'),
+    ),
+    SessionTimeoutLogin,
+  },
+  setup() {
+    const {
+      getUseOpenBackTop,
+      getShowSettingButton,
+      getSettingButtonPosition,
+      getFullContent,
+    } = useRootSetting();
+    const userStore = useUserStoreWithOut();
+    const { prefixCls } = useDesign('setting-drawer-fearure');
+    const { getShowHeader } = useHeaderSetting();
 
-      const getIsSessionTimeout = computed(() => userStore.getSessionTimeout);
+    const getIsSessionTimeout = computed(() => userStore.getSessionTimeout);
 
-      const getIsFixedSettingDrawer = computed(() => {
-        if (!unref(getShowSettingButton)) {
-          return false;
-        }
-        const settingButtonPosition = unref(getSettingButtonPosition);
+    const getIsFixedSettingDrawer = computed(() => {
+      if (!unref(getShowSettingButton))
+        return false;
 
-        if (settingButtonPosition === SettingButtonPositionEnum.AUTO) {
-          return !unref(getShowHeader) || unref(getFullContent);
-        }
-        return settingButtonPosition === SettingButtonPositionEnum.FIXED;
-      });
+      const settingButtonPosition = unref(getSettingButtonPosition);
 
-      return {
-        getTarget: () => document.body,
-        getUseOpenBackTop,
-        getIsFixedSettingDrawer,
-        prefixCls,
-        getIsSessionTimeout,
-      };
-    },
-  });
+      if (settingButtonPosition === SettingButtonPositionEnum.AUTO)
+        return !unref(getShowHeader) || unref(getFullContent);
+
+      return settingButtonPosition === SettingButtonPositionEnum.FIXED;
+    });
+
+    return {
+      getTarget: () => document.body,
+      getUseOpenBackTop,
+      getIsFixedSettingDrawer,
+      prefixCls,
+      getIsSessionTimeout,
+    };
+  },
+});
 </script>
 
 <template>

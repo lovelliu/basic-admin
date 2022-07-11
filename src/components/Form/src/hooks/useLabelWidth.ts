@@ -27,9 +27,8 @@ export function useItemLabelWidth(schemaItemRef: Ref<FormSchema>, propsRef: Ref<
     const col = { ...globalLabelCol, ...labelCol };
     const wrapCol = { ...globWrapperCol, ...wrapperCol };
 
-    if (width) {
+    if (width)
       width = isNumber(width) ? `${width}px` : width;
-    }
 
     return {
       labelCol: { style: { width }, ...col },

@@ -6,12 +6,12 @@ import { useUserStore } from '/@/store/modules/user';
 
 import { useTabs } from './useTabs';
 
-import { router, resetRouter } from '/@/router';
+import { resetRouter, router } from '/@/router';
 // import { RootRoute } from '/@/router/routes';
 
 import projectSetting from '/@/settings/projectSetting';
 import { PermissionModeEnum } from '/@/enums/appEnum';
-import { RoleEnum } from '/@/enums/roleEnum';
+import type { RoleEnum } from '/@/enums/roleEnum';
 
 import { intersection } from 'lodash-es';
 import { isArray } from '/@/utils/is';
@@ -30,9 +30,9 @@ export function usePermission() {
   async function togglePermissionMode() {
     appStore.setProjectConfig({
       permissionMode:
-        projectSetting.permissionMode === PermissionModeEnum.BACK
-          ? PermissionModeEnum.ROUTE_MAPPING
-          : PermissionModeEnum.BACK,
+        projectSetting.permissionMode === PermissionModeEnum.BACK ?
+          PermissionModeEnum.ROUTE_MAPPING :
+          PermissionModeEnum.BACK,
     });
     location.reload();
   }
@@ -46,7 +46,7 @@ export function usePermission() {
     tabStore.clearCacheTabs();
     resetRouter();
     const routes = await permissionStore.buildRoutesAction();
-    routes.forEach((route) => {
+    routes.forEach(route => {
       router.addRoute(route as unknown as RouteRecordRaw);
     });
     permissionStore.setLastBuildMenuTime();
@@ -61,24 +61,23 @@ export function usePermission() {
     def = true,
   ): boolean {
     // Visible by default
-    if (!value) {
+    if (!value)
       return def;
-    }
 
     const permMode = projectSetting.permissionMode;
 
     if ([PermissionModeEnum.ROUTE_MAPPING, PermissionModeEnum.ROLE].includes(permMode)) {
-      if (!isArray(value)) {
+      if (!isArray(value))
         return userStore.getRoleList?.includes(value as RoleEnum);
-      }
+
       return (intersection(value, userStore.getRoleList) as RoleEnum[]).length > 0;
     }
 
     if (PermissionModeEnum.BACK === permMode) {
       const allCodeList = permissionStore.getPermCodeList as string[];
-      if (!isArray(value)) {
+      if (!isArray(value))
         return allCodeList.includes(value);
-      }
+
       return (intersection(value, allCodeList) as string[]).length > 0;
     }
     return true;
@@ -95,9 +94,9 @@ export function usePermission() {
       );
     }
 
-    if (!isArray(roles)) {
+    if (!isArray(roles))
       roles = [roles];
-    }
+
     userStore.setRoleList(roles);
     await resume();
   }

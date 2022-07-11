@@ -23,7 +23,7 @@ export default defineComponent({
       emit('cancel', e);
     };
 
-    return () => {
+    return () => { // eslint-disable-line react/display-name
       const propsData = { ...unref(attrs), ...props, onCancel } as Recordable;
       return <Modal {...propsData}>{extendSlots(slots)}</Modal>;
     };

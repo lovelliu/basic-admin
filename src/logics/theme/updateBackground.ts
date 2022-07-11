@@ -1,4 +1,4 @@
-import { colorIsDark, lighten, darken } from '/@/utils/color';
+import { colorIsDark, darken, lighten } from '/@/utils/color';
 import { useAppStore } from '/@/store/modules/app';
 import { ThemeEnum } from '/@/enums/appEnum';
 import { setCssVar } from './util';
@@ -19,11 +19,10 @@ export function updateHeaderBgColor(color?: string) {
   const appStore = useAppStore();
   const darkMode = appStore.getDarkMode === ThemeEnum.DARK;
   if (!color) {
-    if (darkMode) {
+    if (darkMode)
       color = '#151515';
-    } else {
+    else
       color = appStore.getHeaderSetting.bgColor;
-    }
   }
   // bg color
   setCssVar(HEADER_BG_COLOR_VAR, color);
@@ -53,11 +52,10 @@ export function updateSidebarBgColor(color?: string) {
   // if (!isHexColor(color)) return;
   const darkMode = appStore.getDarkMode === ThemeEnum.DARK;
   if (!color) {
-    if (darkMode) {
+    if (darkMode)
       color = '#212121';
-    } else {
+    else
       color = appStore.getMenuSetting.bgColor;
-    }
   }
   setCssVar(SIDER_DARK_BG_COLOR, color);
   setCssVar(SIDER_DARK_DARKEN_BG_COLOR, darken(color!, 6));

@@ -1,13 +1,13 @@
-import { defineComponent, computed, unref } from 'vue';
+import { computed, defineComponent, unref } from 'vue';
 import { BasicDrawer } from '/@/components/Drawer/index';
 import { Divider } from 'ant-design-vue';
 import {
-  TypePicker,
-  ThemeColorPicker,
+  InputNumberItem,
+  SelectItem,
   SettingFooter,
   SwitchItem,
-  SelectItem,
-  InputNumberItem,
+  ThemeColorPicker,
+  TypePicker,
 } from './components';
 
 import { AppDarkModeToggle } from '/@/components/Application';
@@ -26,17 +26,17 @@ import { baseHandler } from './handler';
 import {
   HandlerEnum,
   contentModeOptions,
-  topMenuAlignOptions,
   getMenuTriggerOptions,
-  routerTransitionOptions,
   menuTypeList,
   mixSidebarTriggerOptions,
+  routerTransitionOptions,
+  topMenuAlignOptions,
 } from './enum';
 
 import {
+  APP_PRESET_COLOR_LIST,
   HEADER_PRESET_BG_COLOR_LIST,
   SIDE_BAR_BG_COLOR_LIST,
-  APP_PRESET_COLOR_LIST,
 } from '/@/settings/designSetting';
 
 const { t } = useI18n();
@@ -150,10 +150,9 @@ export default defineComponent({
       let triggerDef = unref(getTrigger);
 
       const triggerOptions = getMenuTriggerOptions(unref(getSplit));
-      const some = triggerOptions.some((item) => item.value === triggerDef);
-      if (!some) {
+      const some = triggerOptions.some(item => item.value === triggerDef);
+      if (!some)
         triggerDef = TriggerEnum.FOOTER;
-      }
 
       return (
         <>
@@ -259,9 +258,9 @@ export default defineComponent({
             event={HandlerEnum.LOCK_TIME}
             defaultValue={unref(getLockTime)}
             formatter={(value: string) => {
-              return parseInt(value) === 0
-                ? `0(${t('layout.setting.notAutoScreenLock')})`
-                : `${value}${t('layout.setting.minute')}`;
+              return parseInt(value) === 0 ?
+                `0(${t('layout.setting.notAutoScreenLock')})` :
+                `${value}${t('layout.setting.minute')}`;
             }}
           />
           <InputNumberItem
@@ -395,6 +394,8 @@ export default defineComponent({
         </>
       );
     }
+
+    /* eslint-disable react/display-name */
 
     return () => (
       <BasicDrawer

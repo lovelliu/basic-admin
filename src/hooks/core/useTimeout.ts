@@ -3,17 +3,17 @@ import { ref, watch } from 'vue';
 import { isFunction } from '/@/utils/is';
 
 export function useTimeoutFn(handle: Fn, wait: number, native = false) {
-  if (!isFunction(handle)) {
+  if (!isFunction(handle))
     throw new Error('handle is not Function');
-  }
 
   const { readyRef, stop, start } = useTimeoutRef(wait);
   if (native) {
     handle();
-  } else {
+  }
+  else {
     watch(
       readyRef,
-      (maturity) => {
+      maturity => {
         maturity && handle();
       },
       { immediate: false },

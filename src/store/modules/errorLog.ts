@@ -48,9 +48,9 @@ export const useErrorLogStore = defineStore({
      */
     addAjaxErrorInfo(error) {
       const { useErrorHandle } = projectSetting;
-      if (!useErrorHandle) {
+      if (!useErrorHandle)
         return;
-      }
+
       const errInfo: Partial<ErrorLogInfo> = {
         message: error.message,
         type: ErrorTypeEnum.AJAX,

@@ -23,7 +23,7 @@ export const useLockStore = defineStore({
   actions: {
     setLockInfo(info: LockInfo) {
       this.lockInfo = Object.assign({}, this.lockInfo, info);
-      console.log(this.lockInfo);
+      // console.log(this.lockInfo);
 
       Persistent.setLocal(LOCK_INFO_KEY, this.lockInfo, true);
     },
@@ -46,12 +46,15 @@ export const useLockStore = defineStore({
             password: password!,
             goHome: false,
             mode: 'none',
+            captchaId: '',
+            verifyCode: '',
           });
-          if (res) {
+          if (res)
             this.resetLockInfo();
-          }
+
           return res;
-        } catch (error) {
+        }
+        catch (error) {
           return false;
         }
       };

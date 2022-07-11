@@ -2,10 +2,11 @@ import type { TabContentProps } from './types';
 import type { DropMenu } from '/@/components/Dropdown';
 import type { ComputedRef } from 'vue';
 
-import { computed, unref, reactive } from 'vue';
+import { computed, reactive, unref } from 'vue';
 import { MenuEventEnum } from './types';
 import { useMultipleTabStore } from '/@/store/modules/multipleTab';
-import { RouteLocationNormalized, useRouter } from 'vue-router';
+import type { RouteLocationNormalized } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useTabs } from '/@/hooks/web/useTabs';
 import { useI18n } from '/@/hooks/web/useI18n';
 
@@ -28,9 +29,9 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
    * @description: drop-down list
    */
   const getDropMenuList = computed(() => {
-    if (!unref(getTargetTab)) {
+    if (!unref(getTargetTab))
       return;
-    }
+
     const { meta } = unref(getTargetTab);
     const { path } = unref(currentRoute);
 
@@ -87,7 +88,7 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
         icon: 'clarity:minus-line',
         event: MenuEventEnum.CLOSE_ALL,
         text: t('layout.multipleTab.closeAll'),
-        disabled: disabled,
+        disabled,
       },
     ];
 
@@ -96,11 +97,11 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
 
   function handleContextMenu(tabItem: RouteLocationNormalized) {
     return (e: Event) => {
-      if (!tabItem) {
+      if (!tabItem)
         return;
-      }
+
       e?.preventDefault();
-      const index = tabStore.getTabList.findIndex((tab) => tab.path === tabItem.path);
+      const index = tabStore.getTabList.findIndex(tab => tab.path === tabItem.path);
       state.current = tabItem;
       state.currentIndex = index;
     };

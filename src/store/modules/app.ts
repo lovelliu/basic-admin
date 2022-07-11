@@ -1,16 +1,16 @@
 import type {
-  ProjectConfig,
   HeaderSetting,
   MenuSetting,
-  TransitionSetting,
   MultiTabsSetting,
+  ProjectConfig,
+  TransitionSetting,
 } from '/#/config';
 import type { BeforeMiniState } from '/#/store';
 
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
 
-import { ThemeEnum } from '/@/enums/appEnum';
+import type { ThemeEnum } from '/@/enums/appEnum';
 import { APP_DARK_MODE_KEY_, PROJ_CFG_KEY } from '/@/enums/cacheEnum';
 import { Persistent } from '/@/utils/cache/persistent';
 import { darkMode } from '/@/settings/designSetting';
@@ -94,7 +94,8 @@ export const useAppStore = defineStore({
         timeId = setTimeout(() => {
           this.setPageLoading(loading);
         }, 50);
-      } else {
+      }
+      else {
         this.setPageLoading(loading);
         clearTimeout(timeId);
       }

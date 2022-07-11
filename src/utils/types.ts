@@ -13,7 +13,7 @@ type MonoArgEmitter<T, Keys extends keyof T> = <K extends Keys>(evt: K, arg?: T[
 type BiArgEmitter<T, Keys extends keyof T> = <K extends Keys>(evt: K, arg: T[K]) => void;
 
 export type EventEmitter<T extends Record<string, unknown>> = MonoArgEmitter<T, OptionalKeys<T>> &
-  BiArgEmitter<T, RequiredKeys<T>>;
+BiArgEmitter<T, RequiredKeys<T>>;
 
 export type AnyFunction<T> = (...args: any[]) => T;
 
@@ -27,9 +27,9 @@ export type RefElement = Nullable<HTMLElement>;
 
 export type CustomizedHTMLElement<T> = HTMLElement & T;
 
-export type Indexable<T> = {
+export interface Indexable<T> {
   [key: string]: T;
-};
+}
 
 export type Hash<T> = Indexable<T>;
 

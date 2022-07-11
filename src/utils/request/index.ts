@@ -45,7 +45,7 @@ export function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 接口地址
           apiUrl: globSetting.apiUrl,
           // 接口拼接地址
-          urlPrefix: urlPrefix,
+          urlPrefix,
           //  是否加入时间戳
           joinTime: true,
           // 忽略重复请求

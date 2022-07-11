@@ -1,7 +1,7 @@
 import { Avatar, Switch } from 'ant-design-vue';
 import { h } from 'vue';
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Form';
+import type { BasicColumn } from '/@/components/Table';
+import type { FormSchema } from '/@/components/Form';
 import { formatToDateTime } from '/@/utils/dateUtil';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { enableUser, forbidUser, isUserExist } from '/@/api/sys/user';
@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
     title: '头像',
     dataIndex: 'avatar',
     width: 30,
-    customRender: ({ record }) => h(Avatar, { src: record.avatar }),
+    customRender: ({ record }: any) => h(Avatar, { src: record.avatar }),
   },
   {
     title: '用户名',
@@ -36,39 +36,41 @@ export const columns: BasicColumn[] = [
     title: '创建时间',
     dataIndex: 'create_at',
     width: 120,
-    customRender: ({ record }) => formatToDateTime(record.create_at),
+    customRender: ({ record }: any) => formatToDateTime(record.create_at),
   },
   {
     title: '状态',
     dataIndex: 'status',
     width: 50,
-    customRender: ({ record }) => {
-      if (!Reflect.has(record, 'pendingStatus')) record.pendingStatus = false;
+    customRender: ({ record }: any) => {
+      if (!Reflect.has(record, 'pendingStatus'))
+        record.pendingStatus = false;
 
       return h(Switch, {
         checked: record.status,
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
-        disabled: record.status
-          ? !hasPermission('api:user:forbid')
-          : !hasPermission('api:user:enable'),
+        disabled: record.status ?
+            !hasPermission('api:user:forbid') :
+            !hasPermission('api:user:enable'),
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? true : false;
+          const newStatus = !!checked;
           const { createMessage } = useMessage();
           if (newStatus === true) {
             enableUser(record.id)
-              .then((res) => {
+              .then(res => {
                 if (res.data.status === 'success') {
                   createMessage.success('修改成功');
                   record.status = true;
                 }
               })
               .finally(() => (record.pendingStatus = false));
-          } else {
+          }
+          else {
             forbidUser(record.id)
-              .then((res) => {
+              .then(res => {
                 if (res.data.status === 'success') {
                   record.status = false;
                   createMessage.success('修改成功');
@@ -126,15 +128,16 @@ export const userFormSchema: FormSchema[] = [
       {
         validator(_, value) {
           return new Promise<void>((resolve, reject) => {
-            if (timer) clearTimeout(timer);
+            if (timer)
+              clearTimeout(timer);
             timer = setTimeout(() => {
               isUserExist(value)
-                .then((isExist) => {
-                  isExist && isExist !== values.id
-                    ? reject('该用户名称已存在')
-                    : resolve();
+                .then(isExist => {
+                  isExist && isExist !== values.id ?
+                    reject(new Error('该用户名称已存在')) :
+                    resolve();
                 })
-                .catch((err) => {
+                .catch(err => {
                   reject(err.message || '验证失败');
                 });
             }, 500);

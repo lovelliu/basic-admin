@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 
-import { computed, unref, onMounted, nextTick, ref } from 'vue';
+import { computed, nextTick, onMounted, ref, unref } from 'vue';
 
 import { TriggerEnum } from '/@/enums/menuEnum';
 
@@ -43,9 +43,9 @@ export function useTrigger(getIsMobile: Ref<boolean>) {
   });
 
   const getTriggerAttr = computed(() => {
-    if (unref(getShowTrigger)) {
+    if (unref(getShowTrigger))
       return {};
-    }
+
     return {
       trigger: null,
     };
@@ -71,10 +71,11 @@ export function useDragLine(siderRef: Ref<any>, dragBarRef: Ref<any>, mix = fals
 
   function getEl(elRef: Ref<ElRef | ComponentRef>): any {
     const el = unref(elRef);
-    if (!el) return null;
-    if (Reflect.has(el, '$el')) {
+    if (!el)
+      return null;
+    if (Reflect.has(el, '$el'))
       return (unref(elRef) as ComponentRef)?.$el;
-    }
+
     return unref(elRef);
   }
 
@@ -87,7 +88,7 @@ export function useDragLine(siderRef: Ref<any>, dragBarRef: Ref<any>, mix = fals
       iT < 0 && (iT = 0);
       iT > maxT && (iT = maxT);
       iT < minT && (iT = minT);
-      ele.style.left = wrap.style.width = iT + 'px';
+      ele.style.left = wrap.style.width = `${iT}px`;
       return false;
     };
   }
@@ -104,13 +105,15 @@ export function useDragLine(siderRef: Ref<any>, dragBarRef: Ref<any>, mix = fals
       if (!mix) {
         const miniWidth = unref(getMiniWidthNumber);
         if (!unref(getCollapsed)) {
-          width > miniWidth + 20
-            ? setMenuSetting({ menuWidth: width })
-            : setMenuSetting({ collapsed: true });
-        } else {
+          width > miniWidth + 20 ?
+            setMenuSetting({ menuWidth: width }) :
+            setMenuSetting({ collapsed: true });
+        }
+        else {
           width > miniWidth && setMenuSetting({ collapsed: false, menuWidth: width });
         }
-      } else {
+      }
+      else {
         setMenuSetting({ menuWidth: width });
       }
 
@@ -120,9 +123,11 @@ export function useDragLine(siderRef: Ref<any>, dragBarRef: Ref<any>, mix = fals
 
   function changeWrapWidth() {
     const ele = getEl(dragBarRef);
-    if (!ele) return;
+    if (!ele)
+      return;
     const wrap = getEl(siderRef);
-    if (!wrap) return;
+    if (!wrap)
+      return;
 
     ele.onmousedown = (e: any) => {
       wrap.style.transition = 'unset';

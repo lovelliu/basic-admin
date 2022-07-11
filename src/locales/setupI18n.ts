@@ -8,7 +8,7 @@ import { useLocaleStoreWithOut } from '/@/store/modules/locale';
 
 const { fallback, availableLocales } = localeSetting;
 
-export let i18n: ReturnType<typeof createI18n>;
+export let i18n: ReturnType<typeof createI18n>; // eslint-disable-line import/no-mutable-exports
 
 async function createI18nOptions(): Promise<I18nOptions> {
   const localeStore = useLocaleStoreWithOut();
@@ -19,7 +19,7 @@ async function createI18nOptions(): Promise<I18nOptions> {
   const message = defaultLocal.default?.message ?? {};
 
   setHtmlPageLang(locale);
-  setLoadLocalePool((loadLocalePool) => {
+  setLoadLocalePool(loadLocalePool => {
     loadLocalePool.push(locale);
   });
 
@@ -30,8 +30,8 @@ async function createI18nOptions(): Promise<I18nOptions> {
     messages: {
       [locale]: message,
     },
-    availableLocales: availableLocales,
-    sync: true, //If you don’t want to inherit locale from global scope, you need to set sync of i18n component option to false.
+    availableLocales,
+    sync: true, // If you don’t want to inherit locale from global scope, you need to set sync of i18n component option to false.
     silentTranslationWarn: true, // true - warning off
     missingWarn: false,
     silentFallbackWarn: true,

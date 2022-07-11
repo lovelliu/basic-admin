@@ -4,9 +4,9 @@ import type { FormProps } from '/@/components/Form';
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
 import type { ColumnProps } from 'ant-design-vue/lib/table';
 
-import { ComponentType } from './componentType';
-import { VueNode } from '/@/utils/propTypes';
-import { RoleEnum } from '/@/enums/roleEnum';
+import type { ComponentType } from './componentType';
+import type { VueNode } from '/@/utils/propTypes';
+import type { RoleEnum } from '/@/enums/roleEnum';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
@@ -43,11 +43,6 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * @type Function
    */
   onSelectInvert?: (selectedRows: string[] | number[]) => any;
-}
-
-export interface TableCustomRecord<T> {
-  record?: T;
-  index?: number;
 }
 
 export interface ExpandedRowRenderRecord<T> extends TableCustomRecord<T> {
@@ -419,17 +414,17 @@ export type CellFormat =
   | ((text: string, record: Recordable, index: number) => string | number)
   | Map<string | number, any>;
 
-// @ts-ignore
+// @ts-expect-error
 export interface BasicColumn extends ColumnProps {
   children?: BasicColumn[];
   filters?: {
     text: string;
     value: string;
     children?:
-      | unknown[]
-      | (((props: Record<string, unknown>) => unknown[]) &
-          (() => unknown[]) &
-          (() => unknown[]));
+    | unknown[]
+    | (((props: Record<string, unknown>) => unknown[]) &
+    (() => unknown[]) &
+    (() => unknown[]));
   }[];
 
   //
@@ -452,13 +447,13 @@ export interface BasicColumn extends ColumnProps {
   editable?: boolean;
   editComponent?: ComponentType;
   editComponentProps?:
-    | ((opt: {
-        text: string | number | boolean | Recordable;
-        record: Recordable;
-        column: BasicColumn;
-        index: number;
-      }) => Recordable)
-    | Recordable;
+  | ((opt: {
+    text: string | number | boolean | Recordable;
+    record: Recordable;
+    column: BasicColumn;
+    index: number;
+  }) => Recordable)
+  | Recordable;
   editRule?: boolean | ((text: string, record: Recordable) => Promise<string>);
   editValueMap?: (value: any) => string;
   onEditRow?: () => void;
@@ -475,11 +470,11 @@ export interface BasicColumn extends ColumnProps {
   }) => VNodeChild | JSX.Element;
 }
 
-export type ColumnChangeParam = {
+export interface ColumnChangeParam {
   dataIndex: string;
   fixed: boolean | 'left' | 'right' | undefined;
   visible: boolean;
-};
+}
 
 export interface InnerHandlers {
   onColumnsChange: (data: ColumnChangeParam[]) => void;

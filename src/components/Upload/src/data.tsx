@@ -1,5 +1,6 @@
-import type { BasicColumn, ActionItem } from '/@/components/Table';
-import { FileItem, PreviewFileItem, UploadResultStatus } from './typing';
+import type { ActionItem, BasicColumn } from '/@/components/Table';
+import type { FileItem, PreviewFileItem } from './typing';
+import { UploadResultStatus } from './typing';
 import {
   // checkImgType,
   isImgTypeByName,
@@ -30,16 +31,16 @@ export function createTableColumns(): BasicColumn[] {
       customRender: ({ text, record }) => {
         const { percent, status: uploadStatus } = (record as FileItem) || {};
         let status: 'normal' | 'exception' | 'active' | 'success' = 'normal';
-        if (uploadStatus === UploadResultStatus.ERROR) {
+        if (uploadStatus === UploadResultStatus.ERROR)
           status = 'exception';
-        } else if (uploadStatus === UploadResultStatus.UPLOADING) {
+        else if (uploadStatus === UploadResultStatus.UPLOADING)
           status = 'active';
-        } else if (uploadStatus === UploadResultStatus.SUCCESS) {
+        else if (uploadStatus === UploadResultStatus.SUCCESS)
           status = 'success';
-        }
+
         return (
           <span>
-            <p class="truncate mb-1" title={text}>
+            <p className="truncate mb-1" title={text}>
               {text}
             </p>
             <Progress percent={percent} size="small" status={status} />
@@ -52,7 +53,7 @@ export function createTableColumns(): BasicColumn[] {
       title: t('component.upload.fileSize'),
       width: 100,
       customRender: ({ text = 0 }) => {
-        return text && (text / 1024).toFixed(2) + 'KB';
+        return text && `${(text / 1024).toFixed(2)}KB`;
       },
     },
     // {
@@ -65,13 +66,12 @@ export function createTableColumns(): BasicColumn[] {
       title: t('component.upload.fileStatue'),
       width: 100,
       customRender: ({ text }) => {
-        if (text === UploadResultStatus.SUCCESS) {
+        if (text === UploadResultStatus.SUCCESS)
           return <Tag color="green">{() => t('component.upload.uploadSuccess')}</Tag>;
-        } else if (text === UploadResultStatus.ERROR) {
+        else if (text === UploadResultStatus.ERROR)
           return <Tag color="red">{() => t('component.upload.uploadError')}</Tag>;
-        } else if (text === UploadResultStatus.UPLOADING) {
+        else if (text === UploadResultStatus.UPLOADING)
           return <Tag color="blue">{() => t('component.upload.uploading')}</Tag>;
-        }
 
         return text;
       },

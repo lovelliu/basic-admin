@@ -37,14 +37,13 @@ export default function (expandedParentClass = '', x = false) {
       // const offset = `${el[offsetProperty]}px`;
 
       // el.style[sizeProperty] = '0';
-
+      /* eslint-disable no-void */
       void el.offsetHeight; // force reflow
 
       el.style.transition = initialStyle.transition;
 
-      if (expandedParentClass && el._parent) {
+      if (expandedParentClass && el._parent)
         el._parent.classList.add(expandedParentClass);
-      }
 
       requestAnimationFrame(() => {
         // el.style[sizeProperty] = offset;
@@ -63,7 +62,6 @@ export default function (expandedParentClass = '', x = false) {
 
       el.style.overflow = 'hidden';
       el.style[sizeProperty] = `${el[offsetProperty]}px`;
-      /* eslint-disable-next-line */
       void el.offsetHeight; // force reflow
 
       requestAnimationFrame(() => (el.style[sizeProperty] = '0'));
@@ -74,16 +72,17 @@ export default function (expandedParentClass = '', x = false) {
   };
 
   function afterLeave(el: HTMLExpandElement) {
-    if (expandedParentClass && el._parent) {
+    if (expandedParentClass && el._parent)
       el._parent.classList.remove(expandedParentClass);
-    }
+
     resetStyles(el);
   }
 
   function resetStyles(el: HTMLExpandElement) {
     const size = el._initialStyle[sizeProperty];
     el.style.overflow = el._initialStyle.overflow!;
-    if (size != null) el.style[sizeProperty] = size;
+    if (size != null)
+      el.style[sizeProperty] = size;
     Reflect.deleteProperty(el, '_initialStyle');
   }
 }

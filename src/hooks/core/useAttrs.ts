@@ -1,5 +1,5 @@
-import { getCurrentInstance, reactive, shallowRef, watchEffect } from 'vue';
 import type { Ref } from 'vue';
+import { getCurrentInstance, reactive, shallowRef, watchEffect } from 'vue';
 
 interface Params {
   excludeListeners?: boolean;
@@ -16,7 +16,8 @@ export function entries<T>(obj: Recordable<T>): [string, T][] {
 
 export function useAttrs(params: Params = {}): Ref<Recordable> | {} {
   const instance = getCurrentInstance();
-  if (!instance) return {};
+  if (!instance)
+    return {};
 
   const { excludeListeners = false, excludeKeys = [], excludeDefaultKeys = true } = params;
   const attrs = shallowRef({});
@@ -32,9 +33,8 @@ export function useAttrs(params: Params = {}): Ref<Recordable> | {} {
       if (
         !allExcludeKeys.includes(key) &&
         !(excludeListeners && LISTENER_PREFIX.test(key))
-      ) {
+      )
         acm[key] = val;
-      }
 
       return acm;
     }, {} as Recordable);

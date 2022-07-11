@@ -1,3 +1,11 @@
+<script lang="ts" setup>
+import { Card } from 'ant-design-vue';
+import { navItems } from './data';
+import { Icon } from '/@/components/Icon';
+
+const CardGrid = Card.Grid;
+</script>
+
 <template>
   <Card title="快捷导航" v-bind="$attrs">
     <CardGrid v-for="item in navItems" :key="item">
@@ -8,10 +16,3 @@
     </CardGrid>
   </Card>
 </template>
-<script lang="ts" setup>
-  import { Card } from 'ant-design-vue';
-  import { navItems } from './data';
-  import { Icon } from '/@/components/Icon';
-
-  const CardGrid = Card.Grid;
-</script>

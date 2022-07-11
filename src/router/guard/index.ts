@@ -1,4 +1,4 @@
-import type { Router, RouteLocationNormalized } from 'vue-router';
+import type { RouteLocationNormalized, Router } from 'vue-router';
 import { useAppStoreWithOut } from '/@/store/modules/app';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 import { useTransitionSetting } from '/@/hooks/setting/useTransitionSetting';
@@ -7,9 +7,9 @@ import { Modal, notification } from 'ant-design-vue';
 import { warn } from '/@/utils/log';
 import { unref } from 'vue';
 import { setRouteChange } from '/@/logics/mitt/routeChange';
+import nProgress from 'nprogress';
 import { createPermissionGuard } from './permissionGuard';
 import { createStateGuard } from './stateGuard';
-import nProgress from 'nprogress';
 import projectSetting from '/@/settings/projectSetting';
 import { createParamMenuGuard } from './paramMenuGuard';
 
@@ -32,7 +32,7 @@ export function setupRouterGuard(router: Router) {
 function createPageGuard(router: Router) {
   const loadedPageMap = new Map<string, boolean>();
 
-  router.beforeEach(async (to) => {
+  router.beforeEach(async to => {
     // The page has already been loaded, it will be faster to open it again, you don’t need to do loading and other processing
     to.meta.loaded = !!loadedPageMap.get(to.path);
     // Notify routing changes
@@ -41,7 +41,7 @@ function createPageGuard(router: Router) {
     return true;
   });
 
-  router.afterEach((to) => {
+  router.afterEach(to => {
     loadedPageMap.set(to.path, true);
   });
 }
@@ -51,13 +51,12 @@ function createPageLoadingGuard(router: Router) {
   const userStore = useUserStoreWithOut();
   const appStore = useAppStoreWithOut();
   const { getOpenPageLoading } = useTransitionSetting();
-  router.beforeEach(async (to) => {
-    if (!userStore.getToken) {
+  router.beforeEach(async to => {
+    if (!userStore.getToken)
       return true;
-    }
-    if (to.meta.loaded) {
+
+    if (to.meta.loaded)
       return true;
-    }
 
     if (unref(getOpenPageLoading)) {
       appStore.setPageLoadingAction(true);
@@ -85,9 +84,9 @@ function createPageLoadingGuard(router: Router) {
 function createHttpGuard(router: Router) {
   const { removeAllHttpPending } = projectSetting;
   let axiosCanceler: Nullable<AxiosCanceler>;
-  if (removeAllHttpPending) {
+  if (removeAllHttpPending)
     axiosCanceler = new AxiosCanceler();
-  }
+
   router.beforeEach(async () => {
     // Switching the route will delete the previous request
     axiosCanceler?.removeAllPending();
@@ -103,7 +102,7 @@ function createScrollGuard(router: Router) {
 
   const body = document.body;
 
-  router.afterEach(async (to) => {
+  router.afterEach(async to => {
     // scroll top
     isHash((to as RouteLocationNormalized & { href: string })?.href) &&
       body.scrollTo(0, 0);
@@ -124,8 +123,9 @@ export function createMessageGuard(router: Router) {
         Modal.destroyAll();
         notification.destroy();
       }
-    } catch (error) {
-      warn('message guard error:' + error);
+    }
+    catch (error) {
+      warn(`message guard error:${error}`);
     }
     return true;
   });
@@ -133,10 +133,10 @@ export function createMessageGuard(router: Router) {
 
 export function createProgressGuard(router: Router) {
   const { getOpenNProgress } = useTransitionSetting();
-  router.beforeEach(async (to) => {
-    if (to.meta.loaded) {
+  router.beforeEach(async to => {
+    if (to.meta.loaded)
       return true;
-    }
+
     unref(getOpenNProgress) && nProgress.start();
     return true;
   });

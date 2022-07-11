@@ -1,5 +1,5 @@
-import type { InsertNodeParams, KeyType, FieldNames } from './tree';
-import type { Ref, ComputedRef } from 'vue';
+import type { FieldNames, InsertNodeParams, KeyType } from './tree';
+import type { ComputedRef, Ref } from 'vue';
 import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree';
 
 import { cloneDeep } from 'lodash-es';
@@ -11,15 +11,15 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const keys: string[] = [];
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return keys;
+    if (!childrenField || !keyField)
+      return keys;
 
     for (let index = 0; index < treeData.length; index++) {
       const node = treeData[index];
       keys.push(node[keyField]!);
       const children = node[childrenField];
-      if (children && children.length) {
+      if (children && children.length)
         keys.push(...(getAllKeys(children) as string[]));
-      }
     }
     return keys as KeyType[];
   }
@@ -29,15 +29,15 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const keys: string[] = [];
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return keys;
+    if (!childrenField || !keyField)
+      return keys;
 
     for (let index = 0; index < treeData.length; index++) {
       const node = treeData[index];
       node.disabled !== true && node.selectable !== false && keys.push(node[keyField]!);
       const children = node[childrenField];
-      if (children && children.length) {
+      if (children && children.length)
         keys.push(...(getEnabledKeys(children) as string[]));
-      }
     }
     return keys as KeyType[];
   }
@@ -46,19 +46,19 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const keys: KeyType[] = [];
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return keys;
+    if (!childrenField || !keyField)
+      return keys;
     for (let index = 0; index < treeData.length; index++) {
       const node = treeData[index];
       const children = node[childrenField];
       if (nodeKey === node[keyField]) {
         keys.push(node[keyField]!);
-        if (children && children.length) {
+        if (children && children.length)
           keys.push(...(getAllKeys(children) as string[]));
-        }
-      } else {
-        if (children && children.length) {
+      }
+      else {
+        if (children && children.length)
           keys.push(...getChildrenKeys(nodeKey, children));
-        }
       }
     }
     return keys as KeyType[];
@@ -66,11 +66,13 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
 
   // Update node
   function updateNodeByKey(key: string, node: TreeDataItem, list?: TreeDataItem[]) {
-    if (!key) return;
+    if (!key)
+      return;
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
 
-    if (!childrenField || !keyField) return;
+    if (!childrenField || !keyField)
+      return;
 
     for (let index = 0; index < treeData.length; index++) {
       const element: any = treeData[index];
@@ -79,7 +81,8 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
       if (element[keyField] === key) {
         treeData[index] = { ...treeData[index], ...node };
         break;
-      } else if (children && children.length) {
+      }
+      else if (children && children.length) {
         updateNodeByKey(key, node, element[childrenField]);
       }
     }
@@ -87,9 +90,9 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
 
   // Expand the specified level
   function filterByLevel(level = 1, list?: TreeDataItem[], currentLevel = 1) {
-    if (!level) {
+    if (!level)
       return [];
-    }
+
     const res: (string | number)[] = [];
     const data = list || unref(treeDataRef) || [];
     for (let index = 0; index < data.length; index++) {
@@ -118,9 +121,10 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
       return;
     }
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return;
+    if (!childrenField || !keyField)
+      return;
 
-    forEach(treeData, (treeItem) => {
+    forEach(treeData, treeItem => {
       if (treeItem[keyField] === parentKey) {
         treeItem[childrenField] = treeItem[childrenField] || [];
         treeItem[childrenField][push](node);
@@ -134,23 +138,24 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
    */
   function insertNodesByKey({ parentKey = null, list, push = 'push' }: InsertNodeParams) {
     const treeData: any = cloneDeep(unref(treeDataRef));
-    if (!list || list.length < 1) {
+    if (!list || list.length < 1)
       return;
-    }
-    if (!parentKey) {
-      for (let i = 0; i < list.length; i++) {
-        treeData[push](list[i]);
-      }
-    } else {
-      const { key: keyField, children: childrenField } = unref(getFieldNames);
-      if (!childrenField || !keyField) return;
 
-      forEach(treeData, (treeItem) => {
+    if (!parentKey) {
+      for (let i = 0; i < list.length; i++)
+        treeData[push](list[i]);
+    }
+    else {
+      const { key: keyField, children: childrenField } = unref(getFieldNames);
+      if (!childrenField || !keyField)
+        return;
+
+      forEach(treeData, treeItem => {
         if (treeItem[keyField] === parentKey) {
           treeItem[childrenField] = treeItem[childrenField] || [];
-          for (let i = 0; i < list.length; i++) {
+          for (let i = 0; i < list.length; i++)
             treeItem[childrenField][push](list[i]);
-          }
+
           treeDataRef.value = treeData;
           return true;
         }
@@ -159,10 +164,12 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
   }
   // Delete node
   function deleteNodeByKey(key: string, list?: TreeDataItem[]) {
-    if (!key) return;
+    if (!key)
+      return;
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return;
+    if (!childrenField || !keyField)
+      return;
 
     for (let index = 0; index < treeData.length; index++) {
       const element: any = treeData[index];
@@ -171,7 +178,8 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
       if (element[keyField] === key) {
         treeData.splice(index, 1);
         break;
-      } else if (children && children.length) {
+      }
+      else if (children && children.length) {
         deleteNodeByKey(key, element[childrenField]);
       }
     }

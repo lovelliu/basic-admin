@@ -1,26 +1,26 @@
 import type {
-  UseModalReturnType,
   ModalMethods,
   ModalProps,
   ReturnMethods,
   UseModalInnerReturnType,
+  UseModalReturnType,
 } from '../typing';
 import {
-  ref,
-  onUnmounted,
-  unref,
+  computed,
   getCurrentInstance,
-  reactive,
-  watchEffect,
   nextTick,
+  onUnmounted,
+  reactive,
+  ref,
   toRaw,
+  unref,
+  watchEffect,
 } from 'vue';
 import { isProdMode } from '/@/utils/env';
 import { isFunction } from '/@/utils/is';
 import { isEqual } from 'lodash-es';
 import { tryOnUnmounted } from '@vueuse/core';
 import { error } from '/@/utils/log';
-import { computed } from 'vue';
 
 const dataTransfer = reactive<any>({});
 
@@ -35,9 +35,9 @@ export function useModal(): UseModalReturnType {
   const uid = ref<string>('');
 
   function register(modalMethod: ModalMethods, uuid: string) {
-    if (!getCurrentInstance()) {
+    if (!getCurrentInstance())
       throw new Error('useModal() can only be used inside setup() or functional components!');
-    }
+
     uid.value = uuid;
     isProdMode() &&
       onUnmounted(() => {
@@ -45,7 +45,8 @@ export function useModal(): UseModalReturnType {
         loaded.value = false;
         dataTransfer[unref(uid)] = null;
       });
-    if (unref(loaded) && isProdMode() && modalMethod === unref(modal)) return;
+    if (unref(loaded) && isProdMode() && modalMethod === unref(modal))
+      return;
 
     modal.value = modalMethod;
     loaded.value = true;
@@ -56,9 +57,9 @@ export function useModal(): UseModalReturnType {
 
   const getInstance = () => {
     const instance = unref(modal);
-    if (!instance) {
+    if (!instance)
       error('useModal instance is undefined!');
-    }
+
     return instance;
   };
 
@@ -77,10 +78,11 @@ export function useModal(): UseModalReturnType {
 
     openModal: <T = any>(visible = true, data?: T, openOnSet = true): void => {
       getInstance()?.setModalProps({
-        visible: visible,
+        visible,
       });
 
-      if (!data) return;
+      if (!data)
+        return;
       const id = unref(uid);
       if (openOnSet) {
         dataTransfer[id] = null;
@@ -88,9 +90,8 @@ export function useModal(): UseModalReturnType {
         return;
       }
       const equal = isEqual(toRaw(dataTransfer[id]), toRaw(data));
-      if (!equal) {
+      if (!equal)
         dataTransfer[id] = toRaw(data);
-      }
     },
 
     closeModal: () => {
@@ -107,9 +108,9 @@ export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
 
   const getInstance = () => {
     const instance = unref(modalInstanceRef);
-    if (!instance) {
+    if (!instance)
       error('useModalInner instance is undefined!');
-    }
+
     return instance;
   };
 
@@ -125,8 +126,10 @@ export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
 
   watchEffect(() => {
     const data = dataTransfer[unref(uidRef)];
-    if (!data) return;
-    if (!callbackFn || !isFunction(callbackFn)) return;
+    if (!data)
+      return;
+    if (!callbackFn || !isFunction(callbackFn))
+      return;
     nextTick(() => {
       callbackFn(data);
     });

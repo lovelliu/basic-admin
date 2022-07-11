@@ -3,7 +3,8 @@ import type { ProjectConfig } from '/#/config';
 import { computed } from 'vue';
 
 import { useAppStore } from '/@/store/modules/app';
-import { ContentEnum, ThemeEnum } from '/@/enums/appEnum';
+import type { ThemeEnum } from '/@/enums/appEnum';
+import { ContentEnum } from '/@/enums/appEnum';
 
 type RootSetting = Omit<
   ProjectConfig,
@@ -54,9 +55,9 @@ export function useRootSetting() {
   const getDarkMode = computed(() => appStore.getDarkMode);
 
   const getLayoutContentMode = computed(() =>
-    appStore.getProjectConfig.contentMode === ContentEnum.FULL
-      ? ContentEnum.FULL
-      : ContentEnum.FIXED,
+    appStore.getProjectConfig.contentMode === ContentEnum.FULL ?
+      ContentEnum.FULL :
+      ContentEnum.FIXED,
   );
 
   function setRootSetting(setting: Partial<RootSetting>) {

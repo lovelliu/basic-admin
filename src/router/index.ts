@@ -7,7 +7,7 @@ import { basicRoutes } from './routes';
 // 白名单应该包含基本静态路由
 const WHITE_NAME_LIST: string[] = [];
 const getRouteNames = (array: any[]) =>
-  array.forEach((item) => {
+  array.forEach(item => {
     WHITE_NAME_LIST.push(item.name);
     getRouteNames(item.children || []);
   });
@@ -23,11 +23,10 @@ export const router = createRouter({
 
 // reset router
 export function resetRouter() {
-  router.getRoutes().forEach((route) => {
+  router.getRoutes().forEach(route => {
     const { name } = route;
-    if (name && !WHITE_NAME_LIST.includes(name as string)) {
+    if (name && !WHITE_NAME_LIST.includes(name as string))
       router.hasRoute(name) && router.removeRoute(name);
-    }
   });
 }
 

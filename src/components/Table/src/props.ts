@@ -3,15 +3,15 @@ import type { PaginationProps } from './types/pagination';
 import type {
   BasicColumn,
   FetchSetting,
-  TableSetting,
+  SizeType,
   SorterResult,
   TableCustomRecord,
   TableRowSelection,
-  SizeType,
+  TableSetting,
 } from './types/table';
 import type { FormProps } from '/@/components/Form';
 
-import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING, DEFAULT_SIZE } from './const';
+import { DEFAULT_FILTER_FN, DEFAULT_SIZE, DEFAULT_SORT_FN, FETCH_SETTING } from './const';
 import { propTypes } from '/@/utils/propTypes';
 
 export const basicProps = {

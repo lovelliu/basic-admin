@@ -1,7 +1,83 @@
+<script lang="ts">
+// @ts-nocheck
+// components
+import { Dropdown, Menu } from 'ant-design-vue';
+
+import { computed, defineComponent } from 'vue';
+
+import { useUserStore } from '/@/store/modules/user';
+import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
+import { useI18n } from '/@/hooks/web/useI18n';
+import { useDesign } from '/@/hooks/web/useDesign';
+import { useModal } from '/@/components/Modal';
+
+import headerImg from '/@/assets/images/header.jpg';
+import { propTypes } from '/@/utils/propTypes';
+
+import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+
+  type MenuEvent = 'logout' | 'doc' | 'lock';
+
+export default defineComponent({
+  name: 'UserDropdown',
+  components: {
+    Dropdown,
+    Menu,
+    MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
+    LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
+  },
+  props: {
+    theme: propTypes.oneOf(['dark', 'light']),
+  },
+  setup() {
+    const { prefixCls } = useDesign('header-user-dropdown');
+    const { t } = useI18n();
+    const { getUseLockPage } = useHeaderSetting();
+    const userStore = useUserStore();
+
+    const getUserInfo = computed(() => {
+      const { userName = '', portrait, desc } = userStore.getUserInfo || {};
+      return { userName, avatar: portrait || headerImg, desc };
+    });
+
+    const [register, { openModal }] = useModal();
+
+    function handleLock() {
+      openModal(true);
+    }
+
+    //  login out
+    function handleLoginOut() {
+      userStore.confirmLoginOut();
+    }
+
+    function handleMenuClick(e: { key: MenuEvent }) {
+      switch (e.key) {
+        case 'logout':
+          handleLoginOut();
+          break;
+        case 'lock':
+          handleLock();
+          break;
+      }
+    }
+
+    return {
+      prefixCls,
+      t,
+      getUserInfo,
+      handleMenuClick,
+      register,
+      getUseLockPage,
+    };
+  },
+});
+</script>
+
 <template>
-  <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
+  <Dropdown placement="bottomLeft" :overlay-class-name="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar">
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           hello, {{ getUserInfo.userName }}
@@ -27,80 +103,7 @@
   </Dropdown>
   <LockAction @register="register" />
 </template>
-<script lang="ts">
-  // components
-  import { Dropdown, Menu } from 'ant-design-vue';
 
-  import { defineComponent, computed } from 'vue';
-
-  import { useUserStore } from '/@/store/modules/user';
-  import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useModal } from '/@/components/Modal';
-
-  import headerImg from '/@/assets/images/header.jpg';
-  import { propTypes } from '/@/utils/propTypes';
-
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
-
-  type MenuEvent = 'logout' | 'doc' | 'lock';
-
-  export default defineComponent({
-    name: 'UserDropdown',
-    components: {
-      Dropdown,
-      Menu,
-      MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
-      LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
-    },
-    props: {
-      theme: propTypes.oneOf(['dark', 'light']),
-    },
-    setup() {
-      const { prefixCls } = useDesign('header-user-dropdown');
-      const { t } = useI18n();
-      const { getUseLockPage } = useHeaderSetting();
-      const userStore = useUserStore();
-
-      const getUserInfo = computed(() => {
-        const { userName = '', portrait, desc } = userStore.getUserInfo || {};
-        return { userName, avatar: portrait || headerImg, desc };
-      });
-
-      const [register, { openModal }] = useModal();
-
-      function handleLock() {
-        openModal(true);
-      }
-
-      //  login out
-      function handleLoginOut() {
-        userStore.confirmLoginOut();
-      }
-
-      function handleMenuClick(e: { key: MenuEvent }) {
-        switch (e.key) {
-          case 'logout':
-            handleLoginOut();
-            break;
-          case 'lock':
-            handleLock();
-            break;
-        }
-      }
-
-      return {
-        prefixCls,
-        t,
-        getUserInfo,
-        handleMenuClick,
-        register,
-        getUseLockPage,
-      };
-    },
-  });
-</script>
 <style lang="less">
   @prefix-cls: ~'@{namespace}-header-user-dropdown';
 

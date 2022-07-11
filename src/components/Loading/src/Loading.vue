@@ -1,51 +1,53 @@
+<script lang="ts">
+import { defineComponent } from 'vue';
+import type { PropType } from 'vue';
+import { Spin } from 'ant-design-vue';
+import { SizeEnum } from '/@/enums/sizeEnum';
+
+export default defineComponent({
+  name: 'Loading',
+  components: { Spin },
+  props: {
+    tip: {
+      type: String as PropType<string>,
+      default: '',
+    },
+    size: {
+      type: String as PropType<SizeEnum>,
+      default: SizeEnum.LARGE,
+      validator: (v: SizeEnum): boolean => {
+        return [SizeEnum.DEFAULT, SizeEnum.SMALL, SizeEnum.LARGE].includes(v);
+      },
+    },
+    absolute: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    loading: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    background: {
+      type: String as PropType<string>,
+    },
+    theme: {
+      type: String as PropType<'dark' | 'light'>,
+    },
+  },
+});
+</script>
+
 <template>
   <section
+    v-show="loading"
     class="full-loading"
     :class="{ absolute, [theme]: !!theme }"
     :style="[background ? `background-color: ${background}` : '']"
-    v-show="loading"
   >
     <Spin v-bind="$attrs" :tip="tip" :size="size" :spinning="loading" />
   </section>
 </template>
-<script lang="ts">
-  import { PropType } from 'vue';
-  import { defineComponent } from 'vue';
-  import { Spin } from 'ant-design-vue';
-  import { SizeEnum } from '/@/enums/sizeEnum';
 
-  export default defineComponent({
-    name: 'Loading',
-    components: { Spin },
-    props: {
-      tip: {
-        type: String as PropType<string>,
-        default: '',
-      },
-      size: {
-        type: String as PropType<SizeEnum>,
-        default: SizeEnum.LARGE,
-        validator: (v: SizeEnum): boolean => {
-          return [SizeEnum.DEFAULT, SizeEnum.SMALL, SizeEnum.LARGE].includes(v);
-        },
-      },
-      absolute: {
-        type: Boolean as PropType<boolean>,
-        default: false,
-      },
-      loading: {
-        type: Boolean as PropType<boolean>,
-        default: false,
-      },
-      background: {
-        type: String as PropType<string>,
-      },
-      theme: {
-        type: String as PropType<'dark' | 'light'>,
-      },
-    },
-  });
-</script>
 <style lang="less" scoped>
   .full-loading {
     position: fixed;

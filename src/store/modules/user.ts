@@ -4,17 +4,17 @@ import type { ErrorMessageMode } from '/#/axios';
 import { h } from 'vue';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
-import { RoleEnum } from '/@/enums/roleEnum';
+import type { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
 import { RETOKEN_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { LoginParams } from '/@/api/sys/model/userModel';
+import type { LoginParams } from '/@/api/sys/model/userModel';
 import { getUserInfo, loginApi, refreshToken } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { createAxios } from '/@/utils/request';
 import { isArray } from '/@/utils/is';
@@ -57,9 +57,9 @@ export const useUserStore = defineStore({
       return this.refreshToken || getAuthCache<string>(RETOKEN_KEY);
     },
     getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0
-        ? this.roleList
-        : getAuthCache<RoleEnum[]>(ROLES_KEY);
+      return this.roleList.length > 0 ?
+        this.roleList :
+        getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
@@ -70,11 +70,11 @@ export const useUserStore = defineStore({
   },
   actions: {
     setToken(info: string | undefined) {
-      this.token = info ? info : ''; // for null or undefined value
+      this.token = info || ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
     },
     setRefreshToken(info: string | undefined) {
-      this.refreshToken = info ? info : '';
+      this.refreshToken = info || '';
       setAuthCache(RETOKEN_KEY, info);
     },
     setRoleList(roleList: RoleEnum[]) {
@@ -83,9 +83,9 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
-      if (this.userInfo) {
+      if (this.userInfo)
         this.userInfo.userId = this.userId;
-      }
+
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(USER_INFO_KEY, info);
     },
@@ -122,7 +122,8 @@ export const useUserStore = defineStore({
         this.setRefreshToken(refresh_token);
         this.userId = user_id;
         return this.afterLoginAction(goHome);
-      } catch (error) {
+      }
+      catch (error) {
         return Promise.reject(error);
       }
     },
@@ -137,25 +138,28 @@ export const useUserStore = defineStore({
         this.setToken(access_token);
         this.setRefreshToken(refresh_token);
         return true;
-      } catch (error: any) {
+      }
+      catch (error: any) {
         createMessage.error(error.message);
         this.logout(true);
       }
     },
 
     async afterLoginAction(goHome?: boolean): Promise<UserInfo | null> {
-      if (!this.getToken) return null;
+      if (!this.getToken)
+        return null;
       // get user info
       const userInfo = await this.getUserInfoAction();
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
         this.setSessionTimeout(false);
-      } else {
+      }
+      else {
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
           const routes = await permissionStore.buildRoutesAction();
-          routes.forEach((route) => {
+          routes.forEach(route => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
@@ -166,14 +170,16 @@ export const useUserStore = defineStore({
       return userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
-      if (!this.getToken) return null;
+      if (!this.getToken)
+        return null;
       const userInfo = await getUserInfo();
       const { roles = [] } = userInfo;
 
       if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        const roleList = roles.map(item => item.value) as RoleEnum[];
         this.setRoleList(roleList);
-      } else {
+      }
+      else {
         userInfo.roles = [];
         this.setRoleList([]);
       }

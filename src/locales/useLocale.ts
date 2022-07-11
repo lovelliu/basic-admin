@@ -3,9 +3,9 @@
  */
 import type { LocaleType } from '/#/config';
 
+import { computed, unref } from 'vue';
 import { i18n } from './setupI18n';
 import { useLocaleStoreWithOut } from '/@/store/modules/locale';
-import { unref, computed } from 'vue';
 import { loadLocalePool, setHtmlPageLang } from './helper';
 
 interface LangModule {
@@ -17,11 +17,11 @@ interface LangModule {
 function setI18nLanguage(locale: LocaleType) {
   const localeStore = useLocaleStoreWithOut();
 
-  if (i18n.mode === 'legacy') {
+  if (i18n.mode === 'legacy')
     i18n.global.locale = locale;
-  } else {
+  else
     (i18n.global.locale as any).value = locale;
-  }
+
   localeStore.setLocaleInfo({ locale });
   setHtmlPageLang(locale);
 }
@@ -40,9 +40,8 @@ export function useLocale() {
   async function changeLocale(locale: LocaleType) {
     const globalI18n = i18n.global;
     const currentLocale = unref(globalI18n.locale);
-    if (currentLocale === locale) {
+    if (currentLocale === locale)
       return locale;
-    }
 
     if (loadLocalePool.includes(locale)) {
       setI18nLanguage(locale);
@@ -50,7 +49,8 @@ export function useLocale() {
     }
     const langModule = ((await import(`./lang/${locale}.ts`)) as any)
       .default as LangModule;
-    if (!langModule) return;
+    if (!langModule)
+      return;
 
     const { message } = langModule;
 

@@ -1,4 +1,4 @@
-import {
+import type {
   AddOrUpdateMenuParams,
   EditMenuInfo,
   MenuItem,
@@ -16,7 +16,7 @@ enum Api {
   AllocateRoleMenus = '/menu/allocateRoleMenus',
 }
 
-export const getAllMenu = (params?) =>
+export const getAllMenu = (params?: any) =>
   defHttp.get<MenuList>({ url: Api.GetAllMenu, params });
 
 export const addMenu = (data: AddOrUpdateMenuParams) =>
@@ -25,9 +25,9 @@ export const addMenu = (data: AddOrUpdateMenuParams) =>
 export const updateMenu = (data: AddOrUpdateMenuParams) =>
   defHttp.put<boolean>({ url: Api.UpdateMenu, data });
 
-export const deleteMenu = (id) => defHttp.delete({ url: Api.DeleteMenu, data: { id } });
+export const deleteMenu = id => defHttp.delete({ url: Api.DeleteMenu, data: { id } });
 
-export const getMenuById = (id) => defHttp.get<MenuItem>({ url: `${Api.Menu}/${id}` });
+export const getMenuById = id => defHttp.get<MenuItem>({ url: `${Api.Menu}/${id}` });
 
 export const getRoleMenus = (id: number) =>
   defHttp.get<EditMenuInfo['parentMenuList'] & { selected: boolean }>({

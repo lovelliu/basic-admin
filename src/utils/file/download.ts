@@ -9,7 +9,7 @@ import { dataURLtoBlob, urlToBase64 } from './base64Conver';
  * @param bom
  */
 export function downloadByOnlineUrl(url: string, filename: string, mime?: string, bom?: BlobPart) {
-  urlToBase64(url).then((base64) => {
+  urlToBase64(url).then(base64 => {
     downloadByBase64(base64, filename, mime, bom);
   });
 }
@@ -42,9 +42,9 @@ export function downloadByData(data: BlobPart, filename: string, mime?: string, 
   tempLink.style.display = 'none';
   tempLink.href = blobURL;
   tempLink.setAttribute('download', filename);
-  if (typeof tempLink.download === 'undefined') {
+  if (typeof tempLink.download === 'undefined')
     tempLink.setAttribute('target', '_blank');
-  }
+
   document.body.appendChild(tempLink);
   tempLink.click();
   document.body.removeChild(tempLink);
@@ -64,8 +64,8 @@ export function downloadByUrl({
   target?: TargetContext;
   fileName?: string;
 }): boolean {
-  const isChrome = window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-  const isSafari = window.navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+  const isChrome = window.navigator.userAgent.toLowerCase().includes('chrome');
+  const isSafari = window.navigator.userAgent.toLowerCase().includes('safari');
 
   if (/(iP)/g.test(window.navigator.userAgent)) {
     console.error('Your browser does not support download!');
@@ -76,9 +76,8 @@ export function downloadByUrl({
     link.href = url;
     link.target = target;
 
-    if (link.download !== undefined) {
+    if (link.download !== undefined)
       link.download = fileName || url.substring(url.lastIndexOf('/') + 1, url.length);
-    }
 
     if (document.createEvent) {
       const e = document.createEvent('MouseEvents');
@@ -87,9 +86,8 @@ export function downloadByUrl({
       return true;
     }
   }
-  if (url.indexOf('?') === -1) {
+  if (!url.includes('?'))
     url += '?download';
-  }
 
   openWindow(url, { target });
   return true;

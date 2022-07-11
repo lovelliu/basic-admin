@@ -1,9 +1,9 @@
 import type { Menu as MenuType } from '/@/router/types';
 import type { MenuState } from './types';
 
-import { computed, Ref, toRaw } from 'vue';
+import type { Ref } from 'vue';
+import { computed, toRaw, unref } from 'vue';
 
-import { unref } from 'vue';
 import { uniq } from 'lodash-es';
 import { getAllParentPath } from '/@/router/helper/menuHelper';
 
@@ -30,11 +30,11 @@ export function useOpenKeys(
         }
         const keys = getAllParentPath(menuList, path);
 
-        if (!unref(accordion)) {
+        if (!unref(accordion))
           menuState.openNames = uniq([...menuState.openNames, ...keys]);
-        } else {
+        else
           menuState.openNames = keys;
-        }
+
         menuState.activeSubMenuNames = menuState.openNames;
       },
       30,

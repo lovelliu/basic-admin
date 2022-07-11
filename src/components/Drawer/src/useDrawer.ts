@@ -1,19 +1,19 @@
 import type {
-  UseDrawerReturnType,
   DrawerInstance,
-  ReturnMethods,
   DrawerProps,
+  ReturnMethods,
   UseDrawerInnerReturnType,
+  UseDrawerReturnType,
 } from './typing';
 import {
-  ref,
-  getCurrentInstance,
-  unref,
-  reactive,
-  watchEffect,
-  nextTick,
-  toRaw,
   computed,
+  getCurrentInstance,
+  nextTick,
+  reactive,
+  ref,
+  toRaw,
+  unref,
+  watchEffect,
 } from 'vue';
 import { isProdMode } from '/@/utils/env';
 import { isFunction } from '/@/utils/is';
@@ -29,9 +29,9 @@ const visibleData = reactive<{ [key: number]: boolean }>({});
  * @description: Applicable to separate drawer and call outside
  */
 export function useDrawer(): UseDrawerReturnType {
-  if (!getCurrentInstance()) {
+  if (!getCurrentInstance())
     throw new Error('useDrawer() can only be used inside setup() or functional components!');
-  }
+
   const drawer = ref<DrawerInstance | null>(null);
   const loaded = ref<Nullable<boolean>>(false);
   const uid = ref<string>('');
@@ -44,9 +44,9 @@ export function useDrawer(): UseDrawerReturnType {
         dataTransferRef[unref(uid)] = null;
       });
 
-    if (unref(loaded) && isProdMode() && drawerInstance === unref(drawer)) {
+    if (unref(loaded) && isProdMode() && drawerInstance === unref(drawer))
       return;
-    }
+
     uid.value = uuid;
     drawer.value = drawerInstance;
     loaded.value = true;
@@ -58,9 +58,9 @@ export function useDrawer(): UseDrawerReturnType {
 
   const getInstance = () => {
     const instance = unref(drawer);
-    if (!instance) {
+    if (!instance)
       error('useDrawer instance is undefined!');
-    }
+
     return instance;
   };
 
@@ -75,9 +75,10 @@ export function useDrawer(): UseDrawerReturnType {
 
     openDrawer: <T = any>(visible = true, data?: T, openOnSet = true): void => {
       getInstance()?.setDrawerProps({
-        visible: visible,
+        visible,
       });
-      if (!data) return;
+      if (!data)
+        return;
 
       if (openOnSet) {
         dataTransferRef[unref(uid)] = null;
@@ -85,9 +86,8 @@ export function useDrawer(): UseDrawerReturnType {
         return;
       }
       const equal = isEqual(toRaw(dataTransferRef[unref(uid)]), toRaw(data));
-      if (!equal) {
+      if (!equal)
         dataTransferRef[unref(uid)] = toRaw(data);
-      }
     },
     closeDrawer: () => {
       getInstance()?.setDrawerProps({ visible: false });
@@ -102,9 +102,8 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
   const currentInstance = getCurrentInstance();
   const uidRef = ref<string>('');
 
-  if (!getCurrentInstance()) {
+  if (!getCurrentInstance())
     throw new Error('useDrawerInner() can only be used inside setup() or functional components!');
-  }
 
   const getInstance = () => {
     const instance = unref(drawerInstanceRef);
@@ -128,8 +127,10 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
 
   watchEffect(() => {
     const data = dataTransferRef[unref(uidRef)];
-    if (!data) return;
-    if (!callbackFn || !isFunction(callbackFn)) return;
+    if (!data)
+      return;
+    if (!callbackFn || !isFunction(callbackFn))
+      return;
     nextTick(() => {
       callbackFn(data);
     });

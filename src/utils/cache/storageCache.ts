@@ -21,9 +21,8 @@ export const createStorage = ({
   timeout = null,
   hasEncrypt = true,
 }: Partial<CreateStorageParams> = {}) => {
-  if (hasEncrypt && [key.length, iv.length].some((item) => item !== 16)) {
+  if (hasEncrypt && [key.length, iv.length].some(item => item !== 16))
     throw new Error('When hasEncrypt is true, the key or iv must be 16 bits!');
-  }
 
   const encryption = new AesEncryPtion({ key, iv });
 
@@ -68,9 +67,9 @@ export const createStorage = ({
         expire: !isNullOrUndef(expire) ? new Date().getTime() + expire * 1000 : null,
       });
 
-      const stringifyValue = this.hasEncrypt
-        ? this.encryption.encryptByAES(stringData)
-        : stringData;
+      const stringifyValue = this.hasEncrypt ?
+        this.encryption.encryptByAES(stringData) :
+        stringData;
       this.storage.setItem(this.getKey(key), stringifyValue);
     }
 
@@ -81,17 +80,19 @@ export const createStorage = ({
      */
     get(key: string, def: any = null): any {
       const val = this.storage.getItem(this.getKey(key));
-      if (!val) return def;
+      if (!val)
+        return def;
 
       try {
         const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val;
         const data = JSON.parse(decVal);
         const { value, expire } = data;
-        if (isNullOrUndef(expire) || expire >= new Date().getTime()) {
+        if (isNullOrUndef(expire) || expire >= new Date().getTime())
           return value;
-        }
+
         this.remove(key);
-      } catch (error) {
+      }
+      catch (error) {
         return def;
       }
     }

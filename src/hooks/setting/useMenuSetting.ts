@@ -1,5 +1,5 @@
 import type { MenuSetting } from '/#/config';
-import { computed, unref, ref } from 'vue';
+import { computed, ref, unref } from 'vue';
 import { useAppStore } from '/@/store/modules/app';
 
 import { SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '/@/enums/appEnum';
@@ -12,6 +12,11 @@ export function useMenuSetting() {
   const { getFullContent: fullContent } = useFullContent();
   const appStore = useAppStore();
 
+  const getSplit = computed(() => appStore.getMenuSetting.split);
+  const getShowMenu = computed(() => appStore.getMenuSetting.show);
+
+  const getMenuMode = computed(() => appStore.getMenuSetting.mode);
+
   const getShowSidebar = computed(() => {
     return (
       unref(getSplit) ||
@@ -23,11 +28,7 @@ export function useMenuSetting() {
 
   const getMenuType = computed(() => appStore.getMenuSetting.type);
 
-  const getMenuMode = computed(() => appStore.getMenuSetting.mode);
-
   const getMenuFixed = computed(() => appStore.getMenuSetting.fixed);
-
-  const getShowMenu = computed(() => appStore.getMenuSetting.show);
 
   const getMenuHidden = computed(() => appStore.getMenuSetting.hidden);
 
@@ -36,8 +37,6 @@ export function useMenuSetting() {
   const getTrigger = computed(() => appStore.getMenuSetting.trigger);
 
   const getMenuTheme = computed(() => appStore.getMenuSetting.theme);
-
-  const getSplit = computed(() => appStore.getMenuSetting.split);
 
   const getMenuBgColor = computed(() => appStore.getMenuSetting.bgColor);
 
@@ -70,9 +69,8 @@ export function useMenuSetting() {
       unref(getMenuType) === MenuTypeEnum.TOP_MENU ||
       !unref(getShowMenu) ||
       unref(getMenuHidden)
-    ) {
+    )
       return false;
-    }
 
     return unref(getTrigger) === TriggerEnum.HEADER;
   });
@@ -89,28 +87,28 @@ export function useMenuSetting() {
     return unref(getMenuMode) === MenuModeEnum.INLINE && unref(getMenuType) === MenuTypeEnum.MIX;
   });
 
-  const getRealWidth = computed(() => {
-    if (unref(getIsMixSidebar)) {
-      return unref(getCollapsed) && !unref(getMixSideFixed)
-        ? unref(getMiniWidthNumber)
-        : unref(getMenuWidth);
-    }
-    return unref(getCollapsed) ? unref(getMiniWidthNumber) : unref(getMenuWidth);
-  });
-
   const getMiniWidthNumber = computed(() => {
     const { collapsedShowTitle } = appStore.getMenuSetting;
     return collapsedShowTitle ? SIDE_BAR_SHOW_TIT_MINI_WIDTH : SIDE_BAR_MINI_WIDTH;
   });
 
+  const getRealWidth = computed(() => {
+    if (unref(getIsMixSidebar)) {
+      return unref(getCollapsed) && !unref(getMixSideFixed) ?
+        unref(getMiniWidthNumber) :
+        unref(getMenuWidth);
+    }
+    return unref(getCollapsed) ? unref(getMiniWidthNumber) : unref(getMenuWidth);
+  });
+
   const getCalcContentWidth = computed(() => {
     const width =
-      unref(getIsTopMenu) || !unref(getShowMenu) || (unref(getSplit) && unref(getMenuHidden))
-        ? 0
-        : unref(getIsMixSidebar)
-        ? (unref(getCollapsed) ? SIDE_BAR_MINI_WIDTH : SIDE_BAR_SHOW_TIT_MINI_WIDTH) +
-          (unref(getMixSideFixed) && unref(mixSideHasChildren) ? unref(getRealWidth) : 0)
-        : unref(getRealWidth);
+      unref(getIsTopMenu) || !unref(getShowMenu) || (unref(getSplit) && unref(getMenuHidden)) ?
+        0 :
+        unref(getIsMixSidebar) ?
+            (unref(getCollapsed) ? SIDE_BAR_MINI_WIDTH : SIDE_BAR_SHOW_TIT_MINI_WIDTH) +
+          (unref(getMixSideFixed) && unref(mixSideHasChildren) ? unref(getRealWidth) : 0) :
+          unref(getRealWidth);
 
     return `calc(100% - ${unref(width)}px)`;
   });

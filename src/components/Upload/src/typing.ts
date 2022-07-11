@@ -1,4 +1,4 @@
-import { UploadImgResult } from '/@/api/business/model/course';
+import type { UploadImgResult } from '/@/api/business/model/course';
 
 export enum UploadResultStatus {
   SUCCESS = 'success',

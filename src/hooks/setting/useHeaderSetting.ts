@@ -13,6 +13,19 @@ export function useHeaderSetting() {
   const { getFullContent } = useFullContent();
   const appStore = useAppStore();
 
+  const {
+    getMenuMode,
+    getSplit,
+    getShowHeaderTrigger,
+    getIsSidebarType,
+    getIsMixSidebar,
+    getIsTopMenu,
+  } = useMenuSetting();
+
+  const getShowHeader = computed(() => appStore.getHeaderSetting.show);
+
+  const getShowMixHeaderRef = computed(() => !unref(getIsSidebarType) && unref(getShowHeader));
+
   const getShowFullHeaderRef = computed(() => {
     return (
       !unref(getFullContent) &&
@@ -22,6 +35,8 @@ export function useHeaderSetting() {
       !unref(getIsMixSidebar)
     );
   });
+
+  const getFixed = computed(() => appStore.getHeaderSetting.fixed);
 
   const getUnFixedAndFull = computed(() => !unref(getFixed) && !unref(getShowFullHeaderRef));
 
@@ -34,25 +49,11 @@ export function useHeaderSetting() {
     );
   });
 
-  const {
-    getMenuMode,
-    getSplit,
-    getShowHeaderTrigger,
-    getIsSidebarType,
-    getIsMixSidebar,
-    getIsTopMenu,
-  } = useMenuSetting();
   const { getShowBreadCrumb, getShowLogo } = useRootSetting();
-
-  const getShowMixHeaderRef = computed(() => !unref(getIsSidebarType) && unref(getShowHeader));
 
   const getShowDoc = computed(() => appStore.getHeaderSetting.showDoc);
 
   const getHeaderTheme = computed(() => appStore.getHeaderSetting.theme);
-
-  const getShowHeader = computed(() => appStore.getHeaderSetting.show);
-
-  const getFixed = computed(() => appStore.getHeaderSetting.fixed);
 
   const getHeaderBgColor = computed(() => appStore.getHeaderSetting.bgColor);
 

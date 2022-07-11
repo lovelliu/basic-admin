@@ -1,5 +1,5 @@
 import type { PropType } from 'vue';
-import { FileBasicColumn } from './typing';
+import type { FileBasicColumn } from './typing';
 
 export const basicProps = {
   helpText: {

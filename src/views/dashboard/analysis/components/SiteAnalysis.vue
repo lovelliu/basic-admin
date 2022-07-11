@@ -1,25 +1,25 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
-  import { Card } from 'ant-design-vue';
-  import VisitAnalysis from './VisitAnalysis.vue';
-  import VisitAnalysisBar from './VisitAnalysisBar.vue';
+import { ref } from 'vue';
+import { Card } from 'ant-design-vue';
+import VisitAnalysis from './VisitAnalysis.vue';
+import VisitAnalysisBar from './VisitAnalysisBar.vue';
 
-  const activeKey = ref('tab1');
+const activeKey = ref('tab1');
 
-  const tabListTitle = [
-    {
-      key: 'tab1',
-      tab: '流量趋势',
-    },
-    {
-      key: 'tab2',
-      tab: '访问量',
-    },
-  ];
+const tabListTitle = [
+  {
+    key: 'tab1',
+    tab: '流量趋势',
+  },
+  {
+    key: 'tab2',
+    tab: '访问量',
+  },
+];
 
-  const onTabChange = (key) => {
-    activeKey.value = key;
-  };
+const onTabChange = key => {
+  activeKey.value = key;
+};
 </script>
 
 <template>

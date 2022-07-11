@@ -1,9 +1,8 @@
 import type { EChartsOption } from 'echarts';
 import type { Ref } from 'vue';
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
-import { tryOnUnmounted } from '@vueuse/core';
-import { unref, nextTick, watch, computed, ref } from 'vue';
-import { useDebounceFn } from '@vueuse/core';
+import { tryOnUnmounted, useDebounceFn } from '@vueuse/core';
+import { computed, nextTick, ref, unref, watch } from 'vue';
 import { useEventListener } from '/@/hooks/event/useEventListener';
 import { useBreakpoint } from '/@/hooks/event/useBreakpoint';
 import echarts from '/@/utils/lib/echarts';
@@ -26,9 +25,9 @@ export function useECharts(
   resizeFn = useDebounceFn(resize, 200);
 
   const getOptions = computed(() => {
-    if (getDarkMode.value !== 'dark') {
+    if (getDarkMode.value !== 'dark')
       return cacheOptions.value as EChartsOption;
-    }
+
     return {
       backgroundColor: 'transparent',
       ...cacheOptions.value,
@@ -37,9 +36,8 @@ export function useECharts(
 
   function initCharts(t = theme) {
     const el = unref(elRef);
-    if (!el || !unref(el)) {
+    if (!el || !unref(el))
       return;
-    }
 
     chartInstance = echarts.init(el, t);
     const { removeEvent } = useEventListener({
@@ -69,7 +67,8 @@ export function useECharts(
         if (!chartInstance) {
           initCharts(getDarkMode.value as 'default');
 
-          if (!chartInstance) return;
+          if (!chartInstance)
+            return;
         }
         clear && chartInstance?.clear();
 
@@ -84,7 +83,7 @@ export function useECharts(
 
   watch(
     () => getDarkMode.value,
-    (theme) => {
+    theme => {
       if (chartInstance) {
         chartInstance.dispose();
         initCharts(theme as 'default');
@@ -94,16 +93,17 @@ export function useECharts(
   );
 
   tryOnUnmounted(() => {
-    if (!chartInstance) return;
+    if (!chartInstance)
+      return;
     removeResizeFn();
     chartInstance.dispose();
     chartInstance = null;
   });
 
   function getInstance(): echarts.ECharts | null {
-    if (!chartInstance) {
+    if (!chartInstance)
       initCharts(getDarkMode.value as 'default');
-    }
+
     return chartInstance;
   }
 

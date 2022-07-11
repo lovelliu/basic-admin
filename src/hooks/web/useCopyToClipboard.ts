@@ -41,9 +41,8 @@ export function copyTextToClipboard(
 
   const selection = document.getSelection();
   let originalRange;
-  if (selection && selection.rangeCount > 0) {
+  if (selection && selection.rangeCount > 0)
     originalRange = selection.getRangeAt(0);
-  }
 
   target.append(element);
   element.select();
@@ -54,7 +53,8 @@ export function copyTextToClipboard(
   let isSuccess = false;
   try {
     isSuccess = document.execCommand('copy');
-  } catch (e: any) {
+  }
+  catch (e: any) {
     throw new Error(e);
   }
 
@@ -65,8 +65,8 @@ export function copyTextToClipboard(
     selection.addRange(originalRange);
   }
 
-  if (previouslyFocusedElement) {
+  if (previouslyFocusedElement)
     (previouslyFocusedElement as HTMLElement).focus();
-  }
+
   return isSuccess;
 }

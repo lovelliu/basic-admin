@@ -1,5 +1,5 @@
-import { toRaw, ref, nextTick } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
+import { nextTick, ref, toRaw } from 'vue';
 import { useDesign } from '/@/hooks/web/useDesign';
 import { useSortable } from '/@/hooks/web/useSortable';
 import { useMultipleTabStore } from '/@/store/modules/multipleTab';
@@ -18,10 +18,9 @@ export function initAffixTabs(): string[] {
   function filterAffixTabs(routes: RouteLocationNormalized[]) {
     const tabs: RouteLocationNormalized[] = [];
     routes &&
-      routes.forEach((route) => {
-        if (route.meta && route.meta.affix) {
+      routes.forEach(route => {
+        if (route.meta && route.meta.affix)
           tabs.push(toRaw(route));
-        }
       });
     return tabs;
   }
@@ -47,7 +46,7 @@ export function initAffixTabs(): string[] {
     addAffixTabs();
     isAddAffix = true;
   }
-  return affixList.value.map((item) => item.meta?.title).filter(Boolean) as string[];
+  return affixList.value.map(item => item.meta?.title).filter(Boolean) as string[];
 }
 
 export function useTabsDrag(affixTextList: string[]) {
@@ -55,22 +54,23 @@ export function useTabsDrag(affixTextList: string[]) {
   const { multiTabsSetting } = projectSetting;
   const { prefixCls } = useDesign('multiple-tabs');
   nextTick(() => {
-    if (!multiTabsSetting.canDrag) return;
+    if (!multiTabsSetting.canDrag)
+      return;
     const el = document.querySelectorAll(
       `.${prefixCls} .ant-tabs-nav-wrap > div`,
     )?.[0] as HTMLElement;
     const { initSortable } = useSortable(el, {
       filter: (e: ChangeEvent) => {
         const text = e?.target?.innerText;
-        if (!text) return false;
+        if (!text)
+          return false;
         return affixTextList.includes(text);
       },
-      onEnd: (evt) => {
+      onEnd: evt => {
         const { oldIndex, newIndex } = evt;
 
-        if (isNullAndUnDef(oldIndex) || isNullAndUnDef(newIndex) || oldIndex === newIndex) {
+        if (isNullAndUnDef(oldIndex) || isNullAndUnDef(newIndex) || oldIndex === newIndex)
           return;
-        }
 
         tabStore.sortTabs(oldIndex, newIndex);
       },

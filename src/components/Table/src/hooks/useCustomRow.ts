@@ -2,7 +2,7 @@ import type { ComputedRef } from 'vue';
 import type { BasicTableProps } from '../types/table';
 import { unref } from 'vue';
 import { ROW_KEY } from '../const';
-import { isString, isFunction } from '/@/utils/is';
+import { isFunction, isString } from '/@/utils/is';
 
 interface Options {
   setSelectedRowKeys: (keys: string[]) => void;
@@ -17,15 +17,15 @@ function getKey(
   rowKey: string | ((record: Record<string, any>) => string) | undefined,
   autoCreateKey?: boolean,
 ) {
-  if (!rowKey || autoCreateKey) {
+  if (!rowKey || autoCreateKey)
     return record[ROW_KEY];
-  }
-  if (isString(rowKey)) {
+
+  if (isString(rowKey))
     return record[rowKey];
-  }
-  if (isFunction(rowKey)) {
+
+  if (isFunction(rowKey))
     return record[rowKey(record)];
-  }
+
   return null;
 }
 
@@ -45,10 +45,12 @@ export function useCustomRow(
         e?.stopPropagation();
         function handleClick() {
           const { rowSelection, rowKey, clickToRowSelect } = unref(propsRef);
-          if (!rowSelection || !clickToRowSelect) return;
+          if (!rowSelection || !clickToRowSelect)
+            return;
           const keys = getSelectRowKeys();
           const key = getKey(record, rowKey, unref(getAutoCreateKey));
-          if (!key) return;
+          if (!key)
+            return;
 
           const isCheckbox = rowSelection.type === 'checkbox';
           if (isCheckbox) {
@@ -56,15 +58,17 @@ export function useCustomRow(
             const tr: HTMLElement = (e as MouseEvent)
               .composedPath?.()
               .find((dom: HTMLElement) => dom.tagName === 'TR') as HTMLElement;
-            if (!tr) return;
+            if (!tr)
+              return;
             // 找到Checkbox，检查是否为disabled
             const checkBox = tr.querySelector('input[type=checkbox]');
-            if (!checkBox || checkBox.hasAttribute('disabled')) return;
+            if (!checkBox || checkBox.hasAttribute('disabled'))
+              return;
             if (!keys.includes(key)) {
               setSelectedRowKeys([...keys, key]);
               return;
             }
-            const keyIndex = keys.findIndex((item) => item === key);
+            const keyIndex = keys.findIndex(item => item === key);
             keys.splice(keyIndex, 1);
             setSelectedRowKeys(keys);
             return;
@@ -73,9 +77,9 @@ export function useCustomRow(
           const isRadio = rowSelection.type === 'radio';
           if (isRadio) {
             if (!keys.includes(key)) {
-              if (keys.length) {
+              if (keys.length)
                 clearSelectedRowKeys();
-              }
+
               setSelectedRowKeys([key]);
               return;
             }

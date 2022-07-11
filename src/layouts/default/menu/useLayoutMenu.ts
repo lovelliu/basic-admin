@@ -1,6 +1,6 @@
 import type { Menu } from '/@/router/types';
 import type { Ref } from 'vue';
-import { watch, unref, ref, computed } from 'vue';
+import { computed, ref, unref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { MenuSplitTypeEnum } from '/@/enums/menuEnum';
 import { useThrottleFn } from '@vueuse/core';
@@ -36,14 +36,15 @@ export function useSplitMenu(splitType: Ref<MenuSplitTypeEnum>) {
   watch(
     [() => unref(currentRoute).path, () => unref(splitType)],
     async ([path]: [string, MenuSplitTypeEnum]) => {
-      if (unref(splitNotLeft) || unref(getIsMobile)) return;
+      if (unref(splitNotLeft) || unref(getIsMobile))
+        return;
 
       const { meta } = unref(currentRoute);
       const currentActiveMenu = meta.currentActiveMenu as string;
       let parentPath = await getCurrentParentPath(path);
-      if (!parentPath) {
+      if (!parentPath)
         parentPath = await getCurrentParentPath(currentActiveMenu);
-      }
+
       parentPath && throttleHandleSplitLeftMenu(parentPath);
     },
     {
@@ -66,14 +67,16 @@ export function useSplitMenu(splitType: Ref<MenuSplitTypeEnum>) {
   watch(
     () => getSplit.value,
     () => {
-      if (unref(splitNotLeft)) return;
+      if (unref(splitNotLeft))
+        return;
       genMenus();
     },
   );
 
   // Handle left menu split
   async function handleSplitLeftMenu(parentPath: string) {
-    if (unref(getSplitLeft) || unref(getIsMobile)) return;
+    if (unref(getSplitLeft) || unref(getIsMobile))
+      return;
 
     // spilt mode left
     const children = await getChildrenMenus(parentPath);
@@ -101,7 +104,6 @@ export function useSplitMenu(splitType: Ref<MenuSplitTypeEnum>) {
       const shallowMenus = await getShallowMenus();
 
       menusRef.value = shallowMenus;
-      return;
     }
   }
 

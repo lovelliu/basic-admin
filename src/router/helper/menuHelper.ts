@@ -1,14 +1,13 @@
-import { AppRouteModule } from '/@/router/types';
-import type { MenuModule, Menu, AppRouteRecordRaw } from '/@/router/types';
+import type { AppRouteModule, AppRouteRecordRaw, Menu, MenuModule } from '/@/router/types';
 import { findPath, treeMap } from '/@/utils/helper/treeHelper';
+import type { RouteParams } from 'vue-router';
 import { cloneDeep } from 'lodash-es';
 import { isUrl } from '/@/utils/is';
-import { RouteParams } from 'vue-router';
 import { toRaw } from 'vue';
 
 export function getAllParentPath<T = Recordable>(treeData: T[], path: string) {
-  const menuList = findPath(treeData, (n) => n.path === path) as Menu[];
-  return (menuList || []).map((item) => item.path);
+  const menuList = findPath(treeData, n => n.path === path) as Menu[];
+  return (menuList || []).map(item => item.path);
 }
 
 function joinParentPath(menus: Menu[], parentPath = '') {
@@ -47,18 +46,19 @@ export function transformRouteToMenu(
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
 
-  cloneRouteModList.forEach((item) => {
+  cloneRouteModList.forEach(item => {
     if (
       routerMapping &&
       item.meta.hideChildrenInMenu &&
       typeof item.redirect === 'string'
-    ) {
+    )
       item.path = item.redirect;
-    }
+
     if (item.meta?.single) {
       const realItem = item?.children?.[0];
       realItem && routeList.push(realItem);
-    } else {
+    }
+    else {
       routeList.push(item);
     }
   });
@@ -86,20 +86,19 @@ export function transformRouteToMenu(
 const menuParamRegex = /(?::)([\s\S]+?)((?=\/)|$)/g;
 export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
   const { path, paramPath } = toRaw(menu);
-  let realPath = paramPath ? paramPath : path;
+  let realPath = paramPath || path;
   const matchArr = realPath.match(menuParamRegex);
 
-  matchArr?.forEach((it) => {
+  matchArr?.forEach(it => {
     const realIt = it.substr(1);
-    if (params[realIt]) {
+    if (params[realIt])
       realPath = realPath.replace(`:${realIt}`, params[realIt] as string);
-    }
   });
   // save original param path.
-  if (!paramPath && matchArr && matchArr.length > 0) {
+  if (!paramPath && matchArr && matchArr.length > 0)
     menu.paramPath = path;
-  }
+
   menu.path = realPath;
   // children
-  menu.children?.forEach((item) => configureDynamicParamsMenu(item, params));
+  menu.children?.forEach(item => configureDynamicParamsMenu(item, params));
 }

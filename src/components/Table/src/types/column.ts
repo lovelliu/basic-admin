@@ -1,4 +1,4 @@
-import { VNodeChild } from 'vue';
+import type { VNodeChild } from 'vue';
 
 export interface ColumnFilterItem {
   text?: string;
@@ -72,9 +72,9 @@ export interface ColumnProps<T> {
    * @type any (slot)
    */
   filterDropdown?:
-    | VNodeChild
-    | JSX.Element
-    | ((props: FilterDropdownProps) => VNodeChild | JSX.Element);
+  | VNodeChild
+  | JSX.Element
+  | ((props: FilterDropdownProps) => VNodeChild | JSX.Element);
 
   /**
    * Whether filterDropdown is visible

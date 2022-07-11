@@ -1,9 +1,43 @@
+<script lang="ts">
+import type { PropType } from 'vue';
+import type { menuTypeList } from '../enum';
+import { defineComponent } from 'vue';
+
+import { Tooltip } from 'ant-design-vue';
+import { useDesign } from '/@/hooks/web/useDesign';
+
+export default defineComponent({
+  name: 'MenuTypePicker',
+  components: { Tooltip },
+  props: {
+    menuTypeList: {
+      type: Array as PropType<typeof menuTypeList>,
+      defualt: () => [],
+    },
+    handler: {
+      type: Function as PropType<Fn>,
+      default: () => ({}),
+    },
+    def: {
+      type: String,
+      default: '',
+    },
+  },
+  setup() {
+    const { prefixCls } = useDesign('setting-menu-type-picker');
+
+    return {
+      prefixCls,
+    };
+  },
+});
+</script>
+
 <template>
   <div :class="prefixCls">
     <template v-for="item in menuTypeList || []" :key="item.title">
       <Tooltip :title="item.title" placement="bottom">
         <div
-          @click="handler(item)"
           :class="[
             `${prefixCls}__item`,
             `${prefixCls}__item--${item.type}`,
@@ -11,46 +45,15 @@
               [`${prefixCls}__item--active`]: def === item.type,
             },
           ]"
+          @click="handler(item)"
         >
-          <div class="mix-sidebar"></div>
+          <div class="mix-sidebar" />
         </div>
       </Tooltip>
     </template>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent, PropType } from 'vue';
 
-  import { Tooltip } from 'ant-design-vue';
-  import { useDesign } from '/@/hooks/web/useDesign';
-
-  import { menuTypeList } from '../enum';
-  export default defineComponent({
-    name: 'MenuTypePicker',
-    components: { Tooltip },
-    props: {
-      menuTypeList: {
-        type: Array as PropType<typeof menuTypeList>,
-        defualt: () => [],
-      },
-      handler: {
-        type: Function as PropType<Fn>,
-        default: () => ({}),
-      },
-      def: {
-        type: String,
-        default: '',
-      },
-    },
-    setup() {
-      const { prefixCls } = useDesign('setting-menu-type-picker');
-
-      return {
-        prefixCls,
-      };
-    },
-  });
-</script>
 <style lang="less" scoped>
   @prefix-cls: ~'@{namespace}-setting-menu-type-picker';
 

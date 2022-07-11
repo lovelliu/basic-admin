@@ -36,32 +36,32 @@ export function useTabs(_router?: Router) {
 
   function getCurrentTab() {
     const route = unref(currentRoute);
-    return tabStore.getTabList.find((item) => item.fullPath === route.fullPath)!;
+    return tabStore.getTabList.find(item => item.fullPath === route.fullPath)!;
   }
 
   async function updateTabTitle(title: string, tab?: RouteLocationNormalized) {
     const canIUse = canIUseTabs;
-    if (!canIUse) {
+    if (!canIUse)
       return;
-    }
+
     const targetTab = tab || getCurrentTab();
     await tabStore.setTabTitle(title, targetTab);
   }
 
   async function updateTabPath(path: string, tab?: RouteLocationNormalized) {
     const canIUse = canIUseTabs;
-    if (!canIUse) {
+    if (!canIUse)
       return;
-    }
+
     const targetTab = tab || getCurrentTab();
     await tabStore.updateTabPath(path, targetTab);
   }
 
   async function handleTabAction(action: TableActionEnum, tab?: RouteLocationNormalized) {
     const canIUse = canIUseTabs;
-    if (!canIUse) {
+    if (!canIUse)
       return;
-    }
+
     const currentTab = getCurrentTab();
     switch (action) {
       case TableActionEnum.REFRESH:

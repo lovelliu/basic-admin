@@ -1,4 +1,5 @@
-import { ComputedRef, isRef, nextTick, Ref, ref, unref, watch } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
+import { isRef, nextTick, ref, unref, watch } from 'vue';
 import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
 import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
 import { useLayoutHeight } from '/@/layouts/default/content/useContentViewHeight';
@@ -70,10 +71,12 @@ export function useContentHeight(
         subtractHeight += marginBottom;
         subtractHeight += paddingTop;
         subtractHeight += paddingBottom;
-      } else if (direction === 'top') {
+      }
+      else if (direction === 'top') {
         subtractHeight += marginTop;
         subtractHeight += paddingTop;
-      } else {
+      }
+      else {
         subtractHeight += marginBottom;
         subtractHeight += paddingBottom;
       }
@@ -82,34 +85,34 @@ export function useContentHeight(
   }
 
   function getEl(element: any): Nullable<HTMLDivElement> {
-    if (element == null) {
+    if (element == null)
       return null;
-    }
+
     return (element instanceof HTMLDivElement ? element : element.$el) as HTMLDivElement;
   }
 
   async function calcContentHeight() {
-    if (!flag.value) {
+    if (!flag.value)
       return;
-    }
+
     // Add a delay to get the correct height
     await nextTick();
 
     const anchorEl = getEl(unref(anchorRef));
-    if (!anchorEl) {
+    if (!anchorEl)
       return;
-    }
+
     const { bottomIncludeBody } = getViewportOffset(anchorEl);
 
     // substract elements height
     let substractHeight = 0;
-    subtractHeightRefs.forEach((item) => {
+    subtractHeightRefs.forEach(item => {
       substractHeight += getEl(unref(item))?.offsetHeight ?? 0;
     });
 
     // subtract margins / paddings
     let substractSpaceHeight = calcSubtractSpace(anchorEl) ?? 0;
-    substractSpaceRefs.forEach((item) => {
+    substractSpaceRefs.forEach(item => {
       substractSpaceHeight += calcSubtractSpace(getEl(unref(item)));
     });
 
@@ -126,10 +129,12 @@ export function useContentHeight(
             if (!parent.classList.contains(upwardLvlOrClass)) {
               upwardSpaceHeight += calcSubtractSpace(parent, 'bottom');
               upward(parent, upwardLvlOrClass);
-            } else {
+            }
+            else {
               upwardSpaceHeight += calcSubtractSpace(parent, 'bottom');
             }
-          } else if (isNumber(upwardLvlOrClass)) {
+          }
+          else if (isNumber(upwardLvlOrClass)) {
             if (upwardLvlOrClass > 0) {
               upwardSpaceHeight += calcSubtractSpace(parent, 'bottom');
               upward(parent, --upwardLvlOrClass);
@@ -138,11 +143,10 @@ export function useContentHeight(
         }
       }
     }
-    if (isRef(upwardSpace)) {
+    if (isRef(upwardSpace))
       upward(anchorEl, unref(upwardSpace));
-    } else {
+    else
       upward(anchorEl, upwardSpace);
-    }
 
     let height =
       bottomIncludeBody -
@@ -154,15 +158,14 @@ export function useContentHeight(
 
     // compensation height
     const calcCompensationHeight = () => {
-      compensationHeight.elements?.forEach((item) => {
+      compensationHeight.elements?.forEach(item => {
         height += getEl(unref(item))?.offsetHeight ?? 0;
       });
     };
-    if (compensationHeight.useLayoutFooter && unref(layoutFooterHeightRef) > 0) {
+    if (compensationHeight.useLayoutFooter && unref(layoutFooterHeightRef) > 0)
       calcCompensationHeight();
-    } else {
+    else
       calcCompensationHeight();
-    }
 
     contentHeight.value = height;
   }

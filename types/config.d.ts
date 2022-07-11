@@ -7,7 +7,12 @@ import {
   ThemeEnum,
 } from '/@/enums/appEnum';
 import { CacheTypeEnum } from '/@/enums/cacheEnum';
-import { MenuModeEnum, MenuTypeEnum, MixSidebarTriggerEnum, TriggerEnum } from '/@/enums/menuEnum';
+import {
+  MenuModeEnum,
+  MenuTypeEnum,
+  MixSidebarTriggerEnum,
+  TriggerEnum,
+} from '/@/enums/menuEnum';
 
 export type LocaleType = 'zh_CN' | 'ja' | 'en' | 'ru' | 'ko';
 

@@ -1,10 +1,10 @@
 import type { AppRouteRecordRaw } from '/@/router/types';
 // import { t } from '/@/hooks/web/useI18n';
 import {
-  REDIRECT_NAME,
-  LAYOUT,
   EXCEPTION_COMPONENT,
+  LAYOUT,
   PAGE_NOT_FOUND_NAME,
+  REDIRECT_NAME,
 } from '/@/router/constant';
 
 // // 404 on a page

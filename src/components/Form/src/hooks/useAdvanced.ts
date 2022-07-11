@@ -1,9 +1,9 @@
-import { ComputedRef, Ref, watch } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
 import type { ColEx } from '../types';
 
-import { unref, computed } from 'vue';
-import { AdvanceState } from '../types/hooks';
+import type { AdvanceState } from '../types/hooks';
+import { computed, unref, watch } from 'vue';
 import { useBreakpoint } from '/@/hooks/event/useBreakpoint';
 import { isBoolean, isFunction, isNumber, isObject } from '/@/utils/is';
 import { useDebounceFn } from '@vueuse/core';
@@ -30,11 +30,13 @@ export default function ({
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint();
 
   const getEmptySpan = computed((): number => {
-    if (!advanceState.isAdvanced) return 0;
+    if (!advanceState.isAdvanced)
+      return 0;
 
     const emptySpan = unref(getProps).emptySpan || 0;
 
-    if (isNumber(emptySpan)) return emptySpan;
+    if (isNumber(emptySpan))
+      return emptySpan;
     if (isObject(emptySpan)) {
       const { span = 0 } = emptySpan;
       const screen = unref(screenRef) as string;
@@ -51,9 +53,8 @@ export default function ({
     [() => unref(getSchema), () => advanceState.isAdvanced, () => unref(realWidthRef)],
     () => {
       const { showAdvancedButton } = unref(getProps);
-      if (showAdvancedButton) {
+      if (showAdvancedButton)
         debounceUpdateAdvanced();
-      }
     },
     { immediate: true },
   );
@@ -71,9 +72,12 @@ export default function ({
     const lgWidth = parseInt(itemCol.lg as string) || mdWidth;
     const xlWidth = parseInt(itemCol.xl as string) || lgWidth;
     const xxlWidth = parseInt(itemCol.xxl as string) || xlWidth;
-    if (width <= screenEnum.LG) itemColSum += mdWidth;
-    else if (width < screenEnum.XL) itemColSum += lgWidth;
-    else if (width < screenEnum.XXL) itemColSum += xlWidth;
+    if (width <= screenEnum.LG)
+      itemColSum += mdWidth;
+    else if (width < screenEnum.XL)
+      itemColSum += lgWidth;
+    else if (width < screenEnum.XXL)
+      itemColSum += xlWidth;
     else itemColSum += xxlWidth;
 
     if (isLastAction) {
@@ -81,22 +85,21 @@ export default function ({
       if (itemColSum <= BASIC_COL_LEN * 2) {
         advanceState.hideAdvanceBtn = true;
         advanceState.isAdvanced = true;
-      } else if (
+      }
+      else if (
         itemColSum > BASIC_COL_LEN * 2 &&
         itemColSum <= BASIC_COL_LEN * (unref(getProps).autoAdvancedLine || 3)
-      )
-        advanceState.hideAdvanceBtn = false;
+      ) { advanceState.hideAdvanceBtn = false; }
       else if (!advanceState.isLoad) {
         advanceState.isLoad = true;
         advanceState.isAdvanced = !advanceState.isAdvanced;
       }
       return { isAdvanced: advanceState.isAdvanced, itemColSum };
     }
-    if (itemColSum > BASIC_COL_LEN * (unref(getProps).alwaysShowLines || 1)) {
+    if (itemColSum > BASIC_COL_LEN * (unref(getProps).alwaysShowLines || 1))
       return { isAdvanced: advanceState.isAdvanced, itemColSum };
-    } else {
+    else
       return { isAdvanced: true, itemColSum };
-    }
   }
 
   function updateAdvanced() {
@@ -108,7 +111,8 @@ export default function ({
       const { show, colProps } = schema;
       let isShow = true;
 
-      if (isBoolean(show)) isShow = show;
+      if (isBoolean(show))
+        isShow = show;
 
       if (isFunction(show)) {
         isShow = show({
@@ -129,9 +133,9 @@ export default function ({
         );
 
         itemColSum = sum || 0;
-        if (isAdvanced) {
+        if (isAdvanced)
           realItemColSum = itemColSum;
-        }
+
         schema.isAdvanced = isAdvanced;
       }
     }

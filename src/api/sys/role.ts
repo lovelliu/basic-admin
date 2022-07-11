@@ -1,4 +1,4 @@
-import { GetMenuListResultModel, RoleList, RoleItem } from './model/systemModel';
+import type { GetMenuListResultModel, RoleItem, RoleList } from './model/systemModel';
 import { defHttp } from '/@/utils/request';
 
 enum Api {
@@ -22,9 +22,9 @@ export const getMenuList = () =>
 
 export const getPermCode = () => defHttp.get<string[]>({ url: Api.GetPermCode });
 
-export const addRole = (data) => defHttp.post({ url: Api.AddRole, data });
+export const addRole = data => defHttp.post({ url: Api.AddRole, data });
 
-export const updateRole = (data) => defHttp.put({ url: Api.UpdateRole, data });
+export const updateRole = data => defHttp.put({ url: Api.UpdateRole, data });
 
 export const deleteRole = (id: number) =>
   defHttp.delete({ url: Api.DeleteRole, data: { id } });

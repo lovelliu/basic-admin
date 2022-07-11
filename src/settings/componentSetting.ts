@@ -33,7 +33,8 @@ export default {
           // Sorting method passed to the background asc/desc
           order,
         };
-      } else {
+      }
+      else {
         return {};
       }
     },

@@ -1,45 +1,45 @@
 <script lang="ts" setup>
-  import { computed, unref } from 'vue';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-  import {
-    updateHeaderBgColor,
-    updateSidebarBgColor,
-  } from '/@/logics/theme/updateBackground';
-  import { updateDarkTheme } from '/@/logics/theme/dark';
-  import { ThemeEnum } from '/@/enums/appEnum';
+import { computed, unref } from 'vue';
+import { useDesign } from '/@/hooks/web/useDesign';
+import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+import {
+  updateHeaderBgColor,
+  updateSidebarBgColor,
+} from '/@/logics/theme/updateBackground';
+import { updateDarkTheme } from '/@/logics/theme/dark';
+import { ThemeEnum } from '/@/enums/appEnum';
 
-  const { prefixCls } = useDesign('dark-switch');
-  const { getDarkMode, setDarkMode, getShowDarkModeToggle } = useRootSetting();
+const { prefixCls } = useDesign('dark-switch');
+const { getDarkMode, setDarkMode, getShowDarkModeToggle } = useRootSetting();
 
-  const isDark = computed(() => getDarkMode.value === ThemeEnum.DARK);
+const isDark = computed(() => getDarkMode.value === ThemeEnum.DARK);
 
-  const getClass = computed(() => [prefixCls, { [`${prefixCls}--dark`]: unref(isDark) }]);
+const getClass = computed(() => [prefixCls, { [`${prefixCls}--dark`]: unref(isDark) }]);
 
-  function toggleDarkMode() {
-    const darkMode =
+function toggleDarkMode() {
+  const darkMode =
       getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK;
-    setDarkMode(darkMode);
-    updateDarkTheme(darkMode);
-    updateHeaderBgColor();
-    updateSidebarBgColor();
-  }
+  setDarkMode(darkMode);
+  updateDarkTheme(darkMode);
+  updateHeaderBgColor();
+  updateSidebarBgColor();
+}
 </script>
 
 <template>
   <div v-if="getShowDarkModeToggle" :class="getClass">
     <span class="toggle" @click="toggleDarkMode">
       <span class="toggle-handler">
-        <span class="crater crater--1"></span>
-        <span class="crater crater--2"></span>
-        <span class="crater crater--3"></span>
+        <span class="crater crater--1" />
+        <span class="crater crater--2" />
+        <span class="crater crater--3" />
       </span>
-      <span class="star star--1"></span>
-      <span class="star star--2"></span>
-      <span class="star star--3"></span>
-      <span class="star star--4"></span>
-      <span class="star star--5"></span>
-      <span class="star star--6"></span>
+      <span class="star star--1" />
+      <span class="star star--2" />
+      <span class="star star--3" />
+      <span class="star star--4" />
+      <span class="star star--5" />
+      <span class="star star--6" />
     </span>
   </div>
 </template>

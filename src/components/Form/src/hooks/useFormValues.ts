@@ -1,7 +1,7 @@
-import { isArray, isFunction, isObject, isString, isNullOrUndef } from '/@/utils/is';
+import { isArray, isFunction, isNullOrUndef, isObject, isString } from '/@/utils/is';
 import { dateUtil } from '/@/utils/dateUtil';
 import { unref } from 'vue';
-import type { Ref, ComputedRef } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
 import { set } from 'lodash-es';
 
@@ -19,28 +19,27 @@ export function useFormValues({
 }: UseFormValuesContext) {
   // Processing form values
   function handleFormValues(values: Recordable) {
-    if (!isObject(values)) {
+    if (!isObject(values))
       return {};
-    }
+
     const res: Recordable = {};
     for (const item of Object.entries(values)) {
       let [, value] = item;
       const [key] = item;
-      if (!key || (isArray(value) && value.length === 0) || isFunction(value)) {
+      if (!key || (isArray(value) && value.length === 0) || isFunction(value))
         continue;
-      }
-      const transformDateFunc = unref(getProps).transformDateFunc;
-      if (isObject(value)) {
-        value = transformDateFunc?.(value);
-      }
 
-      if (isArray(value) && value[0]?.format && value[1]?.format) {
-        value = value.map((item) => transformDateFunc?.(item));
-      }
+      const transformDateFunc = unref(getProps).transformDateFunc;
+      if (isObject(value))
+        value = transformDateFunc?.(value);
+
+      if (isArray(value) && value[0]?.format && value[1]?.format)
+        value = value.map(item => transformDateFunc?.(item));
+
       // Remove spaces
-      if (isString(value)) {
+      if (isString(value))
         value = value.trim();
-      }
+
       set(res, key, value);
     }
     return handleRangeTimeValue(res);
@@ -52,14 +51,12 @@ export function useFormValues({
   function handleRangeTimeValue(values: Recordable) {
     const fieldMapToTime = unref(getProps).fieldMapToTime;
 
-    if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
+    if (!fieldMapToTime || !Array.isArray(fieldMapToTime))
       return values;
-    }
 
     for (const [field, [startTimeKey, endTimeKey], format = 'YYYY-MM-DD'] of fieldMapToTime) {
-      if (!field || !startTimeKey || !endTimeKey || !values[field]) {
+      if (!field || !startTimeKey || !endTimeKey || !values[field])
         continue;
-      }
 
       const [startTime, endTime]: string[] = values[field];
 
@@ -74,7 +71,7 @@ export function useFormValues({
   function initDefault() {
     const schemas = unref(getSchema);
     const obj: Recordable = {};
-    schemas.forEach((item) => {
+    schemas.forEach(item => {
       const { defaultValue } = item;
       if (!isNullOrUndef(defaultValue)) {
         obj[item.field] = defaultValue;

@@ -2,9 +2,9 @@ import { ContentEnum, RouterTransitionEnum } from '/@/enums/appEnum';
 import {
   MenuModeEnum,
   MenuTypeEnum,
+  MixSidebarTriggerEnum,
   TopMenuAlignEnum,
   TriggerEnum,
-  MixSidebarTriggerEnum,
 } from '/@/enums/menuEnum';
 
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -95,9 +95,9 @@ export const getMenuTriggerOptions = (hideTop: boolean) => {
       value: TriggerEnum.FOOTER,
       label: t('layout.setting.menuTriggerBottom'),
     },
-    ...(hideTop
-      ? []
-      : [
+    ...(hideTop ?
+        [] :
+        [
           {
             value: TriggerEnum.HEADER,
             label: t('layout.setting.menuTriggerTop'),
@@ -113,7 +113,7 @@ export const routerTransitionOptions = [
   RouterTransitionEnum.FADE_SIDE,
   RouterTransitionEnum.FADE_BOTTOM,
   RouterTransitionEnum.FADE_SCALE,
-].map((item) => {
+].map(item => {
   return {
     label: item,
     value: item,

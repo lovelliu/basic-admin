@@ -1,21 +1,23 @@
 import type { BasicTableProps, FetchParams, SorterResult } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
-import {
-  ref,
-  unref,
+import type {
   ComputedRef,
+  Ref,
+} from 'vue';
+import {
   computed,
   onMounted,
-  watch,
   reactive,
-  Ref,
+  ref,
+  unref,
+  watch,
   watchEffect,
 } from 'vue';
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
 import { buildUUID } from '/@/utils/uuid';
-import { isFunction, isBoolean } from '/@/utils/is';
-import { get, cloneDeep, merge } from 'lodash-es';
-import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
+import { isBoolean, isFunction } from '/@/utils/is';
+import { cloneDeep, get, merge } from 'lodash-es';
+import { FETCH_SETTING, PAGE_SIZE, ROW_KEY } from '../const';
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>;
@@ -70,9 +72,9 @@ export function useDataSource(
     sorter: SorterResult,
   ) {
     const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
-    if (clearSelectOnPageChange) {
+    if (clearSelectOnPageChange)
       clearSelectedRowKeys();
-    }
+
     setPagination(pagination);
 
     const params: Recordable = {};
@@ -91,14 +93,14 @@ export function useDataSource(
   }
 
   function setTableKey(items: any[]) {
-    if (!items || !Array.isArray(items)) return;
-    items.forEach((item) => {
-      if (!item[ROW_KEY]) {
+    if (!items || !Array.isArray(items))
+      return;
+    items.forEach(item => {
+      if (!item[ROW_KEY])
         item[ROW_KEY] = buildUUID();
-      }
-      if (item.children && item.children.length) {
+
+      if (item.children && item.children.length)
         setTableKey(item.children);
-      }
     });
   }
 
@@ -113,9 +115,9 @@ export function useDataSource(
 
   const getDataSourceRef = computed(() => {
     const dataSource = unref(dataSourceRef);
-    if (!dataSource || dataSource.length === 0) {
+    if (!dataSource || dataSource.length === 0)
       return unref(dataSourceRef);
-    }
+
     if (unref(getAutoCreateKey)) {
       const firstItem = dataSource[0];
       const lastItem = dataSource[dataSource.length - 1];
@@ -123,13 +125,12 @@ export function useDataSource(
       if (firstItem && lastItem) {
         if (!firstItem[ROW_KEY] || !lastItem[ROW_KEY]) {
           const data = cloneDeep(unref(dataSourceRef));
-          data.forEach((item) => {
-            if (!item[ROW_KEY]) {
+          data.forEach(item => {
+            if (!item[ROW_KEY])
               item[ROW_KEY] = buildUUID();
-            }
-            if (item.children && item.children.length) {
+
+            if (item.children && item.children.length)
               setTableKey(item.children);
-            }
           });
           dataSourceRef.value = data;
         }
@@ -140,9 +141,9 @@ export function useDataSource(
 
   async function updateTableData(index: number, key: string, value: any) {
     const record = dataSourceRef.value[index];
-    if (record) {
+    if (record)
       dataSourceRef.value[index][key] = value;
-    }
+
     return dataSourceRef.value[index];
   }
 
@@ -154,37 +155,41 @@ export function useDataSource(
 
     if (row) {
       for (const field in row) {
-        if (Reflect.has(record, field)) row[field] = record[field];
+        if (Reflect.has(record, field))
+          row[field] = record[field];
       }
+
       return row;
     }
   }
 
   function deleteTableDataRecord(rowKey: string | number | string[] | number[]) {
-    if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
+    if (!dataSourceRef.value || dataSourceRef.value.length === 0)
+      return;
     const rowKeyName = unref(getRowKey);
-    if (!rowKeyName) return;
+    if (!rowKeyName)
+      return;
     const rowKeys = !Array.isArray(rowKey) ? [rowKey] : rowKey;
     for (const key of rowKeys) {
-      let index: number | undefined = dataSourceRef.value.findIndex((row) => {
+      let index: number | undefined = dataSourceRef.value.findIndex(row => {
         let targetKeyName: string;
-        if (typeof rowKeyName === 'function') {
+        if (typeof rowKeyName === 'function')
           targetKeyName = rowKeyName(row);
-        } else {
+        else
           targetKeyName = rowKeyName as string;
-        }
+
         return row[targetKeyName] === key;
       });
-      if (index >= 0) {
+      if (index >= 0)
         dataSourceRef.value.splice(index, 1);
-      }
-      index = unref(propsRef).dataSource?.findIndex((row) => {
+
+      index = unref(propsRef).dataSource?.findIndex(row => {
         let targetKeyName: string;
-        if (typeof rowKeyName === 'function') {
+        if (typeof rowKeyName === 'function')
           targetKeyName = rowKeyName(row);
-        } else {
+        else
           targetKeyName = rowKeyName as string;
-        }
+
         return row[targetKeyName] === key;
       });
       if (typeof index !== 'undefined' && index !== -1)
@@ -206,10 +211,12 @@ export function useDataSource(
   }
 
   function findTableDataRecord(rowKey: string | number) {
-    if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
+    if (!dataSourceRef.value || dataSourceRef.value.length === 0)
+      return;
 
     const rowKeyName = unref(getRowKey);
-    if (!rowKeyName) return;
+    if (!rowKeyName)
+      return;
 
     const { childrenColumnName = 'children' } = unref(propsRef);
 
@@ -221,7 +228,8 @@ export function useDataSource(
             ret = r;
             return true;
           }
-        } else {
+        }
+        else {
           if (Reflect.has(r, rowKeyName) && r[rowKeyName] === rowKey) {
             ret = r;
             return true;
@@ -253,7 +261,8 @@ export function useDataSource(
       useSearchForm,
       pagination,
     } = unref(propsRef);
-    if (!api || !isFunction(api)) return;
+    if (!api || !isFunction(api))
+      return;
     try {
       setLoading(true);
       const { pageField, sizeField, listField, totalField } = Object.assign(
@@ -269,7 +278,8 @@ export function useDataSource(
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
-      } else {
+      }
+      else {
         pageParams[pageField] = (opt && opt.page) || current;
         pageParams[sizeField] = pageSize;
       }
@@ -287,9 +297,8 @@ export function useDataSource(
         opt?.sortInfo ?? {},
         opt?.filterInfo ?? {},
       );
-      if (beforeFetch && isFunction(beforeFetch)) {
+      if (beforeFetch && isFunction(beforeFetch))
         params = (await beforeFetch(params)) || params;
-      }
 
       const res = await api(params);
       rawDataSourceRef.value = res;
@@ -310,9 +319,9 @@ export function useDataSource(
         }
       }
 
-      if (afterFetch && isFunction(afterFetch)) {
+      if (afterFetch && isFunction(afterFetch))
         resultItems = (await afterFetch(resultItems)) || resultItems;
-      }
+
       dataSourceRef.value = resultItems;
       setPagination({
         total: resultTotal || 0,
@@ -327,13 +336,15 @@ export function useDataSource(
         total: resultTotal,
       });
       return resultItems;
-    } catch (error) {
+    }
+    catch (error) {
       emit('fetch-error', error);
       dataSourceRef.value = [];
       setPagination({
         total: 0,
       });
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   }

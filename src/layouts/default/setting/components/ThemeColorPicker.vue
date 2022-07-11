@@ -1,8 +1,46 @@
+<script lang="ts">
+import type { PropType } from 'vue';
+import type { HandlerEnum } from '../enum';
+import { defineComponent } from 'vue';
+import { CheckOutlined } from '@ant-design/icons-vue';
+
+import { useDesign } from '/@/hooks/web/useDesign';
+
+import { baseHandler } from '../handler';
+
+export default defineComponent({
+  name: 'ThemeColorPicker',
+  components: { CheckOutlined },
+  props: {
+    colorList: {
+      type: Array as PropType<string[]>,
+      defualt: [],
+    },
+    event: {
+      type: Number as PropType<HandlerEnum>,
+    },
+    def: {
+      type: String,
+    },
+  },
+  setup(props) {
+    const { prefixCls } = useDesign('setting-theme-picker');
+
+    function handleClick(color: string) {
+      props.event && baseHandler(props.event, color);
+    }
+    return {
+      prefixCls,
+      handleClick,
+    };
+  },
+});
+</script>
+
 <template>
   <div :class="prefixCls">
     <template v-for="color in colorList || []" :key="color">
       <span
-        @click="handleClick(color)"
         :class="[
           `${prefixCls}__item`,
           {
@@ -10,49 +48,14 @@
           },
         ]"
         :style="{ background: color }"
+        @click="handleClick(color)"
       >
         <CheckOutlined />
       </span>
     </template>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent, PropType } from 'vue';
-  import { CheckOutlined } from '@ant-design/icons-vue';
 
-  import { useDesign } from '/@/hooks/web/useDesign';
-
-  import { baseHandler } from '../handler';
-  import { HandlerEnum } from '../enum';
-
-  export default defineComponent({
-    name: 'ThemeColorPicker',
-    components: { CheckOutlined },
-    props: {
-      colorList: {
-        type: Array as PropType<string[]>,
-        defualt: [],
-      },
-      event: {
-        type: Number as PropType<HandlerEnum>,
-      },
-      def: {
-        type: String,
-      },
-    },
-    setup(props) {
-      const { prefixCls } = useDesign('setting-theme-picker');
-
-      function handleClick(color: string) {
-        props.event && baseHandler(props.event, color);
-      }
-      return {
-        prefixCls,
-        handleClick,
-      };
-    },
-  });
-</script>
 <style lang="less">
   @prefix-cls: ~'@{namespace}-setting-theme-picker';
 

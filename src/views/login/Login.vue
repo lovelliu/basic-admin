@@ -1,38 +1,37 @@
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { AppLogo } from '/@/components/Application';
-  import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
-  import { useGlobSetting } from '/@/hooks/setting';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useLocaleStore } from '/@/store/modules/locale';
-  import LoginForm from './LoginForm.vue';
+import { computed } from 'vue';
+import { AppDarkModeToggle, AppLocalePicker, AppLogo } from '/@/components/Application';
+import { useGlobSetting } from '/@/hooks/setting';
+import { useDesign } from '/@/hooks/web/useDesign';
+import { useI18n } from '/@/hooks/web/useI18n';
+import { useLocaleStore } from '/@/store/modules/locale';
+import LoginForm from './LoginForm.vue';
 
-  defineProps({
-    sessionTimeout: {
-      type: Boolean,
-    },
-  });
+defineProps({
+  sessionTimeout: {
+    type: Boolean,
+  },
+});
 
-  const globSetting = useGlobSetting();
-  const { prefixCls } = useDesign('login');
-  const { t } = useI18n();
-  const localStore = useLocaleStore();
-  const showLocale = localStore.getShowPicker;
-  const title = computed(() => globSetting?.title ?? '');
+const globSetting = useGlobSetting();
+const { prefixCls } = useDesign('login');
+const { t } = useI18n();
+const localStore = useLocaleStore();
+const showLocale = localStore.getShowPicker;
+const title = computed(() => globSetting?.title ?? '');
 </script>
 
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
     <AppLocalePicker
-      class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
-      :showText="false"
       v-if="!sessionTimeout && showLocale"
+      class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
+      :show-text="false"
     />
-    <AppDarkModeToggle class="absolute top-3 right-10 enter-x" v-if="!sessionTimeout" />
+    <AppDarkModeToggle v-if="!sessionTimeout" class="absolute top-3 right-10 enter-x" />
 
     <span class="-enter-x xl:hidden">
-      <AppLogo :alwaysShowTitle="false" />
+      <AppLogo :always-show-title="false" />
     </span>
 
     <div class="container relative h-full py-2 mx-auto sm:px-10">
@@ -44,7 +43,7 @@
               src="../../assets/svg/login-box-bg.svg"
               class="w-1/2 -enter-x -mt-16"
               :alt="title"
-            />
+            >
             <div class="mt-10 font-medium text-white -enter-x">
               <span class="inline-block mt-4 text-3xl">
                 {{ t('sys.login.signInTitle') }}

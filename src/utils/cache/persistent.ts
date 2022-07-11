@@ -2,22 +2,24 @@ import type { LockInfo, UserInfo } from '/#/store';
 import type { ProjectConfig } from '/#/config';
 import type { RouteLocationNormalized } from 'vue-router';
 
-import { createLocalStorage, createSessionStorage } from './';
-import { Memory } from './memory';
-import {
-  TOKEN_KEY,
-  USER_INFO_KEY,
-  ROLES_KEY,
-  LOCK_INFO_KEY,
+import type {
+  MULTIPLE_TABS_KEY,
   PROJ_CFG_KEY,
+  RETOKEN_KEY,
+  ROLES_KEY,
+} from '/@/enums/cacheEnum';
+import {
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
-  MULTIPLE_TABS_KEY,
-  RETOKEN_KEY,
+  LOCK_INFO_KEY,
+  TOKEN_KEY,
+  USER_INFO_KEY,
 } from '/@/enums/cacheEnum';
 import { DEFAULT_CACHE_TIME } from '/@/settings/encryptionSetting';
 import { toRaw } from 'vue';
-import { pick, omit } from 'lodash-es';
+import { omit, pick } from 'lodash-es';
+import { Memory } from './memory';
+import { createLocalStorage, createSessionStorage } from './';
 
 interface BasicStore {
   [TOKEN_KEY]: string | number | undefined | null;
@@ -123,13 +125,11 @@ function storageChange(e: any) {
   }
 
   if (!!newValue && !!oldValue) {
-    if (APP_LOCAL_CACHE_KEY === key) {
+    if (APP_LOCAL_CACHE_KEY === key)
       Persistent.clearLocal();
-    }
 
-    if (APP_SESSION_CACHE_KEY === key) {
+    if (APP_SESSION_CACHE_KEY === key)
       Persistent.clearSession();
-    }
   }
 }
 

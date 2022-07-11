@@ -38,14 +38,14 @@ export function initAppConfigStore() {
     menuSetting: { bgColor } = {},
   } = projCfg;
   try {
-    if (themeColor && themeColor !== primaryColor) {
+    if (themeColor && themeColor !== primaryColor)
       changeTheme(themeColor);
-    }
 
     grayMode && updateGrayMode(grayMode);
     colorWeak && updateColorWeak(colorWeak);
-  } catch (error) {
-    console.log(error);
+  }
+  catch (error) {
+    // console.log(error);
   }
   appStore.setProjectConfig(projCfg);
 
@@ -54,7 +54,8 @@ export function initAppConfigStore() {
   if (darkMode === ThemeEnum.DARK) {
     updateHeaderBgColor();
     updateSidebarBgColor();
-  } else {
+  }
+  else {
     headerBgColor && updateHeaderBgColor(headerBgColor);
     bgColor && updateSidebarBgColor(bgColor);
   }
@@ -75,10 +76,9 @@ export function clearObsoleteStorage() {
   const shortPrefix = getStorageShortName();
 
   [localStorage, sessionStorage].forEach((item: Storage) => {
-    Object.keys(item).forEach((key) => {
-      if (key && key.startsWith(commonPrefix) && !key.startsWith(shortPrefix)) {
+    Object.keys(item).forEach(key => {
+      if (key && key.startsWith(commonPrefix) && !key.startsWith(shortPrefix))
         item.removeItem(key);
-      }
     });
   });
 }

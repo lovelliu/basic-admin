@@ -1,7 +1,7 @@
-import { VNode, defineComponent } from 'vue';
+import type { VNode } from 'vue';
 import type { LoadingProps } from './typing';
+import { createVNode, defineComponent, h, reactive, render } from 'vue';
 
-import { createVNode, render, reactive, h } from 'vue';
 import Loading from './Loading.vue';
 
 export function createLoading(
@@ -29,26 +29,26 @@ export function createLoading(
     setTimeout(() => {
       render(vm, document.createElement('div'));
     }, 0);
-  } else {
+  }
+  else {
     render(vm, document.createElement('div'));
   }
 
   function close() {
-    if (vm?.el && vm.el.parentNode) {
+    if (vm?.el && vm.el.parentNode)
       vm.el.parentNode.removeChild(vm.el);
-    }
   }
 
   function open(target: HTMLElement = document.body) {
-    if (!vm || !vm.el) {
+    if (!vm || !vm.el)
       return;
-    }
+
     target.appendChild(vm.el as HTMLElement);
   }
 
-  if (target) {
+  if (target)
     open(target);
-  }
+
   return {
     vm,
     close,

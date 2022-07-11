@@ -1,9 +1,9 @@
 import { defHttp } from '/@/utils/request';
-import { CaptchaModel, LoginParams, LoginResultModel } from './model/userModel';
+import type { CaptchaModel, LoginParams, LoginResultModel } from './model/userModel';
 
-import { UserInfo } from '/#/store';
-import { GetUserListParams } from './model/systemModel';
-import { VAxios } from '/@/utils/request/Axios';
+import type { UserInfo } from '/#/store';
+import type { GetUserListParams } from './model/systemModel';
+import type { VAxios } from '/@/utils/request/Axios';
 
 enum Api {
   GetCaptcha = '/auth/captcha/img',
@@ -78,8 +78,8 @@ export const enableUser = (id: number) =>
 export const isUserExist = (username: string) =>
   defHttp.post({ url: Api.isUserExist, data: { username } });
 
-export const addUser = (data) => defHttp.post({ url: Api.AddUser, data });
+export const addUser = data => defHttp.post({ url: Api.AddUser, data });
 
-export const updateUser = (data) => defHttp.put({ url: Api.UpdateUser, data });
+export const updateUser = data => defHttp.put({ url: Api.UpdateUser, data });
 
-export const getUsername = (id) => defHttp.get({ url: `${Api.GetUsername}/${id}` });
+export const getUsername = id => defHttp.get({ url: `${Api.GetUsername}/${id}` });

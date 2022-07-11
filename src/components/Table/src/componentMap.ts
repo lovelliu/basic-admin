@@ -1,11 +1,11 @@
 import type { Component } from 'vue';
 import {
-  Input,
-  Select,
   Checkbox,
-  InputNumber,
-  Switch,
   DatePicker,
+  Input,
+  InputNumber,
+  Select,
+  Switch,
   TimePicker,
 } from 'ant-design-vue';
 import type { ComponentType } from './types/componentType';

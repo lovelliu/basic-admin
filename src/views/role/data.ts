@@ -1,6 +1,6 @@
 import { Tag } from 'ant-design-vue';
 import { h } from 'vue';
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import type { BasicColumn, FormSchema } from '/@/components/Table';
 import { formatToDateTime } from '/@/utils/dateUtil';
 
 export const columns: BasicColumn<any>[] = [
