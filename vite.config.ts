@@ -1,7 +1,7 @@
 import type { ConfigEnv, UserConfig } from 'vite';
+import { resolve } from 'path';
 import { loadEnv } from 'vite';
 import { createVitePlugins } from './build/vite/plugin';
-import { resolve } from 'path';
 import { wrapperEnv } from './build/utils';
 import { createProxy } from './build/vite/proxy';
 import { OUTPUT_DIR } from './build/constants';
@@ -15,7 +15,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
   const env = loadEnv(mode, root);
   const viteEnv = wrapperEnv(env);
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = viteEnv;
 
   const isBuild = command === 'build';
   return {
@@ -29,12 +29,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
         {
           find: /\/@\//,
-          replacement: pathResolve('src') + '/',
+          replacement: `${pathResolve('src')}/`,
         },
         // /#/xxxx => types/xxxx
         {
           find: /\/#\//,
-          replacement: pathResolve('types') + '/',
+          replacement: `${pathResolve('types')}/`,
         },
       ],
     },
@@ -58,12 +58,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       outDir: OUTPUT_DIR,
       reportCompressedSize: false,
       chunkSizeWarningLimit: 2000,
-      terserOptions: {
-        compress: {
-          drop_console: VITE_DROP_CONSOLE,
-          keep_infinity: true,
-        },
-      },
+      // terserOptions: {
+      //   compress: {
+      //     drop_console: VITE_DROP_CONSOLE,
+      //     keep_infinity: true,
+      //   },
+      // },
     },
     optimizeDeps: {
       include: [
