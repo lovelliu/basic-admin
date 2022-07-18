@@ -1,6 +1,3 @@
-import 'virtual:windi.css';
-import '/@/design/index.less';
-import 'virtual:svg-icons-register';
 import { createApp } from 'vue';
 import App from './App.vue';
 import { setupStore } from './store';
@@ -11,6 +8,9 @@ import { router, setupRouter } from '/@/router';
 import { initAppConfigStore } from '/@/logics/initAppConfig';
 import { registerGlobComp } from '/@/components/registerGlobComp';
 import { setupRouterGuard } from './router/guard';
+import '/@/design/index.less';
+import 'uno.css';
+import 'virtual:svg-icons-register';
 
 async function bootstrap() {
   const app = createApp(App);

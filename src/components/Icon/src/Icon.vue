@@ -13,7 +13,7 @@ import {
   watch,
 } from 'vue';
 import SvgIcon from './SvgIcon.vue';
-import Iconify from '@purge-icons/generated';
+// import Iconify from '@purge-icons/generated';
 import { isString } from '/@/utils/is';
 import { propTypes } from '/@/utils/propTypes';
 
@@ -53,18 +53,18 @@ export default defineComponent({
       if (!icon)
         return;
 
-      const svg = Iconify.renderSVG(icon, {});
-      if (svg) {
-        el.textContent = '';
-        el.appendChild(svg);
-      }
-      else {
-        const span = document.createElement('span');
-        span.className = 'iconify';
-        span.dataset.icon = icon;
-        el.textContent = '';
-        el.appendChild(span);
-      }
+      // const svg = Iconify.renderSVG(icon, {});
+      // if (svg) {
+      //   el.textContent = '';
+      //   el.appendChild(svg);
+      // }
+      // else {
+      const span = document.createElement('span');
+      span.className = 'iconify';
+      span.dataset.icon = icon;
+      el.textContent = '';
+      el.appendChild(span);
+      // }
     };
 
     const getWrapStyle = computed((): CSSProperties => {

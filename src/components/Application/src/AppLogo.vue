@@ -5,6 +5,7 @@ import { useGo } from '/@/hooks/web/usePage';
 import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 import { useDesign } from '/@/hooks/web/useDesign';
 import { PageEnum } from '/@/enums/pageEnum';
+import Icon from '../../Icon/src/Icon.vue';
 
 const props = defineProps({
   theme: { type: String, validator: (v: string) => ['light', 'dark'].includes(v) },
@@ -37,7 +38,7 @@ function goHome() {
 
 <template>
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
-    <img src="../../../assets/images/education.svg">
+    <Icon icon="education|svg" size="30px" />
     <div v-show="showTitle" class="ml-2 truncate md:opacity-100" :class="getTitleClass">
       {{ title }}
     </div>
