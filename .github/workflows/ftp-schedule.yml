@@ -3,6 +3,7 @@ name: schedule-push-to-ftp
 # Timed deployment project
 on:
   push:
+    branches: main
   schedule:
     - cron: '0 20 * * *'
 
