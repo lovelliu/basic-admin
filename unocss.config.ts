@@ -23,7 +23,7 @@ function createEnterRules(selector: string, direction = 'x', maxOutput = 6) {
         opacity: 0;
         animation: enter-${direction}-animation 0.4s ease-in-out 0.3s;
         animation-fill-mode: forwards;
-        animation-delay: ${i} / 10s;
+        animation-delay: .${i}s;
       }`;
   }
   outputValue += `
@@ -70,13 +70,10 @@ export default defineConfig({
     transformerVariantGroup(),
   ],
   theme: {
-    zIndex: {
-      '-1': '-1',
-    },
     colors: {
       primary: primaryColor,
     },
-    screens: {
+    breakpoints: {
       sm: '576px',
       md: '768px',
       lg: '992px',

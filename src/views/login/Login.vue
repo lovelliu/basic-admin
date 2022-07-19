@@ -23,12 +23,14 @@ const title = computed(() => globSetting?.title ?? '');
 
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
-    <AppLocalePicker
-      v-if="!sessionTimeout && showLocale"
-      class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
-      :show-text="false"
-    />
-    <AppDarkModeToggle v-if="!sessionTimeout" class="absolute top-3 right-10 enter-x" />
+    <div class="flex items-center absolute right-5 top-4">
+      <AppDarkModeToggle v-if="!sessionTimeout" class="enter-x mr-2 ml-auto" />
+      <AppLocalePicker
+        v-if="!sessionTimeout && showLocale"
+        class="text-white enter-x xl:text-gray-600"
+        :show-text="false"
+      />
+    </div>
 
     <span class="-enter-x xl:hidden">
       <AppLogo :always-show-title="false" />
@@ -49,7 +51,7 @@ const title = computed(() => globSetting?.title ?? '');
                 {{ t('sys.login.signInTitle') }}
               </span>
             </div>
-            <div class="mt-5 font-normal text-white text-md dark:text-gray-500 -enter-x">
+            <div class="mt-5 font-normal text-white text-sm dark:text-gray-500 -enter-x">
               {{ t('sys.login.signInDesc') }}
             </div>
           </div>

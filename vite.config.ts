@@ -58,12 +58,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       outDir: OUTPUT_DIR,
       reportCompressedSize: false,
       chunkSizeWarningLimit: 2000,
-      // terserOptions: {
-      //   compress: {
-      //     drop_console: VITE_DROP_CONSOLE,
-      //     keep_infinity: true,
-      //   },
-      // },
     },
     optimizeDeps: {
       include: [

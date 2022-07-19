@@ -3,7 +3,6 @@ import type { LocaleType } from '/#/config';
 import type { DropMenu } from '/@/components/Dropdown';
 import { computed, ref, unref, watchEffect } from 'vue';
 import { Dropdown } from '/@/components/Dropdown';
-import { Icon } from '/@/components/Icon';
 import { useLocale } from '/@/locales/useLocale';
 import { localeList } from '/@/settings/localeSetting';
 
@@ -58,8 +57,9 @@ function handleMenuEvent(menu: DropMenu) {
     @menu-event="handleMenuEvent"
   >
     <span class="cursor-pointer flex items-center">
-      <Icon icon="ion:language" />
+      <div i-ion-language />
       <span v-if="showText" class="ml-1">{{ getLocaleText }}</span>
+      <!-- <span v-else class="ml-12" /> -->
     </span>
   </Dropdown>
 </template>
