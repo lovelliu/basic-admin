@@ -58,7 +58,7 @@ export function useFormRules() {
     const passwordFormRule = unref(getPasswordFormRule);
     return {
       phone: [{ validator: validateMobile, trigger: 'change' }],
-      password: passwordFormRule,
+      password: passwordFormRule as any,
     };
   });
 

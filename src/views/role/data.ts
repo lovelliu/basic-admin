@@ -3,7 +3,7 @@ import { h } from 'vue';
 import type { BasicColumn, FormSchema } from '/@/components/Table';
 import { formatToDateTime } from '/@/utils/dateUtil';
 
-export const columns: BasicColumn<any>[] = [
+export const columns: BasicColumn[] = [
   {
     title: '角色ID',
     dataIndex: 'id',
@@ -39,7 +39,7 @@ export const columns: BasicColumn<any>[] = [
     title: '添加时间',
     dataIndex: 'create_at',
     width: 100,
-    customRender: ({ record }) => formatToDateTime(record.create_at),
+    customRender: ({ record }: any) => formatToDateTime(record.create_at),
   },
 ];
 

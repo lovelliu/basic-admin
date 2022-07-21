@@ -1,0 +1,167 @@
+charts:
+  aMap: 高德地图
+  baiduMap: 百度地图
+  charts: 图表
+  googleMap: 谷歌地图
+  line: 折线图
+  map: 地图
+  pie: 饼图
+comp:
+  actionTree: 函数操作示例
+  basic: 基础组件
+  cardList: 卡片列表
+  comp: 组件
+  countTo: 数字动画
+  cropperImage: 图片裁剪
+  desc: 详情组件
+  drawer: 抽屉扩展
+  editTree: 可搜索/工具栏
+  lazy: 懒加载组件
+  lazyBasic: 基础示例
+  lazyTransition: 动画效果
+  loading: Loading
+  modal: 弹窗扩展
+  qrcode: 二维码组件
+  scroll: 滚动组件
+  scrollAction: 滚动函数
+  scrollBasic: 基础滚动
+  strength: 密码强度组件
+  time: 相对时间
+  transition: 动画组件
+  tree: Tree
+  treeBasic: 基础树
+  upload: 上传组件
+  verify: 验证组件
+  verifyDrag: 拖拽校验
+  verifyRotate: 图片还原
+  virtualScroll: 虚拟滚动
+course:
+  course: 课程管理
+  edit_course: 编辑课程
+  lesson: 课时管理
+editor:
+  editor: 编辑器
+  jsonEditor: Json编辑器
+  markdown: markdown编辑器
+  tinymce: 富文本
+  tinymceBasic: 基础使用
+  tinymceForm: 嵌入form
+excel:
+  arrayExport: Array数据导出
+  customExport: 选择导出格式
+  excel: Excel
+  importExcel: 导入
+  jsonExport: JSON数据导出
+feat:
+  breadcrumb: 面包屑导航
+  breadcrumbChildren: 层级模式
+  breadcrumbChildrenDetail: 层级详情
+  breadcrumbFlat: 平级模式
+  breadcrumbFlatDetail: 平级详情
+  clickOutSide: ClickOutSide组件
+  contextMenu: 右键菜单
+  copy: 剪切板
+  download: 文件下载
+  errorLog: 错误日志
+  feat: 功能
+  fullScreen: 全屏
+  icon: 图标
+  imgPreview: 图片预览
+  menu: Menu带参
+  menu1: Menu带参1
+  menu2: Menu带参2
+  msg: 消息提示
+  print: 打印
+  ripple: 水波纹
+  sessionTimeout: 登录过期
+  tab: Tab带参
+  tab1: Tab带参1
+  tab2: Tab带参2
+  tabDetail: 标签详情页
+  tabs: 标签页操作
+  watermark: 水印
+  ws: websocket测试
+flow:
+  flowChart: 流程图
+  name: 图形编辑器
+form:
+  advancedForm: 可收缩表单
+  appendForm: 表单增删示例
+  basic: 基础表单
+  customerForm: 自定义组件
+  dynamicForm: 动态表单
+  form: Form
+  refForm: RefForm
+  ruleForm: 表单验证
+  useForm: useForm
+iframe:
+  antv: antVue文档(内嵌)
+  doc: 项目文档(内嵌)
+  docExternal: 项目文档(外链)
+  frame: 外部页面
+level:
+  level: 多级菜单
+page:
+  account: 个人页
+  accountCenter: 个人中心
+  accountSetting: 个人设置
+  basic: 基本列表
+  desc: 详情页
+  descBasic: 基础详情页
+  descHigh: 高级详情页
+  exception: 异常页
+  form: 表单页
+  formBasic: 基础表单
+  formHigh: 高级表单
+  formStep: 分步表单
+  list: 列表页
+  listBasic: 标准列表
+  listCard: 卡片列表
+  listSearch: 搜索列表
+  netWorkError: 网络错误
+  notData: 无数据
+  page: 页面
+  result: 结果页
+  resultFail: 失败页
+  resultSuccess: 成功页
+permission:
+  back: 基于后台权限
+  backBtn: 按钮权限
+  backPage: 页面权限
+  front: 基于前端权限
+  frontBtn: 按钮权限
+  frontPage: 页面权限
+  frontTestA: 权限测试页A
+  frontTestB: 权限测试页B
+  permission: 权限管理
+setup:
+  page: 引导页
+system:
+  account: 账号管理
+  account_detail: 账号详情
+  dept: 部门管理
+  menu: 菜单管理
+  moduleName: 系统管理
+  password: 修改密码
+  resource: 资源管理
+  resource_cate: 资源分类
+  role: 角色管理
+  user: 用户管理
+table:
+  authColumn: 权限列
+  basic: 基础表格
+  customerCell: 自定义列
+  editCellTable: 可编辑单元格
+  editRowTable: 可编辑行
+  expandTable: 可展开表格
+  fetchTable: 远程加载示例
+  fixedColumn: 固定列
+  fixedHeight: 定高/头部自定义
+  footerTable: 表尾行合计
+  formTable: 开启搜索区域
+  mergeHeader: 合并单元格
+  multipleHeader: 多级表头
+  refTable: RefTable
+  table: Table
+  treeTable: 树形表格
+  useTable: UseTable

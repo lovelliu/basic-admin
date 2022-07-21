@@ -1,0 +1,162 @@
+charts:
+  aMap: A map
+  baiduMap: Baidu map
+  charts: Chart
+  googleMap: Google map
+  line: Line
+  map: Map
+  pie: Pie
+comp:
+  actionTree: Function operation
+  basic: Basic
+  cardList: Card List
+  comp: Component
+  countTo: Count To
+  cropperImage: Cropper Image
+  desc: Desc
+  drawer: Drawer
+  editTree: Searchable/toolbar
+  lazy: Lazy
+  lazyBasic: Basic
+  lazyTransition: Animation
+  loading: Loading
+  modal: Modal
+  qrcode: QR code
+  scroll: Scroll
+  scrollAction: Scroll Function
+  scrollBasic: Basic
+  strength: Password strength
+  time: Relative Time
+  transition: Animation
+  tree: Tree
+  treeBasic: Basic
+  upload: Upload
+  verify: Verify
+  verifyDrag: Drag
+  verifyRotate: Picture Restore
+  virtualScroll: Virtual Scroll
+course:
+  course: Course Management
+editor:
+  editor: Editor
+  jsonEditor: Json editor
+  markdown: Markdown editor
+  tinymce: Rich text
+  tinymceBasic: Basic
+  tinymceForm: embedded form
+excel:
+  arrayExport: Array data export
+  customExport: Select export format
+  excel: Excel
+  importExcel: Import
+  jsonExport: JSON data export
+feat:
+  breadcrumb: Breadcrumbs
+  breadcrumbChildren: Level mode
+  breadcrumbChildrenDetail: Level mode detail
+  breadcrumbFlat: Flat Mode
+  breadcrumbFlatDetail: Flat mode details
+  clickOutSide: ClickOutSide
+  contextMenu: Context Menu
+  copy: Clipboard
+  download: Download
+  errorLog: Error Log
+  feat: Page Function
+  fullScreen: Full Screen
+  icon: Icon
+  imgPreview: Picture Preview
+  menu: Menu with parameters
+  menu1: Menu with parameters 1
+  menu2: Menu with parameters 2
+  msg: Message prompt
+  print: Print
+  ripple: Ripple
+  sessionTimeout: Session Timeout
+  tab: Tab with parameters
+  tab1: Tab with parameter 1
+  tab2: Tab with parameter 2
+  tabDetail: Tab Detail
+  tabs: Tabs
+  watermark: Watermark
+  ws: Websocket test
+flow:
+  flowChart: FlowChart
+  name: Graphics editor
+form:
+  advancedForm: Shrinkable
+  appendForm: Append
+  basic: Basic
+  customerForm: Custom
+  dynamicForm: Dynamic
+  form: Form
+  refForm: RefForm
+  ruleForm: Form validation
+  useForm: useForm
+iframe:
+  antv: antVue doc (embedded)
+  doc: Project doc (embedded)
+  docExternal: Project doc (external)
+  frame: External
+level:
+  level: MultiMenu
+page:
+  account: Personal
+  accountCenter: Personal Center
+  accountSetting: Personal Settings
+  basic: Basic list
+  desc: Details
+  descBasic: Basic Details
+  descHigh: Advanced Details
+  exception: Exception
+  form: Form
+  formBasic: Basic Form
+  formHigh: Advanced Form
+  formStep: Step Form
+  list: List page
+  listBasic: Basic list
+  listCard: Card list
+  listSearch: Search list
+  netWorkError: Network Error
+  notData: No data
+  page: Page
+  result: Result
+  resultFail: Failed
+  resultSuccess: Success
+permission:
+  back: background
+  backBtn: Button
+  backPage: Page
+  front: front-end
+  frontBtn: Button
+  frontPage: Page
+  frontTestA: Test page A
+  frontTestB: Test page B
+  permission: Permission
+setup:
+  page: Intro page
+system:
+  account: Account management
+  account_detail: Account detail
+  dept: Department management
+  menu: Menu management
+  moduleName: System management
+  password: Change password
+  role: Role management
+table:
+  authColumn: Auth column
+  basic: Basic
+  customerCell: Custom column
+  editCellTable: Editable cell
+  editRowTable: Editable row
+  expandTable: Expandable table
+  fetchTable: Remote loading
+  fixedColumn: Fixed column
+  fixedHeight: Fixed height
+  footerTable: Footer
+  formTable: Open search
+  mergeHeader: Merge cells
+  multipleHeader: MultiLevel header
+  refTable: RefTable
+  table: Table
+  treeTable: Tree
+  useTable: UseTable

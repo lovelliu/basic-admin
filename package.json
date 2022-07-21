@@ -59,6 +59,7 @@
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
     "@iconify/json": "2.0.9",
+    "@intlify/vite-plugin-vue-i18n": "^5.0.0",
     "@name6/eslint-config": "^0.0.5",
     "@types/crypto-js": "^4.1.0",
     "@types/lodash-es": "^4.17.5",
