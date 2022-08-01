@@ -63,7 +63,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       include: [
         '@vue/runtime-core',
         '@vue/shared',
-        '@iconify/iconify',
+        '@iconify/json',
         'ant-design-vue/es/locale/zh_CN',
         'ant-design-vue/es/locale/en_US',
       ],
