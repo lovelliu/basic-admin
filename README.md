@@ -20,7 +20,7 @@
 
 ## 后台项目
 
-[basic-admin-api](https://github.com/lhj-web/basic-admin-api) - 使用 Nestjs+Mongodb+Redis 开发的课程管理系统后台。
+[basic-admin-api](https://github.com/lhj-web/basic-admin-api) - 使用 Nestjs+Mongodb+Redis 开发的后台api。
 
 | 用户名 | 密码     | 说明                         |
 | ------ | -------- | ---------------------------- |
