@@ -1,6 +1,6 @@
 import { ThemeEnum } from '../enums/appEnum';
 
-export const prefixCls = 'edu';
+export const prefixCls = 'basic';
 
 export const darkMode = ThemeEnum.LIGHT;
 

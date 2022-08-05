@@ -1,5 +1,5 @@
 {
-  "name": "edu-cms",
+  "name": "basic-admin",
   "version": "0.0.6",
   "author": {
     "name": "Name6",
@@ -7,10 +7,10 @@
     "url": "https://github.com/lhj-web"
   },
   "license": "MIT",
-  "homepage": "https://github.com/lhj-web/edu-cms",
+  "homepage": "https://github.com/lhj-web/basic-admin",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lhj-web/edu-cms.git"
+    "url": "git+https://github.com/lhj-web/basic-admin.git"
   },
   "engines": {
     "node": "^12 || >=14"
