@@ -1,37 +1,37 @@
-import type { ValidationRule } from 'ant-design-vue/lib/form/Form';
-import type { ComponentType } from './types';
+import type { ValidationRule } from 'ant-design-vue/lib/form/Form'
+import type { ComponentType } from './types'
 
-import { useI18n } from '/@/hooks/web/useI18n';
-import { isNumber } from '/@/utils/is';
+import { useI18n } from '/@/hooks/web/useI18n'
+import { isNumber } from '/@/utils/is'
 
-const { t } = useI18n();
+const { t } = useI18n()
 /**
  * @description: generate placeholder
  */
 export function createPlaceholderMessage(component: ComponentType) {
   if (component.includes('Input') || component.includes('Complete'))
-    return t('common.inputText');
+    return t('common.inputText')
 
   if (component.includes('Picker'))
-    return t('common.chooseText');
+    return t('common.chooseText')
 
   if (
-    component.includes('Select') ||
-    component.includes('Cascader') ||
-    component.includes('Checkbox') ||
-    component.includes('Radio') ||
-    component.includes('Switch')
+    component.includes('Select')
+    || component.includes('Cascader')
+    || component.includes('Checkbox')
+    || component.includes('Radio')
+    || component.includes('Switch')
   ) {
     // return `请选择${label}`;
-    return t('common.chooseText');
+    return t('common.chooseText')
   }
-  return '';
+  return ''
 }
 
-const DATE_TYPE = ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'];
+const DATE_TYPE = ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker']
 
 function genType() {
-  return [...DATE_TYPE, 'RangePicker'];
+  return [...DATE_TYPE, 'RangePicker']
 }
 
 export function setComponentRuleType(
@@ -40,23 +40,23 @@ export function setComponentRuleType(
   valueFormat: string,
 ) {
   if (['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'].includes(component))
-    rule.type = valueFormat ? 'string' : 'object';
+    rule.type = valueFormat ? 'string' : 'object'
   else if (['RangePicker', 'Upload', 'CheckboxGroup', 'TimePicker'].includes(component))
-    rule.type = 'array';
+    rule.type = 'array'
   else if (['InputNumber'].includes(component))
-    rule.type = 'number';
+    rule.type = 'number'
 }
 
 export function handleInputNumberValue(component?: ComponentType, val?: any) {
   if (!component)
-    return val;
+    return val
   if (['Input', 'InputPassword', 'InputSearch', 'InputTextArea'].includes(component))
-    return val && isNumber(val) ? `${val}` : val;
+    return val && isNumber(val) ? `${val}` : val
 
-  return val;
+  return val
 }
 
 /**
  * @description: date fileds
  */
-export const dateItemType = genType();
+export const dateItemType = genType()

@@ -1,5 +1,5 @@
-import type { BasicColumn, FormSchema } from '/@/components/Table';
-import { formatToDateTime } from '/@/utils/dateUtil';
+import type { BasicColumn, FormSchema } from '/@/components/Table'
+import { formatToDateTime } from '/@/utils/dateUtil'
 
 export const columns: BasicColumn[] = [
   {
@@ -28,7 +28,7 @@ export const columns: BasicColumn[] = [
     width: 150,
     customRender: ({ record }: any) => formatToDateTime(record.createdTime),
   },
-];
+]
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -49,7 +49,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     colProps: { span: 10 },
   },
-];
+]
 
 export const ResourceFormSchema: FormSchema[] = [
   {
@@ -75,7 +75,7 @@ export const ResourceFormSchema: FormSchema[] = [
     label: '描述',
     component: 'InputTextArea',
   },
-];
+]
 
 export const ResourceCateColumns: BasicColumn[] = [
   {
@@ -98,7 +98,7 @@ export const ResourceCateColumns: BasicColumn[] = [
     dataIndex: 'sort',
     width: 25,
   },
-];
+]
 
 export const ResourceCateFormSchema: FormSchema[] = [
   {
@@ -113,4 +113,4 @@ export const ResourceCateFormSchema: FormSchema[] = [
     component: 'InputNumber',
     required: true,
   },
-];
+]

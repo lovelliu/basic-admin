@@ -1,73 +1,73 @@
 <script lang="ts" setup>
-import { computed, reactive, ref, unref } from 'vue';
+import { computed, reactive, ref, unref } from 'vue'
 
-import { Checkbox, Col, Form, Input, Row } from 'ant-design-vue';
-import LoginFormTitleVue from './LoginFormTitle.vue';
+import { Checkbox, Col, Form, Input, Row } from 'ant-design-vue'
+import LoginFormTitleVue from './LoginFormTitle.vue'
 
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useMessage } from '/@/hooks/web/useMessage'
 
-import { useUserStore } from '/@/store/modules/user';
-import { LoginStateEnum, useFormRules, useFormValid, useLoginState } from './useLogin';
+import { useUserStore } from '/@/store/modules/user'
+import { LoginStateEnum, useFormRules, useFormValid, useLoginState } from './useLogin'
 
-import { getCaptcha } from '/@/api/sys/user';
-import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
+import { getCaptcha } from '/@/api/sys/user'
+import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated'
 
-const ACol = Col;
-const ARow = Row;
-const FormItem = Form.Item;
-const InputPassword = Input.Password;
+const ACol = Col
+const ARow = Row
+const FormItem = Form.Item
+const InputPassword = Input.Password
 
-const { t } = useI18n();
-const userStore = useUserStore();
-const { getFormRules } = useFormRules();
-const { notification } = useMessage();
+const { t } = useI18n()
+const userStore = useUserStore()
+const { getFormRules } = useFormRules()
+const { notification } = useMessage()
 
-const formRef = ref();
+const formRef = ref()
 const formData = reactive({
   username: 'admin',
   password: 'password',
   verifyCode: '',
   captchaId: '',
-});
-const imgSrc = ref('');
-const rememberMe = ref(false);
-const loading = ref(false);
-const { validForm } = useFormValid<typeof formData>(formRef);
+})
+const imgSrc = ref('')
+const rememberMe = ref(false)
+const loading = ref(false)
+const { validForm } = useFormValid<typeof formData>(formRef)
 
-const { getLoginState, setLoginState } = useLoginState();
-const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+const { getLoginState, setLoginState } = useLoginState()
+const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN)
 
-onMountedOrActivated(getCaptchaImg);
+onMountedOrActivated(getCaptchaImg)
 
 async function getCaptchaImg() {
-  const { id, img } = await getCaptcha();
-  formData.captchaId = id;
-  imgSrc.value = img;
+  const { id, img } = await getCaptcha()
+  formData.captchaId = id
+  imgSrc.value = img
 }
 
 async function handleLogin() {
-  const data = await validForm();
+  const data = await validForm()
   if (!data)
-    return;
+    return
   try {
-    loading.value = true;
+    loading.value = true
     const userInfo = await userStore.login({
       username: data.username,
       password: data.password,
       captchaId: formData.captchaId,
       verifyCode: data.verifyCode,
-    });
+    })
 
     if (userInfo) {
       notification.success({
         message: t('sys.login.loginSuccessTitle'),
         description: `${`${t('sys.login.loginSuccessDesc')}: ${userInfo.userName}`}`,
-      });
+      })
     }
   }
   finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 </script>

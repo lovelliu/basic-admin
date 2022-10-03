@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { Card } from 'ant-design-vue';
-import { navItems } from './data';
-import { Icon } from '/@/components/Icon';
+import { Card } from 'ant-design-vue'
+import { navItems } from './data'
+import { Icon } from '/@/components/Icon'
 
-const CardGrid = Card.Grid;
+const CardGrid = Card.Grid
 </script>
 
 <template>

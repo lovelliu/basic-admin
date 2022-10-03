@@ -1,24 +1,24 @@
 <script lang="tsx">
-import type { CSSProperties, PropType } from 'vue';
+import type { CSSProperties, PropType } from 'vue'
 
-import { computed, defineComponent, toRef, unref } from 'vue';
-import { BasicMenu } from '/@/components/Menu';
-import { SimpleMenu } from '/@/components/SimpleMenu';
-import { AppLogo } from '/@/components/Application';
+import { computed, defineComponent, toRef, unref } from 'vue'
+import { BasicMenu } from '/@/components/Menu'
+import { SimpleMenu } from '/@/components/SimpleMenu'
+import { AppLogo } from '/@/components/Application'
 
-import { MenuModeEnum, MenuSplitTypeEnum } from '/@/enums/menuEnum';
+import { MenuModeEnum, MenuSplitTypeEnum } from '/@/enums/menuEnum'
 
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-import { ScrollContainer } from '/@/components/Container';
+import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
+import { ScrollContainer } from '/@/components/Container'
 
-import { useGo } from '/@/hooks/web/usePage';
-import { useSplitMenu } from './useLayoutMenu';
-import { openWindow } from '/@/utils';
-import { propTypes } from '/@/utils/propTypes';
-import { isUrl } from '/@/utils/is';
-import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-import { useAppInject } from '/@/hooks/web/useAppInject';
-import { useDesign } from '/@/hooks/web/useDesign';
+import { useGo } from '/@/hooks/web/usePage'
+import { useSplitMenu } from './useLayoutMenu'
+import { openWindow } from '/@/utils'
+import { propTypes } from '/@/utils/propTypes'
+import { isUrl } from '/@/utils/is'
+import { useRootSetting } from '/@/hooks/setting/useRootSetting'
+import { useAppInject } from '/@/hooks/web/useAppInject'
+import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'LayoutMenu',
@@ -38,7 +38,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const go = useGo();
+    const go = useGo()
 
     const {
       getMenuMode,
@@ -50,37 +50,37 @@ export default defineComponent({
       getIsHorizontal,
       getIsSidebarType,
       getSplit,
-    } = useMenuSetting();
-    const { getShowLogo } = useRootSetting();
+    } = useMenuSetting()
+    const { getShowLogo } = useRootSetting()
 
-    const { prefixCls } = useDesign('layout-menu');
+    const { prefixCls } = useDesign('layout-menu')
 
-    const { menusRef } = useSplitMenu(toRef(props, 'splitType'));
+    const { menusRef } = useSplitMenu(toRef(props, 'splitType'))
 
-    const { getIsMobile } = useAppInject();
+    const { getIsMobile } = useAppInject()
 
     const getComputedMenuMode = computed(() =>
       unref(getIsMobile) ? MenuModeEnum.INLINE : props.menuMode || unref(getMenuMode),
-    );
+    )
 
-    const getComputedMenuTheme = computed(() => props.theme || unref(getMenuTheme));
+    const getComputedMenuTheme = computed(() => props.theme || unref(getMenuTheme))
 
-    const getIsShowLogo = computed(() => unref(getShowLogo) && unref(getIsSidebarType));
+    const getIsShowLogo = computed(() => unref(getShowLogo) && unref(getIsSidebarType))
 
     const getUseScroll = computed(() => {
       return (
-        !unref(getIsHorizontal) &&
-          (unref(getIsSidebarType) ||
-            props.splitType === MenuSplitTypeEnum.LEFT ||
-            props.splitType === MenuSplitTypeEnum.NONE)
-      );
-    });
+        !unref(getIsHorizontal)
+          && (unref(getIsSidebarType)
+            || props.splitType === MenuSplitTypeEnum.LEFT
+            || props.splitType === MenuSplitTypeEnum.NONE)
+      )
+    })
 
     const getWrapperStyle = computed((): CSSProperties => {
       return {
         height: `calc(100% - ${unref(getIsShowLogo) ? '48px' : '0px'})`,
-      };
-    });
+      }
+    })
 
     const getLogoClass = computed(() => {
       return [
@@ -89,11 +89,11 @@ export default defineComponent({
           {
             [`${prefixCls}--mobile`]: unref(getIsMobile),
           },
-      ];
-    });
+      ]
+    })
 
     const getCommonProps = computed(() => {
-      const menus = unref(menusRef);
+      const menus = unref(menusRef)
       return {
         menus,
         beforeClickFn: beforeMenuClickFn,
@@ -103,15 +103,15 @@ export default defineComponent({
         collapse: unref(getCollapsed),
         collapsedShowTitle: unref(getCollapsedShowTitle),
         onMenuClick: handleMenuClick,
-      };
-    });
-      /**
+      }
+    })
+    /**
        * click menu
        * @param menu
        */
 
     function handleMenuClick(path: string) {
-      go(path);
+      go(path)
     }
 
     /**
@@ -120,15 +120,15 @@ export default defineComponent({
        */
     async function beforeMenuClickFn(path: string) {
       if (!isUrl(path))
-        return true;
+        return true
 
-      openWindow(path);
-      return false;
+      openWindow(path)
+      return false
     }
 
     function renderHeader() {
       if (!unref(getIsShowLogo) && !unref(getIsMobile))
-        return null;
+        return null
 
       return (
           <AppLogo
@@ -136,19 +136,19 @@ export default defineComponent({
             class={unref(getLogoClass)}
             theme={unref(getComputedMenuTheme)}
           />
-      );
+      )
     }
 
     function renderMenu() {
-      const { menus, ...menuProps } = unref(getCommonProps);
+      const { menus, ...menuProps } = unref(getCommonProps)
       // console.log(menus);
       if (!menus || !menus.length)
-        return null;
-      return !props.isHorizontal ?
-          (
+        return null
+      return !props.isHorizontal
+        ? (
           <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
-          ) :
-          (
+          )
+        : (
           <BasicMenu
             {...(menuProps as any)}
             isHorizontal={props.isHorizontal}
@@ -157,25 +157,25 @@ export default defineComponent({
             mode={unref(getComputedMenuMode as any)}
             items={menus}
           />
-          );
+          )
     }
-    /* eslint-disable react/display-name */
+
     return () => {
       return (
           <>
             {renderHeader()}
-            {unref(getUseScroll) ?
-                (
+            {unref(getUseScroll)
+              ? (
               <ScrollContainer style={unref(getWrapperStyle)}>{() => renderMenu()}</ScrollContainer>
-                ) :
-                (
+                )
+              : (
                   renderMenu()
                 )}
           </>
-      );
-    };
+      )
+    }
   },
-});
+})
 </script>
 
 <style lang="less">

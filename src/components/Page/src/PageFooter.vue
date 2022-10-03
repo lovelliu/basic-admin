@@ -1,17 +1,17 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-import { useDesign } from '/@/hooks/web/useDesign';
+import { defineComponent } from 'vue'
+import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
+import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'PageFooter',
   inheritAttrs: false,
   setup() {
-    const { prefixCls } = useDesign('page-footer');
-    const { getCalcContentWidth } = useMenuSetting();
-    return { prefixCls, getCalcContentWidth };
+    const { prefixCls } = useDesign('page-footer')
+    const { getCalcContentWidth } = useMenuSetting()
+    return { prefixCls, getCalcContentWidth }
   },
-});
+})
 </script>
 
 <template>

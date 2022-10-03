@@ -2,15 +2,15 @@
  * @Description:It is troublesome to implement radio button group in the form. So it is extracted independently as a separate component
 -->
 <script lang="ts">
-import type { PropType } from 'vue';
-import { computed, defineComponent } from 'vue';
-import { Radio } from 'ant-design-vue';
-import { isString } from '/@/utils/is';
-import { useRuleFormItem } from '/@/hooks/component/useFormItem';
-import { useAttrs } from '/@/hooks/core/useAttrs';
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { Radio } from 'ant-design-vue'
+import { isString } from '/@/utils/is'
+import { useRuleFormItem } from '/@/hooks/component/useFormItem'
+import { useAttrs } from '/@/hooks/core/useAttrs'
 
 interface OptionsItem { label: string; value: string | number | boolean; disabled?: boolean }
-  type RadioItem = string | OptionsItem;
+  type RadioItem = string | OptionsItem
 
 export default defineComponent({
   name: 'RadioButtonGroup',
@@ -28,26 +28,26 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const attrs = useAttrs();
+    const attrs = useAttrs()
     // Embedded in the form, just use the hook binding to perform form verification
-    const [state] = useRuleFormItem(props);
+    const [state] = useRuleFormItem(props)
 
     // Processing options value
     const getOptions = computed((): OptionsItem[] => {
-      const { options } = props;
+      const { options } = props
       if (!options || options?.length === 0)
-        return [];
+        return []
 
-      const isStringArr = options.some(item => isString(item));
+      const isStringArr = options.some(item => isString(item))
       if (!isStringArr)
-        return options as OptionsItem[];
+        return options as OptionsItem[]
 
-      return options.map(item => ({ label: item, value: item })) as OptionsItem[];
-    });
+      return options.map(item => ({ label: item, value: item })) as OptionsItem[]
+    })
 
-    return { state, getOptions, attrs };
+    return { state, getOptions, attrs }
   },
-});
+})
 </script>
 
 <template>

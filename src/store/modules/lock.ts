@@ -1,13 +1,13 @@
-import type { LockInfo } from '/#/store';
+import type { LockInfo } from '/#/store'
 
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-import { LOCK_INFO_KEY } from '/@/enums/cacheEnum';
-import { Persistent } from '/@/utils/cache/persistent';
-import { useUserStore } from './user';
+import { LOCK_INFO_KEY } from '/@/enums/cacheEnum'
+import { Persistent } from '/@/utils/cache/persistent'
+import { useUserStore } from './user'
 
 interface LockState {
-  lockInfo: Nullable<LockInfo>;
+  lockInfo: Nullable<LockInfo>
 }
 
 export const useLockStore = defineStore({
@@ -17,30 +17,30 @@ export const useLockStore = defineStore({
   }),
   getters: {
     getLockInfo(): Nullable<LockInfo> {
-      return this.lockInfo;
+      return this.lockInfo
     },
   },
   actions: {
     setLockInfo(info: LockInfo) {
-      this.lockInfo = Object.assign({}, this.lockInfo, info);
+      this.lockInfo = Object.assign({}, this.lockInfo, info)
       // console.log(this.lockInfo);
 
-      Persistent.setLocal(LOCK_INFO_KEY, this.lockInfo, true);
+      Persistent.setLocal(LOCK_INFO_KEY, this.lockInfo, true)
     },
     resetLockInfo() {
-      Persistent.removeLocal(LOCK_INFO_KEY, true);
-      this.lockInfo = null;
+      Persistent.removeLocal(LOCK_INFO_KEY, true)
+      this.lockInfo = null
     },
     // Unlock
     async unLock(password?: string) {
-      const userStore = useUserStore();
+      const userStore = useUserStore()
       if (this.lockInfo?.pwd === password) {
-        this.resetLockInfo();
-        return true;
+        this.resetLockInfo()
+        return true
       }
       const tryLogin = async () => {
         try {
-          const username = userStore.getUserInfo?.userName;
+          const username = userStore.getUserInfo?.userName
           const res = await userStore.login({
             username,
             password: password!,
@@ -48,17 +48,17 @@ export const useLockStore = defineStore({
             mode: 'none',
             captchaId: '',
             verifyCode: '',
-          });
+          })
           if (res)
-            this.resetLockInfo();
+            this.resetLockInfo()
 
-          return res;
+          return res
         }
         catch (error) {
-          return false;
+          return false
         }
-      };
-      return await tryLogin();
+      }
+      return await tryLogin()
     },
   },
-});
+})

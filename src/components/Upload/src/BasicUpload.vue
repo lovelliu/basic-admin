@@ -1,14 +1,14 @@
 <script lang="ts">
-import { computed, defineComponent, ref, unref, watch } from 'vue';
-import { Icon } from '/@/components/Icon';
-import { Space, Tooltip } from 'ant-design-vue';
-import { useModal } from '/@/components/Modal';
-import { omit } from 'lodash-es';
-import { uploadContainerProps } from './props';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { isArray } from '/@/utils/is';
-import UploadModal from './UploadModal.vue';
-import UploadPreviewModal from './UploadPreviewModal.vue';
+import { computed, defineComponent, ref, unref, watch } from 'vue'
+import { Icon } from '/@/components/Icon'
+import { Space, Tooltip } from 'ant-design-vue'
+import { useModal } from '/@/components/Modal'
+import { omit } from 'lodash-es'
+import { uploadContainerProps } from './props'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { isArray } from '/@/utils/is'
+import UploadModal from './UploadModal.vue'
+import UploadPreviewModal from './UploadPreviewModal.vue'
 
 export default defineComponent({
   name: 'BasicUpload',
@@ -17,55 +17,55 @@ export default defineComponent({
   emits: ['change', 'delete', 'previewDelete', 'update:value'],
 
   setup(props, { emit, attrs }) {
-    const { t } = useI18n();
+    const { t } = useI18n()
     // 上传modal
-    const [registerUploadModal, { openModal: openUploadModal }] = useModal();
+    const [registerUploadModal, { openModal: openUploadModal }] = useModal()
 
     //   预览modal
-    const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
+    const [registerPreviewModal, { openModal: openPreviewModal }] = useModal()
 
-    const fileList = ref<string[]>([]);
+    const fileList = ref<string[]>([])
 
     const showPreview = computed(() => {
-      const { emptyHidePreview } = props;
+      const { emptyHidePreview } = props
       if (!emptyHidePreview)
-        return true;
-      return emptyHidePreview ? fileList.value.length > 0 : true;
-    });
+        return true
+      return emptyHidePreview ? fileList.value.length > 0 : true
+    })
 
     const bindValue = computed(() => {
-      const value = { ...attrs, ...props };
-      return omit(value, 'onChange');
-    });
+      const value = { ...attrs, ...props }
+      return omit(value, 'onChange')
+    })
 
     watch(
       () => props.value,
       (value = []) => {
-        fileList.value = isArray(value) ? value : [];
+        fileList.value = isArray(value) ? value : []
       },
       { immediate: true },
-    );
+    )
 
     // 上传modal保存操作
     function handleChange(urls: string[]) {
-      fileList.value = [...unref(fileList), ...(urls || [])];
-      emit('update:value', fileList.value);
-      emit('change', fileList.value);
+      fileList.value = [...unref(fileList), ...(urls || [])]
+      emit('update:value', fileList.value)
+      emit('change', fileList.value)
     }
 
     // 预览modal保存操作
     function handlePreviewChange(urls: string[]) {
-      fileList.value = [...(urls || [])];
-      emit('update:value', fileList.value);
-      emit('change', fileList.value);
+      fileList.value = [...(urls || [])]
+      emit('update:value', fileList.value)
+      emit('change', fileList.value)
     }
 
     function handleDelete(record: Recordable) {
-      emit('delete', record);
+      emit('delete', record)
     }
 
     function handlePreviewDelete(url: string) {
-      emit('previewDelete', url);
+      emit('previewDelete', url)
     }
 
     return {
@@ -81,9 +81,9 @@ export default defineComponent({
       handleDelete,
       handlePreviewDelete,
       t,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

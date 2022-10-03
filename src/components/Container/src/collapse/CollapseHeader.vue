@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { BasicArrow, BasicTitle } from '/@/components/Basic';
+import { defineComponent } from 'vue'
+import { BasicArrow, BasicTitle } from '/@/components/Basic'
 
 const props = {
   prefixCls: { type: String },
@@ -11,14 +11,14 @@ const props = {
   title: { type: String },
   show: { type: Boolean },
   canExpan: { type: Boolean },
-};
+}
 
 export default defineComponent({
   components: { BasicArrow, BasicTitle },
   inheritAttrs: false,
   props,
   emits: ['expand'],
-});
+})
 </script>
 
 <template>

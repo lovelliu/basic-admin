@@ -1,25 +1,25 @@
 <script lang="ts" setup>
-import { BasicTable, TableAction, useTable } from '/@/components/Table';
-import { useModal } from '/@/components/Modal';
-import { getUserList } from '/@/api/sys/user';
-import { columns, searchFormSchema } from './data';
-import { formatToDate } from '/@/utils/dateUtil';
-import UserModal from './UserModal.vue';
-import { usePermission } from '/@/hooks/web/usePermission';
+import { BasicTable, TableAction, useTable } from '/@/components/Table'
+import { useModal } from '/@/components/Modal'
+import { getUserList } from '/@/api/sys/user'
+import { columns, searchFormSchema } from './data'
+import { formatToDate } from '/@/utils/dateUtil'
+import UserModal from './UserModal.vue'
+import { usePermission } from '/@/hooks/web/usePermission'
 
-const { hasPermission } = usePermission();
-const [registerModal, { openModal }] = useModal();
+const { hasPermission } = usePermission()
+const [registerModal, { openModal }] = useModal()
 const [registerTable, { reload, updateTableDataRecord }] = useTable({
   title: '用户管理',
   api: getUserList,
   handleSearchInfoFn: params => {
     if (!params.phone && !params.startCreateTime)
-      return;
+      return
     return {
       phone: params.phone,
       startCreateTime: params.startCreateTime?.[0],
       endCreateTime: params.startCreateTime?.[1],
-    };
+    }
   },
   showIndexColumn: false,
   rowKey: 'id',
@@ -41,26 +41,26 @@ const [registerTable, { reload, updateTableDataRecord }] = useTable({
     title: '操作',
     dataIndex: 'action',
   },
-});
+})
 
 function handleAdd() {
   openModal(true, {
     isUpdate: false,
-  });
+  })
 }
 
 function handleEdit(record: Recordable) {
   openModal(true, {
     record,
     isUpdate: true,
-  });
+  })
 }
 
 function handleSuccess({ isUpdate, values }) {
   if (isUpdate)
-    updateTableDataRecord(values.id, values);
+    updateTableDataRecord(values.id, values)
   else
-    reload();
+    reload()
 }
 </script>
 

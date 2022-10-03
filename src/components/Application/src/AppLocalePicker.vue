@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type { LocaleType } from '/#/config';
-import type { DropMenu } from '/@/components/Dropdown';
-import { computed, ref, unref, watchEffect } from 'vue';
-import { Dropdown } from '/@/components/Dropdown';
-import { useLocale } from '/@/locales/useLocale';
-import { localeList } from '/@/settings/localeSetting';
-import Icon from '../../Icon/src/Icon.vue';
+import type { LocaleType } from '/#/config'
+import type { DropMenu } from '/@/components/Dropdown'
+import { computed, ref, unref, watchEffect } from 'vue'
+import { Dropdown } from '/@/components/Dropdown'
+import { useLocale } from '/@/locales/useLocale'
+import { localeList } from '/@/settings/localeSetting'
+import Icon from '../../Icon/src/Icon.vue'
 
 const props = defineProps({
   /**
@@ -16,41 +16,41 @@ const props = defineProps({
      * Whether to refresh the interface when changing
      */
   reload: { type: Boolean },
-});
+})
 
-const selectedKeys = ref<string[]>([]);
+const selectedKeys = ref<string[]>([])
 
-const { changeLocale, getLocale } = useLocale();
+const { changeLocale, getLocale } = useLocale()
 
 const getLocaleText = computed(() => {
-  const key = selectedKeys.value[0];
+  const key = selectedKeys.value[0]
   if (!key)
-    return '';
+    return ''
 
-  return localeList.find(item => item.event === key)?.text;
-});
+  return localeList.find(item => item.event === key)?.text
+})
 
 watchEffect(() => {
-  selectedKeys.value = [unref(getLocale)];
-});
+  selectedKeys.value = [unref(getLocale)]
+})
 
 async function toggleLocale(lang: LocaleType | string) {
-  await changeLocale(lang as LocaleType);
-  selectedKeys.value = [lang as string];
-  props.reload && location.reload();
+  await changeLocale(lang as LocaleType)
+  selectedKeys.value = [lang as string]
+  props.reload && location.reload()
 }
 
 function handleMenuEvent(menu: DropMenu) {
   if (unref(getLocale) === menu.event)
-    return;
+    return
 
-  toggleLocale(menu.event as string);
+  toggleLocale(menu.event as string)
 }
 </script>
 
 <template>
   <Dropdown
-    placement="bottomCenter"
+    placement="bottom"
     :trigger="['click']"
     :drop-menu-list="localeList"
     :selected-keys="selectedKeys"
@@ -58,7 +58,7 @@ function handleMenuEvent(menu: DropMenu) {
     @menu-event="handleMenuEvent"
   >
     <span class="cursor-pointer flex items-center">
-      <Icon icon="ion-language" />
+      <Icon icon="ion:language" />
       <span v-if="showText" class="ml-1">{{ getLocaleText }}</span>
     </span>
   </Dropdown>

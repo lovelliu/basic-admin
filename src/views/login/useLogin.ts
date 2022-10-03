@@ -1,8 +1,8 @@
-import type { ValidationRule } from 'ant-design-vue/lib/form/Form';
-import type { RuleObject } from 'ant-design-vue/lib/form/interface';
-import type { Ref } from 'vue';
-import { computed, ref, unref } from 'vue';
-import { useI18n } from '/@/hooks/web/useI18n';
+import type { ValidationRule } from 'ant-design-vue/lib/form/Form'
+import type { RuleObject } from 'ant-design-vue/lib/form/interface'
+import type { Ref } from 'vue'
+import { computed, ref, unref } from 'vue'
+import { useI18n } from '/@/hooks/web/useI18n'
 
 export enum LoginStateEnum {
   LOGIN,
@@ -12,57 +12,57 @@ export enum LoginStateEnum {
   QR_CODE,
 }
 
-const currentState = ref(LoginStateEnum.LOGIN);
+const currentState = ref(LoginStateEnum.LOGIN)
 
 export function useLoginState() {
   function setLoginState(state: LoginStateEnum) {
-    currentState.value = state;
+    currentState.value = state
   }
 
-  const getLoginState = computed(() => currentState.value);
+  const getLoginState = computed(() => currentState.value)
 
   function handleBackLogin() {
-    setLoginState(LoginStateEnum.LOGIN);
+    setLoginState(LoginStateEnum.LOGIN)
   }
 
-  return { setLoginState, handleBackLogin, getLoginState };
+  return { setLoginState, handleBackLogin, getLoginState }
 }
 
 export function useFormValid<T extends Object = any>(formRef: Ref<any>) {
   async function validForm() {
-    const form = unref(formRef);
+    const form = unref(formRef)
     if (!form)
-      return;
-    const data = await form.validate();
-    return data as T;
+      return
+    const data = await form.validate()
+    return data as T
   }
 
-  return { validForm };
+  return { validForm }
 }
 
 export function useFormRules() {
-  const { t } = useI18n();
-  const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
+  const { t } = useI18n()
+  const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')))
 
   const validateMobile = async (_: RuleObject, value: string) => {
     if (!value)
-      return Promise.reject(t('sys.login.mobilePlaceholder'));
+      return Promise.reject(t('sys.login.mobilePlaceholder'))
 
     if (!/^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/.test(value))
-      return Promise.reject(t('sys.login.notLegalPhone'));
+      return Promise.reject(t('sys.login.notLegalPhone'))
 
-    return Promise.resolve();
-  };
+    return Promise.resolve()
+  }
 
   const getFormRules = computed((): { [k: string]: ValidationRule | ValidationRule[] } => {
-    const passwordFormRule = unref(getPasswordFormRule);
+    const passwordFormRule = unref(getPasswordFormRule)
     return {
       phone: [{ validator: validateMobile, trigger: 'change' }],
       password: passwordFormRule as any,
-    };
-  });
+    }
+  })
 
-  return { getFormRules };
+  return { getFormRules }
 }
 
 function createRule(message: string) {
@@ -72,5 +72,5 @@ function createRule(message: string) {
       message,
       trigger: 'change',
     },
-  ];
+  ]
 }

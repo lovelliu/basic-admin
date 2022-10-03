@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { BasicTable, TableAction, useTable } from '/@/components/Table';
-import { deleteRole, getAllRoles } from '/@/api/sys/role';
-import { columns, searchFormSchema } from './data';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { useDrawer } from '/@/components/Drawer';
-import RoleDrawer from './RoleDrawer.vue';
-import { usePermission } from '/@/hooks/web/usePermission';
+import { BasicTable, TableAction, useTable } from '/@/components/Table'
+import { deleteRole, getAllRoles } from '/@/api/sys/role'
+import { columns, searchFormSchema } from './data'
+import { useMessage } from '/@/hooks/web/useMessage'
+import { useDrawer } from '/@/components/Drawer'
+import RoleDrawer from './RoleDrawer.vue'
+import { usePermission } from '/@/hooks/web/usePermission'
 
-const { hasPermission } = usePermission();
-const [registerDrawer, { openDrawer }] = useDrawer();
+const { hasPermission } = usePermission()
+const [registerDrawer, { openDrawer }] = useDrawer()
 const [registerTable, { reload, updateTableDataRecord }] = useTable({
   title: '角色列表',
   api: getAllRoles,
@@ -30,35 +30,35 @@ const [registerTable, { reload, updateTableDataRecord }] = useTable({
     width: 90,
     dataIndex: 'action',
   },
-});
+})
 
 function handleCreate() {
   openDrawer(true, {
     isUpdate: false,
-  });
+  })
 }
 
 function handleEdit(record: Recordable) {
   openDrawer(true, {
     isUpdate: true,
     record,
-  });
+  })
 }
 
 function handleSuccess({ isUpdate, values }) {
   if (isUpdate)
-    updateTableDataRecord(values.id, values);
+    updateTableDataRecord(values.id, values)
 
   else
-    reload();
+    reload()
 }
 
-const { createMessage } = useMessage();
+const { createMessage } = useMessage()
 async function handleDelete(record: Recordable) {
-  const res = await deleteRole(record.id);
+  const res = await deleteRole(record.id)
   if (res) {
-    createMessage.success('删除成功');
-    reload();
+    createMessage.success('删除成功')
+    reload()
   }
 }
 </script>
@@ -84,7 +84,7 @@ async function handleDelete(record: Recordable) {
               disabled: !hasPermission('api:role:update'),
             },
             {
-              icon: 'ant-design:delete-outline',
+              icon: 'ant-design:delete-outlined',
               color: 'error',
               disabled: !hasPermission('api:role:delete'),
               popConfirm: {

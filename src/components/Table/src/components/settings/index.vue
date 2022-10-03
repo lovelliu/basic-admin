@@ -1,13 +1,13 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import type { ColumnChangeParam, TableSetting } from '../../types/table';
-import { computed, defineComponent, unref } from 'vue';
-import { useTableContext } from '../../hooks/useTableContext';
-import ColumnSetting from './ColumnSetting.vue';
-import SizeSetting from './SizeSetting.vue';
-import RedoSetting from './RedoSetting.vue';
-import FullScreenSetting from './FullScreenSetting.vue';
-import { useI18n } from '/@/hooks/web/useI18n';
+import type { PropType } from 'vue'
+import type { ColumnChangeParam, TableSetting } from '../../types/table'
+import { computed, defineComponent, unref } from 'vue'
+import { useTableContext } from '../../hooks/useTableContext'
+import ColumnSetting from './ColumnSetting.vue'
+import SizeSetting from './SizeSetting.vue'
+import RedoSetting from './RedoSetting.vue'
+import FullScreenSetting from './FullScreenSetting.vue'
+import { useI18n } from '/@/hooks/web/useI18n'
 
 export default defineComponent({
   name: 'TableSetting',
@@ -25,8 +25,8 @@ export default defineComponent({
   },
   emits: ['columnsChange'],
   setup(props, { emit }) {
-    const { t } = useI18n();
-    const table = useTableContext();
+    const { t } = useI18n()
+    const table = useTableContext()
 
     const getSetting = computed((): TableSetting => {
       return {
@@ -35,20 +35,20 @@ export default defineComponent({
         setting: true,
         fullScreen: false,
         ...props.setting,
-      };
-    });
+      }
+    })
 
     function handleColumnChange(data: ColumnChangeParam[]) {
-      emit('columnsChange', data);
+      emit('columnsChange', data)
     }
 
     function getTableContainer() {
-      return table ? unref(table.wrapRef) : document.body;
+      return table ? unref(table.wrapRef) : document.body
     }
 
-    return { getSetting, t, handleColumnChange, getTableContainer };
+    return { getSetting, t, handleColumnChange, getTableContainer }
   },
-});
+})
 </script>
 
 <template>

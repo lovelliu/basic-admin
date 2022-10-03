@@ -1,35 +1,36 @@
 <script lang="ts" setup>
-import { ref, toRefs, unref } from 'vue';
-import { createAppProviderContext } from './useAppContext';
-import { useAppStore } from '/@/store/modules/app';
-import { createBreakpointListen } from '/@/hooks/event/useBreakpoint';
-import { prefixCls as defaultValue } from '/@/settings/designSetting';
-import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
-const props = withDefaults(defineProps<Props>(), {
-  prefixCls: defaultValue,
-});
+import { ref, toRefs, unref } from 'vue'
+import { createAppProviderContext } from './useAppContext'
+import { useAppStore } from '/@/store/modules/app'
+import { createBreakpointListen } from '/@/hooks/event/useBreakpoint'
+import { prefixCls as defaultValue } from '/@/settings/designSetting'
+import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum'
 
 interface Props {
-  prefixCls?: string;
+  prefixCls?: string
 }
 
-const isSetState = ref(false);
+const props = withDefaults(defineProps<Props>(), {
+  prefixCls: defaultValue,
+})
 
-const appStore = useAppStore();
-const isMobile = ref(false);
-const { prefixCls } = toRefs(props);
-createAppProviderContext({ prefixCls, isMobile });
+const isSetState = ref(false)
+
+const appStore = useAppStore()
+const isMobile = ref(false)
+const { prefixCls } = toRefs(props)
+createAppProviderContext({ prefixCls, isMobile })
 createBreakpointListen(({ screenMap, sizeEnum, width }) => {
-  const lgWidth = screenMap.get(sizeEnum.LG);
+  const lgWidth = screenMap.get(sizeEnum.LG)
   if (lgWidth)
-    isMobile.value = width.value - 1 < lgWidth;
+    isMobile.value = width.value - 1 < lgWidth
 
-  handleRestoreState();
-});
+  handleRestoreState()
+})
 function handleRestoreState() {
   if (unref(isMobile)) {
     if (!unref(isSetState)) {
-      isSetState.value = true;
+      isSetState.value = true
       const {
         menuSetting: {
           type: menuType,
@@ -37,22 +38,22 @@ function handleRestoreState() {
           collapsed: menuCollapsed,
           split: menuSplit,
         },
-      } = appStore.getProjectConfig;
+      } = appStore.getProjectConfig
       appStore.setProjectConfig({
         menuSetting: {
           type: MenuTypeEnum.SIDEBAR,
           mode: MenuModeEnum.INLINE,
           split: false,
         },
-      });
-      appStore.setBeforeMiniInfo({ menuMode, menuCollapsed, menuType, menuSplit });
+      })
+      appStore.setBeforeMiniInfo({ menuMode, menuCollapsed, menuType, menuSplit })
     }
   }
   else {
     if (unref(isSetState)) {
-      isSetState.value = false;
-      const { menuMode, menuCollapsed, menuType, menuSplit } =
-          appStore.getBeforeMiniInfo;
+      isSetState.value = false
+      const { menuMode, menuCollapsed, menuType, menuSplit }
+          = appStore.getBeforeMiniInfo
       appStore.setProjectConfig({
         menuSetting: {
           type: menuType,
@@ -60,7 +61,7 @@ function handleRestoreState() {
           collapsed: menuCollapsed,
           split: menuSplit,
         },
-      });
+      })
     }
   }
 }
@@ -69,7 +70,7 @@ function handleRestoreState() {
 <script lang="ts">
 export default {
   inheritAttrs: false,
-};
+}
 </script>
 
 <template>

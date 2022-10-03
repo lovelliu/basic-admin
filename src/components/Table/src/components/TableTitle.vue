@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import { computed, defineComponent } from 'vue';
-import { BasicTitle } from '/@/components/Basic/index';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { isFunction } from '/@/utils/is';
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { BasicTitle } from '/@/components/Basic/index'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { isFunction } from '/@/utils/is'
 
 export default defineComponent({
   name: 'BasicTableTitle',
@@ -20,23 +20,23 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { prefixCls } = useDesign('basic-table-title');
+    const { prefixCls } = useDesign('basic-table-title')
 
     const getTitle = computed(() => {
-      const { title, getSelectRows = () => {} } = props;
-      let tit = title;
+      const { title, getSelectRows = () => {} } = props
+      let tit = title
 
       if (isFunction(title)) {
         tit = title({
           selectRows: getSelectRows(),
-        });
+        })
       }
-      return tit;
-    });
+      return tit
+    })
 
-    return { getTitle, prefixCls };
+    return { getTitle, prefixCls }
   },
-});
+})
 </script>
 
 <template>

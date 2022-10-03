@@ -1,18 +1,18 @@
 <script lang="ts">
-import { basicProps } from './props';
+import { basicProps } from './props'
 </script>
 
 <script lang="ts" setup>
-import type { Ref } from 'vue';
-import { onMounted, ref } from 'vue';
-import { useECharts } from '/@/hooks/web/useECharts';
+import type { Ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useECharts } from '/@/hooks/web/useECharts'
 
 defineProps({
   ...basicProps,
-});
+})
 
-const chartRef = ref<HTMLDivElement | null>(null);
-const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
+const chartRef = ref<HTMLDivElement | null>(null)
+const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>)
 onMounted(() => {
   setOptions({
     tooltip: {
@@ -41,8 +41,8 @@ onMounted(() => {
         barMaxWidth: 80,
       },
     ],
-  });
-});
+  })
+})
 </script>
 
 <template>

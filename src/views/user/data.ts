@@ -1,14 +1,14 @@
-import { Avatar, Switch } from 'ant-design-vue';
-import { h } from 'vue';
-import type { BasicColumn } from '/@/components/Table';
-import type { FormSchema } from '/@/components/Form';
-import { formatToDateTime } from '/@/utils/dateUtil';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { enableUser, forbidUser, isUserExist } from '/@/api/sys/user';
-import { getRoleList } from '/@/api/sys/role';
-import { usePermission } from '/@/hooks/web/usePermission';
+import { Avatar, Switch } from 'ant-design-vue'
+import { h } from 'vue'
+import type { BasicColumn } from '/@/components/Table'
+import type { FormSchema } from '/@/components/Form'
+import { formatToDateTime } from '/@/utils/dateUtil'
+import { useMessage } from '/@/hooks/web/useMessage'
+import { enableUser, forbidUser, isUserExist } from '/@/api/sys/user'
+import { getRoleList } from '/@/api/sys/role'
+import { usePermission } from '/@/hooks/web/usePermission'
 
-const { hasPermission } = usePermission();
+const { hasPermission } = usePermission()
 
 export const columns: BasicColumn[] = [
   {
@@ -44,45 +44,45 @@ export const columns: BasicColumn[] = [
     width: 50,
     customRender: ({ record }: any) => {
       if (!Reflect.has(record, 'pendingStatus'))
-        record.pendingStatus = false;
+        record.pendingStatus = false
 
       return h(Switch, {
         checked: record.status,
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
-        disabled: record.status ?
-            !hasPermission('api:user:forbid') :
-            !hasPermission('api:user:enable'),
+        disabled: record.status
+          ? !hasPermission('api:user:forbid')
+          : !hasPermission('api:user:enable'),
         onChange(checked: boolean) {
-          record.pendingStatus = true;
-          const newStatus = !!checked;
-          const { createMessage } = useMessage();
+          record.pendingStatus = true
+          const newStatus = !!checked
+          const { createMessage } = useMessage()
           if (newStatus === true) {
             enableUser(record.id)
               .then(res => {
                 if (res.data.status === 'success') {
-                  createMessage.success('修改成功');
-                  record.status = true;
+                  createMessage.success('修改成功')
+                  record.status = true
                 }
               })
-              .finally(() => (record.pendingStatus = false));
+              .finally(() => (record.pendingStatus = false))
           }
           else {
             forbidUser(record.id)
               .then(res => {
                 if (res.data.status === 'success') {
-                  record.status = false;
-                  createMessage.success('修改成功');
+                  record.status = false
+                  createMessage.success('修改成功')
                 }
               })
-              .finally(() => (record.pendingStatus = false));
+              .finally(() => (record.pendingStatus = false))
           }
         },
-      });
+      })
     },
   },
-];
+]
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -107,8 +107,8 @@ export const searchFormSchema: FormSchema[] = [
       span: 6,
     },
   },
-];
-let timer;
+]
+let timer
 export const userFormSchema: FormSchema[] = [
   {
     field: 'id',
@@ -129,19 +129,19 @@ export const userFormSchema: FormSchema[] = [
         validator(_, value) {
           return new Promise<void>((resolve, reject) => {
             if (timer)
-              clearTimeout(timer);
+              clearTimeout(timer)
             timer = setTimeout(() => {
               isUserExist(value)
                 .then(isExist => {
-                  isExist && isExist !== values.id ?
-                    reject(new Error('该用户名称已存在')) :
-                    resolve();
+                  isExist && isExist !== values.id
+                    ? reject(new Error('该用户名称已存在'))
+                    : resolve()
                 })
                 .catch(err => {
-                  reject(err.message || '验证失败');
-                });
-            }, 500);
-          });
+                  reject(err.message || '验证失败')
+                })
+            }, 500)
+          })
         },
       },
     ],
@@ -168,4 +168,4 @@ export const userFormSchema: FormSchema[] = [
     label: '描述',
     component: 'Input',
   },
-];
+]

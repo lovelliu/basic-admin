@@ -1,60 +1,60 @@
-import type { ComputedRef, Ref } from 'vue';
-import { nextTick, unref } from 'vue';
-import { warn } from '/@/utils/log';
+import type { ComputedRef, Ref } from 'vue'
+import { nextTick, unref } from 'vue'
+import { warn } from '/@/utils/log'
 
 export function useTableScrollTo(
   tableElRef: Ref<ComponentRef>,
   getDataSourceRef: ComputedRef<Recordable[]>,
 ) {
-  let bodyEl: HTMLElement | null;
+  let bodyEl: HTMLElement | null
 
   async function findTargetRowToScroll(targetRowData: Recordable) {
-    const { id } = targetRowData;
+    const { id } = targetRowData
     const targetRowEl: HTMLElement | null | undefined = bodyEl?.querySelector(
       `[data-row-key="${id}"]`,
-    );
+    )
     // Add a delay to get new dataSource
-    await nextTick();
+    await nextTick()
     bodyEl?.scrollTo({
       top: targetRowEl?.offsetTop ?? 0,
       behavior: 'smooth',
-    });
+    })
   }
 
   function scrollTo(pos: string): void {
-    const table = unref(tableElRef);
+    const table = unref(tableElRef)
     if (!table)
-      return;
+      return
 
-    const tableEl: Element = table.$el;
+    const tableEl: Element = table.$el
     if (!tableEl)
-      return;
+      return
 
     if (!bodyEl) {
-      bodyEl = tableEl.querySelector('.ant-table-body');
+      bodyEl = tableEl.querySelector('.ant-table-body')
       if (!bodyEl)
-        return;
+        return
     }
 
-    const dataSource = unref(getDataSourceRef);
+    const dataSource = unref(getDataSourceRef)
     if (!dataSource)
-      return;
+      return
 
     // judge pos type
     if (pos === 'top') {
-      findTargetRowToScroll(dataSource[0]);
+      findTargetRowToScroll(dataSource[0])
     }
     else if (pos === 'bottom') {
-      findTargetRowToScroll(dataSource[dataSource.length - 1]);
+      findTargetRowToScroll(dataSource[dataSource.length - 1])
     }
     else {
-      const targetRowData = dataSource.find(data => data.id === pos);
+      const targetRowData = dataSource.find(data => data.id === pos)
       if (targetRowData)
-        findTargetRowToScroll(targetRowData);
+        findTargetRowToScroll(targetRowData)
       else
-        warn(`id: ${pos} doesn't exist`);
+        warn(`id: ${pos} doesn't exist`)
     }
   }
 
-  return { scrollTo };
+  return { scrollTo }
 }

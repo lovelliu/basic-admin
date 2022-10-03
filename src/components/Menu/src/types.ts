@@ -1,11 +1,11 @@
 export interface MenuState {
-  defaultSelectedKeys: string[];
+  defaultSelectedKeys: string[]
 
-  inlineIndent?: number;
+  inlineIndent?: number
 
-  openKeys: string[];
+  openKeys: string[]
 
-  selectedKeys: string[];
+  selectedKeys: string[]
 
-  collapsedOpenKeys: string[];
+  collapsedOpenKeys: string[]
 }

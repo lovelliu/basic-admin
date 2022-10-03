@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Ref } from 'vue';
-import { ref, watch } from 'vue';
-import { Card } from 'ant-design-vue';
-import { useECharts } from '/@/hooks/web/useECharts';
+import type { Ref } from 'vue'
+import { ref, watch } from 'vue'
+import { Card } from 'ant-design-vue'
+import { useECharts } from '/@/hooks/web/useECharts'
 
 const props = defineProps({
   loading: Boolean,
@@ -14,16 +14,16 @@ const props = defineProps({
     type: String as PropType<string>,
     default: '300px',
   },
-});
+})
 
-const chartRef = ref<HTMLDivElement | null>(null);
-const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
+const chartRef = ref<HTMLDivElement | null>(null)
+const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>)
 
 watch(
   () => props.loading,
   () => {
     if (props.loading)
-      return;
+      return
 
     setOptions({
       tooltip: {
@@ -43,20 +43,20 @@ watch(
             { value: 274, name: '化妆品' },
             { value: 400, name: '家居' },
           ].sort((a, b) => {
-            return a.value - b.value;
+            return a.value - b.value
           }),
           roseType: 'radius',
           animationType: 'scale',
           animationEasing: 'exponentialInOut',
           animationDelay() {
-            return Math.random() * 400;
+            return Math.random() * 400
           },
         },
       ],
-    });
+    })
   },
   { immediate: true },
-);
+)
 </script>
 
 <template>

@@ -1,65 +1,65 @@
 <script lang="ts">
-import { defineComponent, nextTick, ref, unref } from 'vue';
-import type { ScrollbarType } from '/@/components/Scrollbar';
-import { Scrollbar } from '/@/components/Scrollbar';
-import { useScrollTo } from '/@/hooks/event/useScrollTo';
+import { defineComponent, nextTick, ref, unref } from 'vue'
+import type { ScrollbarType } from '/@/components/Scrollbar'
+import { Scrollbar } from '/@/components/Scrollbar'
+import { useScrollTo } from '/@/hooks/event/useScrollTo'
 
 export default defineComponent({
   name: 'ScrollContainer',
   components: { Scrollbar },
   setup() {
-    const scrollbarRef = ref<Nullable<ScrollbarType>>(null);
+    const scrollbarRef = ref<Nullable<ScrollbarType>>(null)
 
     /**
        * Scroll to the specified position
        */
     function scrollTo(to: number, duration = 500) {
-      const scrollbar = unref(scrollbarRef);
+      const scrollbar = unref(scrollbarRef)
       if (!scrollbar)
-        return;
+        return
 
       nextTick(() => {
-        const wrap = unref(scrollbar.wrap);
+        const wrap = unref(scrollbar.wrap)
         if (!wrap)
-          return;
+          return
 
         const { start } = useScrollTo({
           el: wrap,
           to,
           duration,
-        });
-        start();
-      });
+        })
+        start()
+      })
     }
 
     function getScrollWrap() {
-      const scrollbar = unref(scrollbarRef);
+      const scrollbar = unref(scrollbarRef)
       if (!scrollbar)
-        return null;
+        return null
 
-      return scrollbar.wrap;
+      return scrollbar.wrap
     }
 
     /**
        * Scroll to the bottom
        */
     function scrollBottom() {
-      const scrollbar = unref(scrollbarRef);
+      const scrollbar = unref(scrollbarRef)
       if (!scrollbar)
-        return;
+        return
 
       nextTick(() => {
-        const wrap = unref(scrollbar.wrap) as any;
+        const wrap = unref(scrollbar.wrap) as any
         if (!wrap)
-          return;
+          return
 
-        const scrollHeight = wrap.scrollHeight as number;
+        const scrollHeight = wrap.scrollHeight as number
         const { start } = useScrollTo({
           el: wrap,
           to: scrollHeight,
-        });
-        start();
-      });
+        })
+        start()
+      })
     }
 
     return {
@@ -67,9 +67,9 @@ export default defineComponent({
       scrollTo,
       scrollBottom,
       getScrollWrap,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Ref } from 'vue';
-import { ref, watch } from 'vue';
-import { Card } from 'ant-design-vue';
-import { useECharts } from '/@/hooks/web/useECharts';
+import type { Ref } from 'vue'
+import { ref, watch } from 'vue'
+import { Card } from 'ant-design-vue'
+import { useECharts } from '/@/hooks/web/useECharts'
 
 const props = defineProps({
   loading: Boolean,
@@ -14,15 +14,15 @@ const props = defineProps({
     type: String as PropType<string>,
     default: '300px',
   },
-});
-const chartRef = ref<HTMLDivElement | null>(null);
-const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
+})
+const chartRef = ref<HTMLDivElement | null>(null)
+const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>)
 
 watch(
   () => props.loading,
   () => {
     if (props.loading)
-      return;
+      return
 
     setOptions({
       legend: {
@@ -35,27 +35,27 @@ watch(
         splitNumber: 8,
         indicator: [
           {
-            text: '电脑',
+            name: '电脑',
             max: 100,
           },
           {
-            text: '充电器',
+            name: '充电器',
             max: 100,
           },
           {
-            text: '耳机',
+            name: '耳机',
             max: 100,
           },
           {
-            text: '手机',
+            name: '手机',
             max: 100,
           },
           {
-            text: 'Ipad',
+            name: 'Ipad',
             max: 100,
           },
           {
-            text: '耳机',
+            name: '耳机',
             max: 100,
           },
         ],
@@ -89,10 +89,10 @@ watch(
           ],
         },
       ],
-    });
+    })
   },
   { immediate: true },
-);
+)
 </script>
 
 <template>

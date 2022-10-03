@@ -1,15 +1,15 @@
 <script lang="ts" setup name="ResourceManagement">
-import { deleteResource, getResourceCate, getResourceList } from '/@/api/sys/resource';
-import { BasicTable, TableAction, useTable } from '/@/components/Table';
-import { useModal } from '/@/components/Modal';
-import { columns, searchFormSchema } from './data';
-import { onMounted, ref } from 'vue';
-import ResourceModal from './ResourceModal.vue';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { useGo } from '/@/hooks/web/usePage';
+import { deleteResource, getResourceCate, getResourceList } from '/@/api/sys/resource'
+import { BasicTable, TableAction, useTable } from '/@/components/Table'
+import { useModal } from '/@/components/Modal'
+import { columns, searchFormSchema } from './data'
+import { onMounted, ref } from 'vue'
+import ResourceModal from './ResourceModal.vue'
+import { useMessage } from '/@/hooks/web/useMessage'
+import { useGo } from '/@/hooks/web/usePage'
 
-const go = useGo();
-const [registerModal, { openModal }] = useModal();
+const go = useGo()
+const [registerModal, { openModal }] = useModal()
 const [registerTable, { reload, getForm }] = useTable({
   title: '资源列表',
   api: getResourceList,
@@ -37,31 +37,31 @@ const [registerTable, { reload, getForm }] = useTable({
     slots: { customRender: 'action' },
     fixed: undefined,
   },
-});
+})
 
-const resourceCate = ref<{ label: string; value: number }[]>([]);
+const resourceCate = ref<{ label: string; value: number }[]>([])
 onMounted(async () => {
-  const res = await getResourceCate();
-  const options = res.map(item => ({ label: item.name, value: item.id }));
-  resourceCate.value = options;
-  const { updateSchema } = getForm();
+  const res = await getResourceCate()
+  const options = res.map(item => ({ label: item.name, value: item.id }))
+  resourceCate.value = options
+  const { updateSchema } = getForm()
   updateSchema({
     field: 'categoryId',
     componentProps: {
       options,
     },
-  });
-});
+  })
+})
 
 function handleCreate() {
   openModal(true, {
     isUpdate: false,
     resourceCate: resourceCate.value,
-  });
+  })
 }
 
 function handleSuccess() {
-  reload();
+  reload()
 }
 
 function handleEdit(record: Recordable) {
@@ -69,15 +69,15 @@ function handleEdit(record: Recordable) {
     record,
     isUpdate: true,
     resourceCate: resourceCate.value,
-  });
+  })
 }
 
-const { createMessage } = useMessage();
+const { createMessage } = useMessage()
 async function handleDelete(record: Recordable) {
-  const res = await deleteResource(record.id);
+  const res = await deleteResource(record.id)
   if (res) {
-    createMessage.success('删除成功');
-    reload();
+    createMessage.success('删除成功')
+    reload()
   }
 }
 </script>

@@ -1,9 +1,9 @@
-import { Switch } from 'ant-design-vue';
-import { h } from 'vue';
-import { changeCourseState, uploadImg } from '/@/api/business/course';
-import { MarkDown } from '/@/components/Markdown';
-import type { BasicColumn, FormSchema } from '/@/components/Table';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { Switch } from 'ant-design-vue'
+import { h } from 'vue'
+import { changeCourseState, uploadImg } from '/@/api/business/course'
+import { MarkDown } from '/@/components/Markdown'
+import type { BasicColumn, FormSchema } from '/@/components/Table'
+import { useMessage } from '/@/hooks/web/useMessage'
 
 export const columns: BasicColumn[] = [
   {
@@ -21,7 +21,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'price',
     width: 50,
     customRender: ({ record }: any) => {
-      return `¥${record.price}`;
+      return `¥${record.price}`
     },
   },
   {
@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
     width: 50,
     customRender: ({ record }: any) => {
       if (!Reflect.has(record, 'pendingStatus'))
-        record.pendingStatus = false;
+        record.pendingStatus = false
 
       return h(Switch, {
         checked: record.status === 1,
@@ -43,20 +43,20 @@ export const columns: BasicColumn[] = [
         unCheckedChildren: '下架',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
-          record.pendingStatus = true;
-          const newStatus = checked ? 1 : 0;
-          const { createMessage } = useMessage();
+          record.pendingStatus = true
+          const newStatus = checked ? 1 : 0
+          const { createMessage } = useMessage()
           changeCourseState(record.id, newStatus)
             .then(() => {
-              record.status = newStatus;
-              createMessage.success('修改课程状态成功');
+              record.status = newStatus
+              createMessage.success('修改课程状态成功')
             })
-            .finally(() => (record.pendingStatus = false));
+            .finally(() => (record.pendingStatus = false))
         },
-      });
+      })
     },
   },
-];
+]
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -79,7 +79,7 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { span: 8 },
   },
-];
+]
 
 export const BasicFormSchema: FormSchema[] = [
   {
@@ -197,7 +197,7 @@ export const BasicFormSchema: FormSchema[] = [
     helpMessage: '数字越大排序越靠后',
     colProps: { span: 24 },
   },
-];
+]
 
 export const SalesFormSchema: FormSchema[] = [
   {
@@ -235,7 +235,7 @@ export const SalesFormSchema: FormSchema[] = [
     },
     colProps: { span: 24 },
   },
-];
+]
 
 export const activityFormSchema: FormSchema[] = [
   {
@@ -274,7 +274,7 @@ export const activityFormSchema: FormSchema[] = [
     component: 'InputNumber',
     ifShow: ({ model }) => model.activityCourse,
   },
-];
+]
 
 export const detailFormSchema: FormSchema[] = [
   {
@@ -285,12 +285,12 @@ export const detailFormSchema: FormSchema[] = [
       return h(MarkDown, {
         value: model[field],
         onChange: (value: string) => {
-          model[field] = value;
+          model[field] = value
         },
-      });
+      })
     },
   },
-];
+]
 
 export const editCourseFormSchema: FormSchema[] = [
   {
@@ -341,7 +341,7 @@ export const editCourseFormSchema: FormSchema[] = [
       ],
     },
   },
-];
+]
 
 export const editLessonFormSchema: FormSchema[] = [
   {
@@ -405,4 +405,4 @@ export const editLessonFormSchema: FormSchema[] = [
     },
     required: true,
   },
-];
+]

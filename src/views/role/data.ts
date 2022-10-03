@@ -1,7 +1,7 @@
-import { Tag } from 'ant-design-vue';
-import { h } from 'vue';
-import type { BasicColumn, FormSchema } from '/@/components/Table';
-import { formatToDateTime } from '/@/utils/dateUtil';
+import { Tag } from 'ant-design-vue'
+import { h } from 'vue'
+import type { BasicColumn, FormSchema } from '/@/components/Table'
+import { formatToDateTime } from '/@/utils/dateUtil'
 
 export const columns: BasicColumn[] = [
   {
@@ -30,9 +30,9 @@ export const columns: BasicColumn[] = [
     dataIndex: 'status',
     width: 50,
     customRender: ({ value }) => {
-      const color = value ? 'green' : 'red';
-      const text = value ? '启用' : '禁用';
-      return h(Tag, { color }, () => text);
+      const color = value ? 'green' : 'red'
+      const text = value ? '启用' : '禁用'
+      return h(Tag, { color }, () => text)
     },
   },
   {
@@ -41,7 +41,7 @@ export const columns: BasicColumn[] = [
     width: 100,
     customRender: ({ record }: any) => formatToDateTime(record.create_at),
   },
-];
+]
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -52,7 +52,7 @@ export const searchFormSchema: FormSchema[] = [
       span: 10,
     },
   },
-];
+]
 
 export const RoleFormSchema: FormSchema[] = [
   {
@@ -96,4 +96,4 @@ export const RoleFormSchema: FormSchema[] = [
     component: 'Input',
     slot: 'menu',
   },
-];
+]

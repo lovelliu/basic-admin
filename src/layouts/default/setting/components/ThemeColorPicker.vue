@@ -1,12 +1,12 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import type { HandlerEnum } from '../enum';
-import { defineComponent } from 'vue';
-import { CheckOutlined } from '@ant-design/icons-vue';
+import type { PropType } from 'vue'
+import type { HandlerEnum } from '../enum'
+import { defineComponent } from 'vue'
+import { CheckOutlined } from '@ant-design/icons-vue'
 
-import { useDesign } from '/@/hooks/web/useDesign';
+import { useDesign } from '/@/hooks/web/useDesign'
 
-import { baseHandler } from '../handler';
+import { baseHandler } from '../handler'
 
 export default defineComponent({
   name: 'ThemeColorPicker',
@@ -24,17 +24,17 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { prefixCls } = useDesign('setting-theme-picker');
+    const { prefixCls } = useDesign('setting-theme-picker')
 
     function handleClick(color: string) {
-      props.event && baseHandler(props.event, color);
+      props.event && baseHandler(props.event, color)
     }
     return {
       prefixCls,
       handleClick,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

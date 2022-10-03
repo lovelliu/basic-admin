@@ -1,15 +1,15 @@
-import type { ComputedRef } from 'vue';
-import type { BasicTableProps } from '../types/table';
-import { unref } from 'vue';
-import { ROW_KEY } from '../const';
-import { isFunction, isString } from '/@/utils/is';
+import type { ComputedRef } from 'vue'
+import type { BasicTableProps } from '../types/table'
+import { unref } from 'vue'
+import { ROW_KEY } from '../const'
+import { isFunction, isString } from '/@/utils/is'
 
 interface Options {
-  setSelectedRowKeys: (keys: string[]) => void;
-  getSelectRowKeys: () => string[];
-  clearSelectedRowKeys: () => void;
-  emit: EmitType;
-  getAutoCreateKey: ComputedRef<boolean | undefined>;
+  setSelectedRowKeys: (keys: string[]) => void
+  getSelectRowKeys: () => string[]
+  clearSelectedRowKeys: () => void
+  emit: EmitType
+  getAutoCreateKey: ComputedRef<boolean | undefined>
 }
 
 function getKey(
@@ -18,15 +18,15 @@ function getKey(
   autoCreateKey?: boolean,
 ) {
   if (!rowKey || autoCreateKey)
-    return record[ROW_KEY];
+    return record[ROW_KEY]
 
   if (isString(rowKey))
-    return record[rowKey];
+    return record[rowKey]
 
   if (isFunction(rowKey))
-    return record[rowKey(record)];
+    return record[rowKey(record)]
 
-  return null;
+  return null
 }
 
 export function useCustomRow(
@@ -42,69 +42,69 @@ export function useCustomRow(
   const customRow = (record: Recordable, index: number) => {
     return {
       onClick: (e: Event) => {
-        e?.stopPropagation();
+        e?.stopPropagation()
         function handleClick() {
-          const { rowSelection, rowKey, clickToRowSelect } = unref(propsRef);
+          const { rowSelection, rowKey, clickToRowSelect } = unref(propsRef)
           if (!rowSelection || !clickToRowSelect)
-            return;
-          const keys = getSelectRowKeys();
-          const key = getKey(record, rowKey, unref(getAutoCreateKey));
+            return
+          const keys = getSelectRowKeys()
+          const key = getKey(record, rowKey, unref(getAutoCreateKey))
           if (!key)
-            return;
+            return
 
-          const isCheckbox = rowSelection.type === 'checkbox';
+          const isCheckbox = rowSelection.type === 'checkbox'
           if (isCheckbox) {
             // 找到tr
             const tr: HTMLElement = (e as MouseEvent)
               .composedPath?.()
-              .find((dom: HTMLElement) => dom.tagName === 'TR') as HTMLElement;
+              .find((dom: HTMLElement) => dom.tagName === 'TR') as HTMLElement
             if (!tr)
-              return;
+              return
             // 找到Checkbox，检查是否为disabled
-            const checkBox = tr.querySelector('input[type=checkbox]');
+            const checkBox = tr.querySelector('input[type=checkbox]')
             if (!checkBox || checkBox.hasAttribute('disabled'))
-              return;
+              return
             if (!keys.includes(key)) {
-              setSelectedRowKeys([...keys, key]);
-              return;
+              setSelectedRowKeys([...keys, key])
+              return
             }
-            const keyIndex = keys.findIndex(item => item === key);
-            keys.splice(keyIndex, 1);
-            setSelectedRowKeys(keys);
-            return;
+            const keyIndex = keys.findIndex(item => item === key)
+            keys.splice(keyIndex, 1)
+            setSelectedRowKeys(keys)
+            return
           }
 
-          const isRadio = rowSelection.type === 'radio';
+          const isRadio = rowSelection.type === 'radio'
           if (isRadio) {
             if (!keys.includes(key)) {
               if (keys.length)
-                clearSelectedRowKeys();
+                clearSelectedRowKeys()
 
-              setSelectedRowKeys([key]);
-              return;
+              setSelectedRowKeys([key])
+              return
             }
-            clearSelectedRowKeys();
+            clearSelectedRowKeys()
           }
         }
-        handleClick();
-        emit('row-click', record, index, e);
+        handleClick()
+        emit('row-click', record, index, e)
       },
       onDblclick: (event: Event) => {
-        emit('row-dbClick', record, index, event);
+        emit('row-dbClick', record, index, event)
       },
       onContextmenu: (event: Event) => {
-        emit('row-contextmenu', record, index, event);
+        emit('row-contextmenu', record, index, event)
       },
       onMouseenter: (event: Event) => {
-        emit('row-mouseenter', record, index, event);
+        emit('row-mouseenter', record, index, event)
       },
       onMouseleave: (event: Event) => {
-        emit('row-mouseleave', record, index, event);
+        emit('row-mouseleave', record, index, event)
       },
-    };
-  };
+    }
+  }
 
   return {
     customRow,
-  };
+  }
 }

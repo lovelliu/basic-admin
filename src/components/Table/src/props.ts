@@ -1,5 +1,5 @@
-import type { PropType } from 'vue';
-import type { PaginationProps } from './types/pagination';
+import type { PropType } from 'vue'
+import type { PaginationProps } from './types/pagination'
 import type {
   BasicColumn,
   FetchSetting,
@@ -8,11 +8,11 @@ import type {
   TableCustomRecord,
   TableRowSelection,
   TableSetting,
-} from './types/table';
-import type { FormProps } from '/@/components/Form';
+} from './types/table'
+import type { FormProps } from '/@/components/Form'
 
-import { DEFAULT_FILTER_FN, DEFAULT_SIZE, DEFAULT_SORT_FN, FETCH_SETTING } from './const';
-import { propTypes } from '/@/utils/propTypes';
+import { DEFAULT_FILTER_FN, DEFAULT_SIZE, DEFAULT_SORT_FN, FETCH_SETTING } from './const'
+import { propTypes } from '/@/utils/propTypes'
 
 export const basicProps = {
   clickToRowSelect: { type: Boolean, default: true },
@@ -60,7 +60,7 @@ export const basicProps = {
   fetchSetting: {
     type: Object as PropType<FetchSetting>,
     default: () => {
-      return FETCH_SETTING;
+      return FETCH_SETTING
     },
   },
   // 立即请求接口
@@ -137,10 +137,10 @@ export const basicProps = {
   beforeEditSubmit: {
     type: Function as PropType<
       (data: {
-        record: Recordable;
-        index: number;
-        key: string | number;
-        value: any;
+        record: Recordable
+        index: number
+        key: string | number
+        value: any
       }) => Promise<any>
     >,
   },
@@ -148,4 +148,4 @@ export const basicProps = {
     type: String as PropType<SizeType>,
     default: DEFAULT_SIZE,
   },
-};
+}

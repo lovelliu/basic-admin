@@ -1,11 +1,11 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import type { HandlerEnum } from '../enum';
-import { defineComponent } from 'vue';
+import type { PropType } from 'vue'
+import type { HandlerEnum } from '../enum'
+import { defineComponent } from 'vue'
 
-import { InputNumber } from 'ant-design-vue';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { baseHandler } from '../handler';
+import { InputNumber } from 'ant-design-vue'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { baseHandler } from '../handler'
 
 export default defineComponent({
   name: 'InputNumberItem',
@@ -19,17 +19,17 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { prefixCls } = useDesign('setting-input-number-item');
+    const { prefixCls } = useDesign('setting-input-number-item')
 
     function handleChange(e) {
-      props.event && baseHandler(props.event, e);
+      props.event && baseHandler(props.event, e)
     }
     return {
       prefixCls,
       handleChange,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

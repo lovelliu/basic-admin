@@ -5,8 +5,8 @@ import type {
   ResourceList,
   ResourceParams,
   RoleResourceList,
-} from './model/systemModel';
-import { defHttp } from '/@/utils/request';
+} from './model/systemModel'
+import { defHttp } from '/@/utils/request'
 
 enum Api {
   GetResourceList = '/resource/getResourcePages',
@@ -21,29 +21,29 @@ enum Api {
 }
 
 export const getResourceList = (data: Partial<ResourceParams>) =>
-  defHttp.post<ResourceList>({ url: Api.GetResourceList, data });
+  defHttp.post<ResourceList>({ url: Api.GetResourceList, data })
 
-export const getResourceCate = () => defHttp.get<ResourceCateList>({ url: Api.GetResourceCate });
+export const getResourceCate = () => defHttp.get<ResourceCateList>({ url: Api.GetResourceCate })
 
 export const addOrUpdate = (data: AddOrUpdateMenuParams) =>
-  defHttp.post({ url: Api.AddOrUpdate, data });
+  defHttp.post({ url: Api.AddOrUpdate, data })
 
 export const deleteResource = (id: number) =>
-  defHttp.delete({ url: `${Api.DeleteResource}/${id}` });
+  defHttp.delete({ url: `${Api.DeleteResource}/${id}` })
 
 export const addOrUpdateCate = (data: AddOrUpdateResourceCate) =>
-  defHttp.post({ url: Api.AddOrUpdateResourceCate, data });
+  defHttp.post({ url: Api.AddOrUpdateResourceCate, data })
 
 export const deleteResourceCate = (id: number) =>
-  defHttp.delete({ url: `${Api.DeleteResourceCate}/${id}` });
+  defHttp.delete({ url: `${Api.DeleteResourceCate}/${id}` })
 
-export const getAllResource = () => defHttp.get<ResourceList>({ url: Api.GetAllResource });
+export const getAllResource = () => defHttp.get<ResourceList>({ url: Api.GetAllResource })
 
 export const getRoleResource = (id: number) =>
   defHttp.get<RoleResourceList>({
     url: Api.GetRoleResource,
     params: { roleId: id },
-  });
+  })
 
 export const allocateRoleResource = (data: { roleId: number; resourceIdList: number[] }) =>
-  defHttp.post({ url: Api.AllocateRoleResource, data });
+  defHttp.post({ url: Api.AllocateRoleResource, data })

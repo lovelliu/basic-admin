@@ -1,23 +1,24 @@
-import type { ConfigEnv, UserConfig } from 'vite';
-import { resolve } from 'path';
-import { loadEnv } from 'vite';
-import { createVitePlugins } from './build/vite/plugin';
-import { wrapperEnv } from './build/utils';
-import { createProxy } from './build/vite/proxy';
-import { OUTPUT_DIR } from './build/constants';
-import { generateModifyVars } from './build/generate/generateModifyVars';
+import type { ConfigEnv, UserConfig } from 'vite'
+
+import { resolve } from 'path'
+import { loadEnv } from 'vite'
+import { createVitePlugins } from './build/vite/plugin'
+import { wrapperEnv } from './build/utils'
+import { createProxy } from './build/vite/proxy'
+import { OUTPUT_DIR } from './build/constants'
+import { generateModifyVars } from './build/generate/generateModifyVars'
 
 function pathResolve(dir: string) {
-  return resolve(process.cwd(), '.', dir);
+  return resolve(process.cwd(), '.', dir)
 }
 export default ({ command, mode }: ConfigEnv): UserConfig => {
-  const root = process.cwd();
+  const root = process.cwd()
 
-  const env = loadEnv(mode, root);
-  const viteEnv = wrapperEnv(env);
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = viteEnv;
+  const env = loadEnv(mode, root)
+  const viteEnv = wrapperEnv(env)
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = viteEnv
 
-  const isBuild = command === 'build';
+  const isBuild = command === 'build'
   return {
     root,
     base: VITE_PUBLIC_PATH,
@@ -68,5 +69,5 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         'ant-design-vue/es/locale/en_US',
       ],
     },
-  };
-};
+  }
+}

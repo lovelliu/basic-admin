@@ -1,7 +1,7 @@
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, unref, watch, watchEffect } from 'vue';
-import { TransitionPresets, useTransition } from '@vueuse/core';
-import { isNumber } from '/@/utils/is';
+import { computed, defineComponent, onMounted, ref, unref, watch, watchEffect } from 'vue'
+import { TransitionPresets, useTransition } from '@vueuse/core'
+import { isNumber } from '/@/utils/is'
 
 const props = {
   startVal: { type: Number, default: 0 },
@@ -12,7 +12,7 @@ const props = {
     type: Number,
     default: 0,
     validator(value: number) {
-      return value >= 0;
+      return value >= 0
     },
   },
   prefix: { type: String, default: '' },
@@ -31,40 +31,40 @@ const props = {
      * Digital animation
      */
   transition: { type: String, default: 'linear' },
-};
+}
 
 export default defineComponent({
   name: 'CountTo',
   props,
   emits: ['onStarted', 'onFinished'],
   setup(props, { emit }) {
-    const source = ref(props.startVal);
-    const disabled = ref(false);
-    let outputValue = useTransition(source);
+    const source = ref(props.startVal)
+    const disabled = ref(false)
+    let outputValue = useTransition(source)
 
-    const value = computed(() => formatNumber(unref(outputValue)));
+    const value = computed(() => formatNumber(unref(outputValue)))
 
     watchEffect(() => {
-      source.value = props.startVal;
-    });
+      source.value = props.startVal
+    })
 
     watch([() => props.startVal, () => props.endVal], () => {
       if (props.autoplay)
-        start();
-    });
+        start()
+    })
 
     onMounted(() => {
-      props.autoplay && start();
-    });
+      props.autoplay && start()
+    })
 
     function start() {
-      run();
-      source.value = props.endVal;
+      run()
+      source.value = props.endVal
     }
 
     function reset() {
-      source.value = props.startVal;
-      run();
+      source.value = props.startVal
+      run()
     }
 
     function run() {
@@ -74,32 +74,32 @@ export default defineComponent({
         onFinished: () => emit('onFinished'),
         onStarted: () => emit('onStarted'),
         ...(props.useEasing ? { transition: TransitionPresets[props.transition] } : {}),
-      });
+      })
     }
 
     function formatNumber(num: number | string) {
       if (!num && num !== 0)
-        return '';
+        return ''
 
-      const { decimals, decimal, separator, suffix, prefix } = props;
-      num = Number(num).toFixed(decimals);
-      num += '';
+      const { decimals, decimal, separator, suffix, prefix } = props
+      num = Number(num).toFixed(decimals)
+      num += ''
 
-      const x = num.split('.');
-      let x1 = x[0];
-      const x2 = x.length > 1 ? decimal + x[1] : '';
+      const x = num.split('.')
+      let x1 = x[0]
+      const x2 = x.length > 1 ? decimal + x[1] : ''
 
-      const rgx = /(\d+)(\d{3})/;
+      const rgx = /(\d+)(\d{3})/
       if (separator && !isNumber(separator)) {
         while (rgx.test(x1))
-          x1 = x1.replace(rgx, `$1${separator}$2`);
+          x1 = x1.replace(rgx, `$1${separator}$2`)
       }
-      return prefix + x1 + x2 + suffix;
+      return prefix + x1 + x2 + suffix
     }
 
-    return { value, start, reset };
+    return { value, start, reset }
   },
-});
+})
 </script>
 
 <template>

@@ -1,15 +1,15 @@
 <script lang="ts" setup name="MenuManagement">
-import { nextTick } from 'vue';
-import { BasicTable, TableAction, useTable } from '/@/components/Table';
-import { deleteMenu, getAllMenu } from '/@/api/sys/menu';
-import { columns, searchFormSchema } from './data';
-import MenuDrawer from './MenuDrawer.vue';
-import { useDrawer } from '/@/components/Drawer';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { usePermission } from '/@/hooks/web/usePermission';
+import { nextTick } from 'vue'
+import { BasicTable, TableAction, useTable } from '/@/components/Table'
+import { deleteMenu, getAllMenu } from '/@/api/sys/menu'
+import { columns, searchFormSchema } from './data'
+import MenuDrawer from './MenuDrawer.vue'
+import { useDrawer } from '/@/components/Drawer'
+import { useMessage } from '/@/hooks/web/useMessage'
+import { usePermission } from '/@/hooks/web/usePermission'
 
-const { hasPermission } = usePermission();
-const [registerDrawer, { openDrawer }] = useDrawer();
+const { hasPermission } = usePermission()
+const [registerDrawer, { openDrawer }] = useDrawer()
 const [registerTable, { reload, expandAll }] = useTable({
   title: '菜单列表',
   api: getAllMenu,
@@ -34,38 +34,38 @@ const [registerTable, { reload, expandAll }] = useTable({
     slots: { customRender: 'action' },
     fixed: undefined,
   },
-});
+})
 
 function handleCreate() {
   openDrawer(true, {
     isUpdate: false,
-  });
+  })
 }
 
 function handleEdit(record: Recordable) {
   openDrawer(true, {
     record,
     isUpdate: true,
-  });
+  })
 }
 
-const { createMessage } = useMessage();
+const { createMessage } = useMessage()
 
 async function handleDelete(record: Recordable) {
-  const res = await deleteMenu(record.id);
+  const res = await deleteMenu(record.id)
   if (res) {
-    createMessage.success('删除成功');
-    reload();
+    createMessage.success('删除成功')
+    reload()
   }
 }
 
 function handleSuccess() {
-  reload();
+  reload()
 }
 
 function onFetchSuccess() {
   // 演示默认展开所有表项
-  nextTick(expandAll);
+  nextTick(expandAll)
 }
 </script>
 

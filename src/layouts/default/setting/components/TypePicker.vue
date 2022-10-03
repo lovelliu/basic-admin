@@ -1,10 +1,10 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import type { menuTypeList } from '../enum';
-import { defineComponent } from 'vue';
+import type { PropType } from 'vue'
+import type { menuTypeList } from '../enum'
+import { defineComponent } from 'vue'
 
-import { Tooltip } from 'ant-design-vue';
-import { useDesign } from '/@/hooks/web/useDesign';
+import { Tooltip } from 'ant-design-vue'
+import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'MenuTypePicker',
@@ -24,13 +24,13 @@ export default defineComponent({
     },
   },
   setup() {
-    const { prefixCls } = useDesign('setting-menu-type-picker');
+    const { prefixCls } = useDesign('setting-menu-type-picker')
 
     return {
       prefixCls,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

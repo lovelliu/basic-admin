@@ -1,25 +1,25 @@
 <script lang="ts">
-import type { CSSProperties } from 'vue';
-import { computed, defineComponent, h, ref, unref } from 'vue';
+import type { CSSProperties } from 'vue'
+import { computed, defineComponent, h, ref, unref } from 'vue'
 
-import { Layout } from 'ant-design-vue';
-import LayoutMenu from '../menu/index.vue';
-import LayoutTrigger from '/@/layouts/default/trigger/index.vue';
+import { Layout } from 'ant-design-vue'
+import LayoutMenu from '../menu/index.vue'
+import LayoutTrigger from '/@/layouts/default/trigger/index.vue'
 
-import { MenuModeEnum, MenuSplitTypeEnum } from '/@/enums/menuEnum';
+import { MenuModeEnum, MenuSplitTypeEnum } from '/@/enums/menuEnum'
 
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-import { useDragLine, useSiderEvent, useTrigger } from './useLayoutSider';
-import { useAppInject } from '/@/hooks/web/useAppInject';
-import { useDesign } from '/@/hooks/web/useDesign';
+import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
+import { useDragLine, useSiderEvent, useTrigger } from './useLayoutSider'
+import { useAppInject } from '/@/hooks/web/useAppInject'
+import { useDesign } from '/@/hooks/web/useDesign'
 
-import DragBar from './DragBar.vue';
+import DragBar from './DragBar.vue'
 export default defineComponent({
   name: 'LayoutSideBar',
   components: { Sider: Layout.Sider, LayoutMenu, DragBar, LayoutTrigger },
   setup() {
-    const dragBarRef = ref<ElRef>(null);
-    const sideRef = ref<ElRef>(null);
+    const dragBarRef = ref<ElRef>(null)
+    const sideRef = ref<ElRef>(null)
 
     const {
       getCollapsed,
@@ -31,29 +31,29 @@ export default defineComponent({
       getMenuFixed,
       getIsMixMode,
       toggleCollapsed,
-    } = useMenuSetting();
+    } = useMenuSetting()
 
-    const { prefixCls } = useDesign('layout-sideBar');
+    const { prefixCls } = useDesign('layout-sideBar')
 
-    const { getIsMobile } = useAppInject();
+    const { getIsMobile } = useAppInject()
 
-    const { getTriggerAttr, getShowTrigger } = useTrigger(getIsMobile);
+    const { getTriggerAttr, getShowTrigger } = useTrigger(getIsMobile)
 
-    useDragLine(sideRef, dragBarRef);
+    useDragLine(sideRef, dragBarRef)
 
-    const { getCollapsedWidth, onBreakpointChange } = useSiderEvent();
+    const { getCollapsedWidth, onBreakpointChange } = useSiderEvent()
 
     const getMode = computed(() => {
-      return unref(getSplit) ? MenuModeEnum.INLINE : null;
-    });
+      return unref(getSplit) ? MenuModeEnum.INLINE : null
+    })
 
     const getSplitType = computed(() => {
-      return unref(getSplit) ? MenuSplitTypeEnum.LEFT : MenuSplitTypeEnum.NONE;
-    });
+      return unref(getSplit) ? MenuSplitTypeEnum.LEFT : MenuSplitTypeEnum.NONE
+    })
 
     const showClassSideBarRef = computed(() => {
-      return unref(getSplit) ? !unref(getMenuHidden) : true;
-    });
+      return unref(getSplit) ? !unref(getMenuHidden) : true
+    })
 
     const getSiderClass = computed(() => {
       return [
@@ -62,11 +62,11 @@ export default defineComponent({
           [`${prefixCls}--fixed`]: unref(getMenuFixed),
           [`${prefixCls}--mix`]: unref(getIsMixMode) && !unref(getIsMobile),
         },
-      ];
-    });
+      ]
+    })
 
     const getHiddenDomStyle = computed((): CSSProperties => {
-      const width = `${unref(getRealWidth)}px`;
+      const width = `${unref(getRealWidth)}px`
       return {
         width,
         overflow: 'hidden',
@@ -74,12 +74,12 @@ export default defineComponent({
         maxWidth: width,
         minWidth: width,
         transition: 'all 0.2s',
-      };
-    });
+      }
+    })
 
     // 在此处使用计算量可能会导致sider异常
     // andv 更新后，如果trigger插槽可用，则此处代码可废弃
-    const getTrigger = h(LayoutTrigger);
+    const getTrigger = h(LayoutTrigger)
 
     return {
       prefixCls,
@@ -101,9 +101,9 @@ export default defineComponent({
       getSplitType,
       getShowTrigger,
       toggleCollapsed,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

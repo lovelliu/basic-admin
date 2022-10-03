@@ -1,16 +1,16 @@
-import type { Ref } from 'vue';
-import { ref, unref, watch } from 'vue';
-import { useDebounceFn, useThrottleFn } from '@vueuse/core';
+import type { Ref } from 'vue'
+import { ref, unref, watch } from 'vue'
+import { useDebounceFn, useThrottleFn } from '@vueuse/core'
 
-export type RemoveEventFn = () => void;
+export type RemoveEventFn = () => void
 export interface UseEventParams {
-  el?: Element | Ref<Element | undefined> | Window | any;
-  name: string;
-  listener: EventListener;
-  options?: boolean | AddEventListenerOptions;
-  autoRemove?: boolean;
-  isDebounce?: boolean;
-  wait?: number;
+  el?: Element | Ref<Element | undefined> | Window | any
+  name: string
+  listener: EventListener
+  options?: boolean | AddEventListenerOptions
+  autoRemove?: boolean
+  isDebounce?: boolean
+  wait?: number
 }
 
 export function useEventListener({
@@ -22,36 +22,36 @@ export function useEventListener({
   isDebounce = true,
   wait = 80,
 }: UseEventParams): { removeEvent: RemoveEventFn } {
-  let remove: RemoveEventFn = () => {};
-  const isAddRef = ref(false);
+  let remove: RemoveEventFn = () => {}
+  const isAddRef = ref(false)
   if (el) {
-    const element = ref<Element>(el as Element);
-    const handler = isDebounce ? useDebounceFn(listener, wait) : useThrottleFn(listener, wait);
-    const realHandler = wait ? handler : listener;
+    const element = ref<Element>(el as Element)
+    const handler = isDebounce ? useDebounceFn(listener, wait) : useThrottleFn(listener, wait)
+    const realHandler = wait ? handler : listener
     const removeEventListener = (e: Element) => {
-      isAddRef.value = true;
-      e.removeEventListener(name, realHandler, options);
-    };
-    const addEventListener = (e: Element) => e.addEventListener(name, realHandler, options);
+      isAddRef.value = true
+      e.removeEventListener(name, realHandler, options)
+    }
+    const addEventListener = (e: Element) => e.addEventListener(name, realHandler, options)
 
     const removeWatch = watch(
       element,
       (v, _ov, cleanup) => {
         if (v) {
-          !unref(isAddRef) && addEventListener(v);
+          !unref(isAddRef) && addEventListener(v)
           cleanup(() => {
-            autoRemove && removeEventListener(v);
-          });
+            autoRemove && removeEventListener(v)
+          })
         }
       },
       { immediate: true },
-    );
+    )
 
     remove = () => {
-      removeEventListener(element.value);
-      removeWatch();
-    };
+      removeEventListener(element.value)
+      removeWatch()
+    }
   }
 
-  return { removeEvent: remove };
+  return { removeEvent: remove }
 }

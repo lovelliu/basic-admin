@@ -1,7 +1,7 @@
-import antdLocale from 'ant-design-vue/es/locale/en_US';
-import { genMessage } from '../helper';
+import antdLocale from 'ant-design-vue/es/locale/en_US'
+import { genMessage } from '../helper'
 
-const modules = import.meta.globEager('./en/**/*.y(a)?ml');
+const modules = import.meta.globEager('./en/**/*.y(a)?ml')
 
 export default {
   message: {
@@ -10,4 +10,4 @@ export default {
   },
   dateLocale: null,
   dateLocaleName: 'en',
-};
+}

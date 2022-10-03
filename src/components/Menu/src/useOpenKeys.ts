@@ -1,13 +1,13 @@
-import { MenuModeEnum } from '/@/enums/menuEnum';
-import type { Menu as MenuType } from '/@/router/types';
-import type { MenuState } from './types';
+import { MenuModeEnum } from '/@/enums/menuEnum'
+import type { Menu as MenuType } from '/@/router/types'
+import type { MenuState } from './types'
 
-import type { Ref } from 'vue';
-import { computed, toRaw, unref } from 'vue';
-import { uniq } from 'lodash-es';
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-import { getAllParentPath } from '/@/router/helper/menuHelper';
-import { useTimeoutFn } from '/@/hooks/core/useTimeout';
+import type { Ref } from 'vue'
+import { computed, toRaw, unref } from 'vue'
+import { uniq } from 'lodash-es'
+import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
+import { getAllParentPath } from '/@/router/helper/menuHelper'
+import { useTimeoutFn } from '/@/hooks/core/useTimeout'
 
 export function useOpenKeys(
   menuState: MenuState,
@@ -15,61 +15,61 @@ export function useOpenKeys(
   mode: Ref<MenuModeEnum>,
   accordion: Ref<boolean>,
 ) {
-  const { getCollapsed, getIsMixSidebar } = useMenuSetting();
+  const { getCollapsed, getIsMixSidebar } = useMenuSetting()
 
   async function setOpenKeys(path: string) {
     if (mode.value === MenuModeEnum.HORIZONTAL)
-      return;
+      return
 
-    const native = unref(getIsMixSidebar);
+    const native = unref(getIsMixSidebar)
     useTimeoutFn(
       () => {
-        const menuList = toRaw(menus.value);
+        const menuList = toRaw(menus.value)
         if (menuList?.length === 0) {
-          menuState.openKeys = [];
-          return;
+          menuState.openKeys = []
+          return
         }
         if (!unref(accordion))
-          menuState.openKeys = uniq([...menuState.openKeys, ...getAllParentPath(menuList, path)]);
+          menuState.openKeys = uniq([...menuState.openKeys, ...getAllParentPath(menuList, path)])
         else
-          menuState.openKeys = getAllParentPath(menuList, path);
+          menuState.openKeys = getAllParentPath(menuList, path)
       },
       16,
       !native,
-    );
+    )
   }
 
   const getOpenKeys = computed(() => {
-    const collapse = unref(getIsMixSidebar) ? false : unref(getCollapsed);
-    return collapse ? menuState.collapsedOpenKeys : menuState.openKeys;
-  });
+    const collapse = unref(getIsMixSidebar) ? false : unref(getCollapsed)
+    return collapse ? menuState.collapsedOpenKeys : menuState.openKeys
+  })
 
   function resetKeys() {
-    menuState.selectedKeys = [];
-    menuState.openKeys = [];
+    menuState.selectedKeys = []
+    menuState.openKeys = []
   }
 
   function handleOpenChange(openKeys: string[]) {
     if (unref(mode) === MenuModeEnum.HORIZONTAL || !unref(accordion) || unref(getIsMixSidebar)) {
-      menuState.openKeys = openKeys;
+      menuState.openKeys = openKeys
     }
     else {
-      const rootSubMenuKeys: string[] = [];
+      const rootSubMenuKeys: string[] = []
       for (const { children, path } of unref(menus)) {
         if (children && children.length > 0)
-          rootSubMenuKeys.push(path);
+          rootSubMenuKeys.push(path)
       }
       if (!unref(getCollapsed)) {
-        const latestOpenkey = openKeys.find(key => !menuState.openKeys.includes(key));
+        const latestOpenkey = openKeys.find(key => !menuState.openKeys.includes(key))
         if (!rootSubMenuKeys.includes(latestOpenkey as string))
-          menuState.openKeys = openKeys;
+          menuState.openKeys = openKeys
         else
-          menuState.openKeys = latestOpenkey ? [latestOpenkey] : [];
+          menuState.openKeys = latestOpenkey ? [latestOpenkey] : []
       }
       else {
-        menuState.collapsedOpenKeys = openKeys;
+        menuState.collapsedOpenKeys = openKeys
       }
     }
   }
-  return { setOpenKeys, resetKeys, getOpenKeys, handleOpenChange };
+  return { setOpenKeys, resetKeys, getOpenKeys, handleOpenChange }
 }

@@ -1,9 +1,9 @@
-import type { ComputedRef, Slots } from 'vue';
-import type { BasicTableProps, InnerHandlers } from '../types/table';
-import { computed, h, unref } from 'vue';
-import TableHeader from '../components/TableHeader.vue';
-import { isString } from '/@/utils/is';
-import { getSlot } from '/@/utils/helper/tsxHelper';
+import type { ComputedRef, Slots } from 'vue'
+import type { BasicTableProps, InnerHandlers } from '../types/table'
+import { computed, h, unref } from 'vue'
+import TableHeader from '../components/TableHeader.vue'
+import { isString } from '/@/utils/is'
+import { getSlot } from '/@/utils/helper/tsxHelper'
 
 export function useTableHeader(
   propsRef: ComputedRef<BasicTableProps>,
@@ -11,15 +11,15 @@ export function useTableHeader(
   handlers: InnerHandlers,
 ) {
   const getHeaderProps = computed((): Recordable => {
-    const { title, showTableSetting, titleHelpMessage, tableSetting } = unref(propsRef);
-    const hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting;
+    const { title, showTableSetting, titleHelpMessage, tableSetting } = unref(propsRef)
+    const hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting
     if (hideTitle && !isString(title))
-      return {};
+      return {}
 
     return {
-      title: hideTitle ?
-        null :
-          () =>
+      title: hideTitle
+        ? null
+        : () =>
             h(
               TableHeader,
               {
@@ -30,24 +30,24 @@ export function useTableHeader(
                 onColumnsChange: handlers.onColumnsChange,
               } as Recordable,
               {
-                ...(slots.toolbar ?
-                    {
+                ...(slots.toolbar
+                  ? {
                       toolbar: () => getSlot(slots, 'toolbar'),
-                    } :
-                    {}),
-                ...(slots.tableTitle ?
-                    {
+                    }
+                  : {}),
+                ...(slots.tableTitle
+                  ? {
                       tableTitle: () => getSlot(slots, 'tableTitle'),
-                    } :
-                    {}),
-                ...(slots.headerTop ?
-                    {
+                    }
+                  : {}),
+                ...(slots.headerTop
+                  ? {
                       headerTop: () => getSlot(slots, 'headerTop'),
-                    } :
-                    {}),
+                    }
+                  : {}),
               },
             ),
-    };
-  });
-  return { getHeaderProps };
+    }
+  })
+  return { getHeaderProps }
 }

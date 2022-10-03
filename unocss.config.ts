@@ -2,19 +2,21 @@ import {
   defineConfig,
   toEscapedSelector as e,
   presetAttributify,
+  presetIcons,
   presetUno,
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
-} from 'unocss';
-import { primaryColor } from './build/config/themeConfig';
+} from 'unocss'
+import { primaryColor } from './build/config/themeConfig'
+import iconsData from './src/components/Icon/data/icons.data'
 
 /**
  * Used for animation when the element is displayed
  * @param maxOutput The larger the maxOutput output, the larger the generated css volume
  */
 function createEnterRules(selector: string, direction = 'x', maxOutput = 6) {
-  let outputValue = '';
+  let outputValue = ''
   for (let i = 1; i < maxOutput; i++) {
     outputValue += `
       ${selector}:nth-child(${i}) {
@@ -23,7 +25,7 @@ function createEnterRules(selector: string, direction = 'x', maxOutput = 6) {
         animation: enter-${direction}-animation 0.4s ease-in-out 0.3s;
         animation-fill-mode: forwards;
         animation-delay: .${i}s;
-      }`;
+      }`
   }
   outputValue += `
       @keyframes enter-x-animation {
@@ -37,14 +39,18 @@ function createEnterRules(selector: string, direction = 'x', maxOutput = 6) {
           opacity: 1;
           transform: translateY(0);
         }
-      }`;
-  return outputValue;
+      }`
+  return outputValue
 }
+
+const prefixIcon = iconsData?.prefix
+const icons = iconsData?.icons.map(icon => `i-${prefixIcon}:${icon}`)
+
 export default defineConfig({
   rules: [
     [/^enter-([x-y])$/, ([, d], { rawSelector }) => {
-      const selector = e(rawSelector);
-      return createEnterRules(selector, d);
+      const selector = e(rawSelector)
+      return createEnterRules(selector, d)
     }],
   ],
   shortcuts: [
@@ -52,6 +58,9 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
+    presetIcons({
+      warn: true,
+    }),
     presetWebFonts({
       fonts: {
         sans: 'DM Sans',
@@ -76,4 +85,12 @@ export default defineConfig({
       '2xl': '1600px',
     },
   },
-});
+  safelist: [
+    'i-ion:settings-outline', 'i-ion:language', 'i-ion:lock-closed-outline', 'i-ion:power-outline', 'i-ion:apps-outline', 'i-clarity:note-edit-line',
+    'i-ion:ios-arrow-down', 'i-ion:grid-outline', 'i-ion:reload-sharp',
+    'i-clarity:close-line', 'i-mdi:arrow-collapse-left', 'i-mdi:arrow-collapse-right',
+    'i-dashicons:align-center', 'i-clarity:minus-line', 'i-codicon:screen-full',
+    'i-codicon:screen-normal',
+    ...icons,
+  ],
+})

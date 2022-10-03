@@ -1,20 +1,20 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import { defineComponent, ref, unref, watch, watchEffect } from 'vue';
-import { Cascader } from 'ant-design-vue';
-import { propTypes } from '/@/utils/propTypes';
-import { isFunction } from '/@/utils/is';
-import { get, omit } from 'lodash-es';
-import { useRuleFormItem } from '/@/hooks/component/useFormItem';
-import { LoadingOutlined } from '@ant-design/icons-vue';
-import { useI18n } from '/@/hooks/web/useI18n';
+import type { PropType } from 'vue'
+import { defineComponent, ref, unref, watch, watchEffect } from 'vue'
+import { Cascader } from 'ant-design-vue'
+import { propTypes } from '/@/utils/propTypes'
+import { isFunction } from '/@/utils/is'
+import { get, omit } from 'lodash-es'
+import { useRuleFormItem } from '/@/hooks/component/useFormItem'
+import { LoadingOutlined } from '@ant-design/icons-vue'
+import { useI18n } from '/@/hooks/web/useI18n'
 
 interface Option {
-  value: string;
-  label: string;
-  loading?: boolean;
-  isLeaf?: boolean;
-  children?: Option[];
+  value: string
+  label: string
+  loading?: boolean
+  isLeaf?: boolean
+  children?: Option[]
 }
 export default defineComponent({
   name: 'ApiCascader',
@@ -53,123 +53,123 @@ export default defineComponent({
   },
   emits: ['change', 'defaultChange'],
   setup(props, { emit }) {
-    const apiData = ref<any[]>([]);
-    const options = ref<Option[]>([]);
-    const loading = ref<boolean>(false);
-    const emitData = ref<any[]>([]);
-    const isFirstLoad = ref(true);
+    const apiData = ref<any[]>([])
+    const options = ref<Option[]>([])
+    const loading = ref<boolean>(false)
+    const emitData = ref<any[]>([])
+    const isFirstLoad = ref(true)
 
     // Embedded in the form, just use the hook binding to perform form verification
-    const [state] = useRuleFormItem(props, 'value', 'change', emitData);
-    const { t } = useI18n();
+    const [state] = useRuleFormItem(props, 'value', 'change', emitData)
+    const { t } = useI18n()
 
     watch(
       apiData,
       data => {
-        const opts = generatorOptions(data);
-        options.value = opts;
+        const opts = generatorOptions(data)
+        options.value = opts
       },
       { deep: true },
-    );
+    )
 
     function generatorOptions(options: any[]): Option[] {
-      const { labelField, valueField, numberToString, childrenField, isLeaf } = props;
+      const { labelField, valueField, numberToString, childrenField, isLeaf } = props
       return options.reduce((prev, next: Recordable) => {
         if (next) {
-          const value = next[valueField];
+          const value = next[valueField]
           const item = {
             ...omit(next, [labelField, valueField]),
             label: next[labelField],
             value: numberToString ? `${value}` : value,
             isLeaf: isLeaf && typeof isLeaf === 'function' ? isLeaf(next) : false,
-          };
-          const children = Reflect.get(next, childrenField);
+          }
+          const children = Reflect.get(next, childrenField)
           if (children)
-            Reflect.set(item, childrenField, generatorOptions(children));
+            Reflect.set(item, childrenField, generatorOptions(children))
 
-          prev.push(item);
+          prev.push(item)
         }
-        return prev;
-      }, [] as Option[]);
+        return prev
+      }, [] as Option[])
     }
 
     async function initialFetch() {
-      const api = props.api;
+      const api = props.api
       if (!api || !isFunction(api))
-        return;
-      apiData.value = [];
-      loading.value = true;
+        return
+      apiData.value = []
+      loading.value = true
       try {
-        const res = await api(props.initFetchParams);
+        const res = await api(props.initFetchParams)
         if (Array.isArray(res)) {
-          apiData.value = res;
-          return;
+          apiData.value = res
+          return
         }
         if (props.resultField)
-          apiData.value = get(res, props.resultField) || [];
+          apiData.value = get(res, props.resultField) || []
       }
       catch (error) {
-        console.warn(error);
+        console.warn(error)
       }
       finally {
-        loading.value = false;
+        loading.value = false
       }
     }
 
     async function loadData(selectedOptions: Option[]) {
-      const targetOption = selectedOptions[selectedOptions.length - 1];
-      targetOption.loading = true;
+      const targetOption = selectedOptions[selectedOptions.length - 1]
+      targetOption.loading = true
 
-      const api = props.api;
+      const api = props.api
       if (!api || !isFunction(api))
-        return;
+        return
       try {
         const res = await api({
           [props.asyncFetchParamKey]: Reflect.get(targetOption, 'value'),
-        });
+        })
         if (Array.isArray(res)) {
-          const children = generatorOptions(res);
-          targetOption.children = children;
-          return;
+          const children = generatorOptions(res)
+          targetOption.children = children
+          return
         }
         if (props.resultField) {
-          const children = generatorOptions(get(res, props.resultField) || []);
-          targetOption.children = children;
+          const children = generatorOptions(get(res, props.resultField) || [])
+          targetOption.children = children
         }
       }
       catch (e) {
-        console.error(e);
+        console.error(e)
       }
       finally {
-        targetOption.loading = false;
+        targetOption.loading = false
       }
     }
 
     watchEffect(() => {
-      props.immediate && initialFetch();
-    });
+      props.immediate && initialFetch()
+    })
 
     watch(
       () => props.initFetchParams,
       () => {
-        !unref(isFirstLoad) && initialFetch();
+        !unref(isFirstLoad) && initialFetch()
       },
       { deep: true },
-    );
+    )
 
     function handleChange(keys, args) {
-      emitData.value = keys;
-      emit('defaultChange', keys, args);
+      emitData.value = keys
+      emit('defaultChange', keys, args)
     }
 
     function handleRenderDisplay({ labels, selectedOptions }) {
       if (unref(emitData).length === selectedOptions.length)
-        return labels.join(' / ');
+        return labels.join(' / ')
 
       if (props.displayRenderArray)
-        return props.displayRenderArray.join(' / ');
+        return props.displayRenderArray.join(' / ')
 
-      return '';
+      return ''
     }
 
     return {
@@ -180,9 +180,9 @@ export default defineComponent({
       loadData,
       handleRenderDisplay,
       t,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

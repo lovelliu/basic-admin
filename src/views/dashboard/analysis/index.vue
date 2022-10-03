@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import GrowCardVue from './components/GrowCard.vue';
-import SiteAnalysis from './components/SiteAnalysis.vue';
-import VisitRadar from './components/VisitRadar.vue';
-import VisitSource from './components/VisitSource.vue';
-import SalesProductPie from './components/SalesProductPie.vue';
+import { ref } from 'vue'
+import GrowCardVue from './components/GrowCard.vue'
+import SiteAnalysis from './components/SiteAnalysis.vue'
+import VisitRadar from './components/VisitRadar.vue'
+import VisitSource from './components/VisitSource.vue'
+import SalesProductPie from './components/SalesProductPie.vue'
 
-const loading = ref(true);
+const loading = ref(true)
 setTimeout(() => {
-  loading.value = false;
-}, 1500);
+  loading.value = false
+}, 1500)
 </script>
 
 <template>

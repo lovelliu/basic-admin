@@ -1,12 +1,12 @@
 <script lang="ts">
 // @ts-nocheck
-import type { PropType } from 'vue';
-import type { HandlerEnum } from '../enum';
-import { computed, defineComponent } from 'vue';
+import type { PropType } from 'vue'
+import type { HandlerEnum } from '../enum'
+import { computed, defineComponent } from 'vue'
 
-import { Select } from 'ant-design-vue';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { baseHandler } from '../handler';
+import { Select } from 'ant-design-vue'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { baseHandler } from '../handler'
 
 export default defineComponent({
   name: 'SelectItem',
@@ -33,21 +33,21 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { prefixCls } = useDesign('setting-select-item');
+    const { prefixCls } = useDesign('setting-select-item')
     const getBindValue = computed(() => {
-      return props.def ? { value: props.def, defaultValue: props.initValue || props.def } : {};
-    });
+      return props.def ? { value: props.def, defaultValue: props.initValue || props.def } : {}
+    })
 
     function handleChange(e: ChangeEvent) {
-      props.event && baseHandler(props.event, e);
+      props.event && baseHandler(props.event, e)
     }
     return {
       prefixCls,
       handleChange,
       getBindValue,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

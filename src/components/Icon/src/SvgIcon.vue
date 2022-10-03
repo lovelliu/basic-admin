@@ -1,41 +1,42 @@
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue';
-import { computed } from 'vue';
-import { useDesign } from '/@/hooks/web/useDesign';
+import type { CSSProperties } from 'vue'
+
+import { computed } from 'vue'
+import { useDesign } from '/@/hooks/web/useDesign'
 
 interface Props {
-  prefix?: string;
-  name: string;
-  size?: number | string;
-  spin?: boolean;
+  prefix?: string
+  name: string
+  size?: number | string
+  spin?: boolean
 }
+
 const props = withDefaults(defineProps<Props>(), {
   prefix: 'icon',
   size: 16,
   spin: false,
-});
+})
 
-const { prefixCls } = useDesign('svg-icon');
-const symbolId = computed(() => `#${props.prefix}-${props.name}`);
+const { prefixCls } = useDesign('svg-icon')
+const symbolId = computed(() => `#${props.prefix}-${props.name}`)
 
 const getStyle = computed((): CSSProperties => {
-  const { size } = props;
-  let s = `${size}`;
-  s = `${s.replace('px', '')}px`;
+  const { size } = props
+  let s = `${size}`
+  s = `${s.replace('px', '')}px`
   return {
     width: s,
     height: s,
-  };
-});
+  }
+})
 </script>
 
 <template>
   <svg
-    :class="[prefixCls, $attrs.class, spin && 'svg-icon-spin']"
+    :class="[prefixCls, spin && 'svg-icon-spin']"
     :style="getStyle"
     aria-hidden="true"
   >
-    {{ $attrs }}
     <use :href="symbolId" />
   </svg>
 </template>

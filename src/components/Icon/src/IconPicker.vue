@@ -1,107 +1,113 @@
 <script lang="ts" setup>
-import { ref, unref, watch, watchEffect } from 'vue';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { ScrollContainer } from '/@/components/Container';
-import { Empty, Input, Pagination, Popover } from 'ant-design-vue';
-import { useDebounceFn } from '@vueuse/core';
-import svgIcons from 'virtual:svg-icons-names';
-import iconsData from '../data/icons.data';
-import Icon from './Icon.vue';
-import SvgIcon from './SvgIcon.vue';
+import { ref, unref, watch, watchEffect } from 'vue'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { ScrollContainer } from '/@/components/Container'
+import { Empty, Input, Pagination, Popover } from 'ant-design-vue'
+import { useDebounceFn } from '@vueuse/core'
+import svgIcons from 'virtual:svg-icons-names'
+import iconsData from '../data/icons.data'
+import Icon from './Icon.vue'
+import SvgIcon from './SvgIcon.vue'
+import { usePagination } from '/@/hooks/web/usePagination'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard'
+import { useMessage } from '/@/hooks/web/useMessage'
 
-import { propTypes } from '/@/utils/propTypes';
-import { usePagination } from '/@/hooks/web/usePagination';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
-import { useMessage } from '/@/hooks/web/useMessage';
+interface Props {
+  value: string
+  width: string
+  pageSize: number
+  copy: boolean
+  mode: 'svg' | 'iconify'
+}
 
-const props = defineProps({
-  value: propTypes.string,
-  width: propTypes.string.def('100%'),
-  pageSize: propTypes.number.def(140),
-  copy: propTypes.bool.def(false),
-  mode: propTypes.oneOf<('svg' | 'iconify')[]>(['svg', 'iconify']).def('iconify'),
-});
-const emit = defineEmits(['change', 'update:value']);
-// 没有使用别名引入，是因为WebStorm当前版本还不能正确识别，会报unused警告
-const AInput = Input;
-const APopover = Popover;
-const APagination = Pagination;
-const AEmpty = Empty;
+const props = withDefaults(defineProps<Props>(), {
+  width: '100%',
+  pageSize: 140,
+  copy: false,
+  mode: 'iconify',
+})
+
+const emit = defineEmits(['change', 'update:value'])
+
+const AInput = Input
+const APopover = Popover
+const APagination = Pagination
+const AEmpty = Empty
 
 function getIcons() {
-  const data = iconsData as any;
-  const prefix: string = data?.prefix ?? '';
-  let result: string[] = [];
+  const data = iconsData
+  const prefix: string = data?.prefix ?? ''
+  let result: string[] = []
   if (prefix)
-    result = (data?.icons ?? []).map(item => `${prefix}:${item}`);
+    result = (data?.icons ?? []).map(item => `${prefix}:${item}`)
   else if (Array.isArray(iconsData))
-    result = iconsData as string[];
+    result = iconsData as string[]
 
-  return result;
+  return result
 }
 
 function getSvgIcons() {
-  return svgIcons.map(icon => icon.replace('icon-', ''));
+  return svgIcons.map(icon => icon.replace('icon-', ''))
 }
 
-const isSvgMode = props.mode === 'svg';
-const icons = isSvgMode ? getSvgIcons() : getIcons();
+const isSvgMode = props.mode === 'svg'
+const icons = isSvgMode ? getSvgIcons() : getIcons()
 
-const currentSelect = ref('');
-const visible = ref(false);
-const currentList = ref(icons);
+const currentSelect = ref('')
+const visible = ref(false)
+const currentList = ref(icons)
 
-const { t } = useI18n();
-const { prefixCls } = useDesign('icon-picker');
+const { t } = useI18n()
+const { prefixCls } = useDesign('icon-picker')
 
-const debounceHandleSearchChange = useDebounceFn(handleSearchChange, 100);
-const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
-const { createMessage } = useMessage();
+const debounceHandleSearchChange = useDebounceFn(handleSearchChange, 100)
+const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value)
+const { createMessage } = useMessage()
 
 const { getPaginationList, getTotal, setCurrentPage } = usePagination(
   currentList,
   props.pageSize,
-);
+)
 
 watchEffect(() => {
-  currentSelect.value = props.value;
-});
+  currentSelect.value = props.value
+})
 
 watch(
   () => currentSelect.value,
   v => {
-    emit('update:value', v);
-    return emit('change', v);
+    emit('update:value', v)
+    return emit('change', v)
   },
-);
+)
 
 function handlePageChange(page: number) {
-  setCurrentPage(page);
+  setCurrentPage(page)
 }
 
 function handleClick(icon: string) {
-  currentSelect.value = icon;
+  currentSelect.value = icon
   if (props.copy) {
-    clipboardRef.value = icon;
+    clipboardRef.value = icon
     if (unref(isSuccessRef))
-      createMessage.success(t('component.icon.copy'));
+      createMessage.success(t('component.icon.copy'))
   }
 }
 
 function handleSearchChange(e: ChangeEvent) {
-  const value = e.target.value;
+  const value = e.target.value
   if (!value) {
-    setCurrentPage(1);
-    currentList.value = icons;
-    return;
+    setCurrentPage(1)
+    currentList.value = icons
+    return
   }
-  currentList.value = icons.filter(item => item.includes(value));
+  currentList.value = icons.filter(item => item.includes(value))
 }
 </script>
 
 <template>
-  <a-input
+  <AInput
     v-model:value="currentSelect"
     disabled
     :style="{ width }"
@@ -109,7 +115,7 @@ function handleSearchChange(e: ChangeEvent) {
     :class="prefixCls"
   >
     <template #addonAfter>
-      <a-popover
+      <APopover
         v-model="visible"
         placement="bottomLeft"
         trigger="click"
@@ -117,7 +123,7 @@ function handleSearchChange(e: ChangeEvent) {
       >
         <template #title>
           <div class="flex justify-between">
-            <a-input
+            <AInput
               :placeholder="t('component.icon.search')"
               allow-clear
               @change="debounceHandleSearchChange"
@@ -155,7 +161,7 @@ function handleSearchChange(e: ChangeEvent) {
               </ul>
             </ScrollContainer>
             <div v-if="getTotal >= pageSize" class="flex py-2 items-center justify-center">
-              <a-pagination
+              <APagination
                 show-less-items
                 size="small"
                 :page-size="pageSize"
@@ -166,7 +172,7 @@ function handleSearchChange(e: ChangeEvent) {
           </div>
           <template v-else>
             <div class="p-5">
-              <a-empty />
+              <AEmpty />
             </div>
           </template>
         </template>
@@ -175,9 +181,9 @@ function handleSearchChange(e: ChangeEvent) {
           <SvgIcon :name="currentSelect" />
         </span>
         <Icon v-else :icon="currentSelect || 'ion:apps-outline'" class="cursor-pointer px-2 py-1" />
-      </a-popover>
+      </APopover>
     </template>
-  </a-input>
+  </AInput>
 </template>
 
 <style lang="less">

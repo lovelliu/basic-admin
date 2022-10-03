@@ -1,7 +1,7 @@
-import type { AppRouteModule } from '/@/router/types';
+import type { AppRouteModule } from '/@/router/types'
 
-import { LAYOUT } from '/@/router/constant';
-import { t } from '/@/hooks/web/useI18n';
+import { LAYOUT } from '/@/router/constant'
+import { t } from '/@/hooks/web/useI18n'
 
 const course: AppRouteModule = {
   path: '/course',
@@ -48,6 +48,6 @@ const course: AppRouteModule = {
       component: () => import('/@/views/course/Lesson.vue'),
     },
   ],
-};
+}
 
-export default course;
+export default course

@@ -1,5 +1,5 @@
 <script lang="tsx">
-import type { CSSProperties } from 'vue';
+import type { CSSProperties } from 'vue'
 import type {
   CheckKeys,
   FieldNames,
@@ -7,7 +7,7 @@ import type {
   TreeActionType,
   TreeItem,
   TreeState,
-} from './tree';
+} from './tree'
 
 import {
   computed,
@@ -19,20 +19,20 @@ import {
   unref,
   watch,
   watchEffect,
-} from 'vue';
-import TreeHeader from './TreeHeader.vue';
-import { Empty, Tree } from 'ant-design-vue';
-import { TreeIcon } from './TreeIcon';
-import { ScrollContainer } from '/@/components/Container';
-import { cloneDeep, difference, get, omit } from 'lodash-es';
-import { isArray, isBoolean, isEmpty, isFunction } from '/@/utils/is';
-import { extendSlots, getSlot } from '/@/utils/helper/tsxHelper';
-import { eachTree, filter, treeToList } from '/@/utils/helper/treeHelper';
-import { useTree } from './useTree';
-import { useContextMenu } from '/@/hooks/web/useContextMenu';
-import type { CreateContextOptions } from '/@/components/ContextMenu';
-import { treeEmits, treeProps } from './tree';
-import { createBEM } from '/@/utils/bem';
+} from 'vue'
+import TreeHeader from './TreeHeader.vue'
+import { Empty, Tree } from 'ant-design-vue'
+import { TreeIcon } from './TreeIcon'
+import { ScrollContainer } from '/@/components/Container'
+import { cloneDeep, difference, get, omit } from 'lodash-es'
+import { isArray, isBoolean, isEmpty, isFunction } from '/@/utils/is'
+import { extendSlots, getSlot } from '/@/utils/helper/tsxHelper'
+import { eachTree, filter, treeToList } from '/@/utils/helper/treeHelper'
+import { useTree } from './useTree'
+import { useContextMenu } from '/@/hooks/web/useContextMenu'
+import type { CreateContextOptions } from '/@/components/ContextMenu'
+import { treeEmits, treeProps } from './tree'
+import { createBEM } from '/@/utils/bem'
 
 export default defineComponent({
   name: 'BasicTree',
@@ -40,34 +40,34 @@ export default defineComponent({
   props: treeProps,
   emits: treeEmits,
   setup(props, { attrs, slots, emit, expose }) {
-    const [bem] = createBEM('tree');
+    const [bem] = createBEM('tree')
 
     const state = reactive<TreeState>({
       checkStrictly: props.checkStrictly,
       expandedKeys: props.expandedKeys || [],
       selectedKeys: props.selectedKeys || [],
       checkedKeys: props.checkedKeys || [],
-    });
+    })
 
     const searchState = reactive({
       startSearch: false,
       searchText: '',
       searchData: [] as TreeItem[],
-    });
+    })
 
-    const treeDataRef = ref<TreeItem[]>([]);
+    const treeDataRef = ref<TreeItem[]>([])
 
-    const [createContextMenu] = useContextMenu();
+    const [createContextMenu] = useContextMenu()
 
     const getFieldNames = computed((): Required<FieldNames> => {
-      const { fieldNames } = props;
+      const { fieldNames } = props
       return {
         children: 'children',
         title: 'title',
         key: 'key',
         ...fieldNames,
-      };
-    });
+      }
+    })
 
     const {
       deleteNodeByKey,
@@ -78,7 +78,7 @@ export default defineComponent({
       getAllKeys,
       getChildrenKeys,
       getEnabledKeys,
-    } = useTree(treeDataRef, getFieldNames);
+    } = useTree(treeDataRef, getFieldNames)
 
     const getBindValues = computed(() => {
       const propsData = {
@@ -91,230 +91,230 @@ export default defineComponent({
         checkStrictly: state.checkStrictly,
         filedNames: unref(getFieldNames),
         'onUpdate:expandedKeys': (v: KeyType[]) => {
-          state.expandedKeys = v;
-          emit('update:expandedKeys', v);
+          state.expandedKeys = v
+          emit('update:expandedKeys', v)
         },
         'onUpdate:selectedKeys': (v: KeyType[]) => {
-          state.selectedKeys = v;
-          emit('update:selectedKeys', v);
+          state.selectedKeys = v
+          emit('update:selectedKeys', v)
         },
         onCheck: (v: CheckKeys, e) => {
-          let currentValue = toRaw(state.checkedKeys) as KeyType[];
+          let currentValue = toRaw(state.checkedKeys) as KeyType[]
           if (isArray(currentValue) && searchState.startSearch) {
-            const { key } = unref(getFieldNames);
+            const { key } = unref(getFieldNames)
             currentValue = difference(
               currentValue,
               getChildrenKeys(e.node.$attrs.node[key]),
-            );
+            )
             if (e.checked)
-              currentValue.push(e.node.$attrs.node[key]);
+              currentValue.push(e.node.$attrs.node[key])
 
-            state.checkedKeys = currentValue;
+            state.checkedKeys = currentValue
           }
           else {
-            state.checkedKeys = v;
+            state.checkedKeys = v
           }
 
-          const rawVal = toRaw(state.checkedKeys);
-          emit('update:value', rawVal);
-          emit('check', rawVal, e);
+          const rawVal = toRaw(state.checkedKeys)
+          emit('update:value', rawVal)
+          emit('check', rawVal, e)
         },
         onRightClick: handleRightClick,
-      };
-      return omit(propsData, 'treeData', 'class');
-    });
+      }
+      return omit(propsData, 'treeData', 'class')
+    })
 
     const getTreeData = computed((): TreeItem[] =>
       searchState.startSearch ? searchState.searchData : unref(treeDataRef),
-    );
+    )
 
     const getNotFound = computed((): boolean => {
-      return !getTreeData.value || getTreeData.value.length === 0;
-    });
+      return !getTreeData.value || getTreeData.value.length === 0
+    })
 
     function getIcon(params: Recordable, icon?: string) {
       if (!icon) {
         if (props.renderIcon && isFunction(props.renderIcon))
-          return props.renderIcon(params);
+          return props.renderIcon(params)
       }
-      return icon;
+      return icon
     }
 
     async function handleRightClick({ event, node }: Recordable) {
-      const { rightMenuList: menuList = [], beforeRightClick } = props;
-      const contextMenuOptions: CreateContextOptions = { event, items: [] };
+      const { rightMenuList: menuList = [], beforeRightClick } = props
+      const contextMenuOptions: CreateContextOptions = { event, items: [] }
 
       if (beforeRightClick && isFunction(beforeRightClick)) {
-        const result = await beforeRightClick(node, event);
+        const result = await beforeRightClick(node, event)
         if (Array.isArray(result))
-          contextMenuOptions.items = result;
+          contextMenuOptions.items = result
         else
-          Object.assign(contextMenuOptions, result);
+          Object.assign(contextMenuOptions, result)
       }
       else {
-        contextMenuOptions.items = menuList;
+        contextMenuOptions.items = menuList
       }
       if (!contextMenuOptions.items?.length)
-        return;
-      createContextMenu(contextMenuOptions);
+        return
+      createContextMenu(contextMenuOptions)
     }
 
     function setExpandedKeys(keys: KeyType[]) {
-      state.expandedKeys = keys;
+      state.expandedKeys = keys
     }
 
     function getExpandedKeys() {
-      return state.expandedKeys;
+      return state.expandedKeys
     }
     function setSelectedKeys(keys: KeyType[]) {
-      state.selectedKeys = keys;
+      state.selectedKeys = keys
     }
 
     function getSelectedKeys() {
-      return state.selectedKeys;
+      return state.selectedKeys
     }
 
     function setCheckedKeys(keys: CheckKeys) {
-      state.checkedKeys = keys;
+      state.checkedKeys = keys
     }
 
     function getCheckedKeys() {
-      return state.checkedKeys;
+      return state.checkedKeys
     }
 
     function checkAll(checkAll: boolean) {
-      state.checkedKeys = checkAll ? getEnabledKeys() : ([] as KeyType[]);
+      state.checkedKeys = checkAll ? getEnabledKeys() : ([] as KeyType[])
     }
 
     function expandAll(expandAll: boolean) {
-      state.expandedKeys = expandAll ? getAllKeys() : ([] as KeyType[]);
+      state.expandedKeys = expandAll ? getAllKeys() : ([] as KeyType[])
     }
 
     function onStrictlyChange(strictly: boolean) {
-      state.checkStrictly = strictly;
+      state.checkStrictly = strictly
     }
 
     watch(
       () => props.searchValue,
       val => {
         if (val !== searchState.searchText)
-          searchState.searchText = val;
+          searchState.searchText = val
       },
       {
         immediate: true,
       },
-    );
+    )
 
     watch(
       () => props.treeData,
       val => {
         if (val)
-          handleSearch(searchState.searchText);
+          handleSearch(searchState.searchText)
       },
-    );
+    )
 
     function handleSearch(searchValue: string) {
       if (searchValue !== searchState.searchText)
-        searchState.searchText = searchValue;
-      emit('update:searchValue', searchValue);
+        searchState.searchText = searchValue
+      emit('update:searchValue', searchValue)
       if (!searchValue) {
-        searchState.startSearch = false;
-        return;
+        searchState.startSearch = false
+        return
       }
-      const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch } =
-          unref(props);
-      searchState.startSearch = true;
-      const { title: titleField, key: keyField } = unref(getFieldNames);
+      const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch }
+          = unref(props)
+      searchState.startSearch = true
+      const { title: titleField, key: keyField } = unref(getFieldNames)
 
-      const matchedKeys: string[] = [];
+      const matchedKeys: string[] = []
       searchState.searchData = filter(
         unref(treeDataRef),
         node => {
-          const result = filterFn ?
-            filterFn(searchValue, node, unref(getFieldNames)) :
-            node[titleField]?.includes(searchValue) ?? false;
+          const result = filterFn
+            ? filterFn(searchValue, node, unref(getFieldNames))
+            : node[titleField]?.includes(searchValue) ?? false
           if (result)
-            matchedKeys.push(node[keyField]);
+            matchedKeys.push(node[keyField])
 
-          return result;
+          return result
         },
         unref(getFieldNames),
-      );
+      )
 
       if (expandOnSearch) {
         const expandKeys = treeToList(searchState.searchData).map(val => {
-          return val[keyField];
-        });
+          return val[keyField]
+        })
         if (expandKeys && expandKeys.length)
-          setExpandedKeys(expandKeys);
+          setExpandedKeys(expandKeys)
       }
 
       if (checkOnSearch && checkable && matchedKeys.length)
-        setCheckedKeys(matchedKeys);
+        setCheckedKeys(matchedKeys)
 
       if (selectedOnSearch && matchedKeys.length)
-        setSelectedKeys(matchedKeys);
+        setSelectedKeys(matchedKeys)
     }
 
     function handleClickNode(key: string, children: TreeItem[]) {
       if (!props.clickRowToExpand || !children || children.length === 0)
-        return;
+        return
       if (!state.expandedKeys.includes(key)) {
-        setExpandedKeys([...state.expandedKeys, key]);
+        setExpandedKeys([...state.expandedKeys, key])
       }
       else {
-        const keys = [...state.expandedKeys];
-        const index = keys.findIndex(item => item === key);
+        const keys = [...state.expandedKeys]
+        const index = keys.findIndex(item => item === key)
         if (index !== -1)
-          keys.splice(index, 1);
+          keys.splice(index, 1)
 
-        setExpandedKeys(keys);
+        setExpandedKeys(keys)
       }
     }
 
     watchEffect(() => {
-      treeDataRef.value = props.treeData as TreeItem[];
-    });
+      treeDataRef.value = props.treeData as TreeItem[]
+    })
 
     onMounted(() => {
-      const level = parseInt(props.defaultExpandLevel);
+      const level = parseInt(props.defaultExpandLevel)
       if (level > 0)
-        state.expandedKeys = filterByLevel(level);
+        state.expandedKeys = filterByLevel(level)
       else if (props.defaultExpandAll)
-        expandAll(true);
-    });
+        expandAll(true)
+    })
 
     watchEffect(() => {
-      state.expandedKeys = props.expandedKeys;
-    });
+      state.expandedKeys = props.expandedKeys
+    })
 
     watchEffect(() => {
-      state.selectedKeys = props.selectedKeys;
-    });
+      state.selectedKeys = props.selectedKeys
+    })
 
     watchEffect(() => {
-      state.checkedKeys = props.checkedKeys;
-    });
+      state.checkedKeys = props.checkedKeys
+    })
 
     watch(
       () => props.value,
       () => {
-        state.checkedKeys = toRaw(props.value || []);
+        state.checkedKeys = toRaw(props.value || [])
       },
-    );
+    )
 
     watch(
       () => state.checkedKeys,
       () => {
-        const v = toRaw(state.checkedKeys);
-        emit('update:value', v);
-        emit('change', v);
+        const v = toRaw(state.checkedKeys)
+        emit('update:value', v)
+        emit('change', v)
       },
-    );
+    )
 
     watchEffect(() => {
-      state.checkStrictly = props.checkStrictly;
-    });
+      state.checkStrictly = props.checkStrictly
+    })
 
     const instance: TreeActionType = {
       setExpandedKeys,
@@ -330,82 +330,82 @@ export default defineComponent({
       checkAll,
       expandAll,
       filterByLevel: (level: number) => {
-        state.expandedKeys = filterByLevel(level);
+        state.expandedKeys = filterByLevel(level)
       },
       setSearchValue: (value: string) => {
-        handleSearch(value);
+        handleSearch(value)
       },
       getSearchValue: () => {
-        return searchState.searchText;
+        return searchState.searchText
       },
-    };
+    }
 
     function renderAction(node: TreeItem) {
-      const { actionList } = props;
+      const { actionList } = props
 
       if (!actionList || actionList.length === 0)
-        return;
+        return
       return actionList.map((item, index) => {
-        let nodeShow = true;
+        let nodeShow = true
         if (isFunction(item.show))
-          nodeShow = item.show?.(node);
+          nodeShow = item.show?.(node)
         else if (isBoolean(item.show))
-          nodeShow = item.show;
+          nodeShow = item.show
 
         if (!nodeShow)
-          return null;
+          return null
 
         return (
             <span key={index} className={bem('action')}>
               {item.render(node)}
             </span>
-        );
-      });
+        )
+      })
     }
 
     const treeData = computed(() => {
-      const data = cloneDeep(getTreeData.value);
+      const data = cloneDeep(getTreeData.value)
       eachTree(data, (item, _parent) => {
-        const searchText = searchState.searchText;
-        const { highlight } = unref(props);
+        const searchText = searchState.searchText
+        const { highlight } = unref(props)
         const {
           title: titleField,
           key: keyField,
           children: childrenField,
-        } = unref(getFieldNames);
+        } = unref(getFieldNames)
 
-        const icon = getIcon(item, item.icon);
-        const title = get(item, titleField);
+        const icon = getIcon(item, item.icon)
+        const title = get(item, titleField)
 
-        const searchIdx = searchText ? title.indexOf(searchText) : -1;
-        const isHighlight =
-            searchState.startSearch &&
-            !isEmpty(searchText) &&
-            highlight &&
-            searchIdx !== -1;
-        const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
+        const searchIdx = searchText ? title.indexOf(searchText) : -1
+        const isHighlight
+            = searchState.startSearch
+            && !isEmpty(searchText)
+            && highlight
+            && searchIdx !== -1
+        const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`
 
-        const titleDom = isHighlight ?
-            (
+        const titleDom = isHighlight
+          ? (
             <span className={unref(getBindValues)?.blockNode ? `${bem('content')}` : ''}>
               <span>{title.substr(0, searchIdx)}</span>
               <span style={highlightStyle}>{searchText}</span>
               <span>{title.substr(searchIdx + (searchText as string).length)}</span>
             </span>
-            ) :
-            (
+            )
+          : (
               title
-            );
+            )
         item.title = (
             <span
               className={`${bem('title')} pl-2`}
               onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}
             >
-              {slots?.title ?
-                  (
+              {slots?.title
+                ? (
                     getSlot(slots, 'title', item)
-                  ) :
-                  (
+                  )
+                : (
                 <>
                   {icon && <TreeIcon icon={icon} />}
                   {titleDom}
@@ -413,19 +413,18 @@ export default defineComponent({
                 </>
                   )}
             </span>
-        );
-        return item;
-      });
-      return data;
-    });
+        )
+        return item
+      })
+      return data
+    })
 
-    expose(instance);
+    expose(instance)
 
-    /* eslint-disable react/display-name, react/prop-types */
     return () => {
-      const { title, helpMessage, toolbar, search, checkable } = props;
-      const showTitle = title || toolbar || search || slots.headerTitle;
-      const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' };
+      const { title, helpMessage, toolbar, search, checkable } = props
+      const showTitle = title || toolbar || search || slots.headerTitle
+      const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' }
       return (
           <div className={[bem(), 'h-full', attrs.class]}>
             {showTitle && (
@@ -453,8 +452,8 @@ export default defineComponent({
               class="!mt-4"
             />
           </div>
-      );
-    };
+      )
+    }
   },
-});
+})
 </script>

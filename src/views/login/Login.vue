@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { AppDarkModeToggle, AppLocalePicker, AppLogo } from '/@/components/Application';
-import { useGlobSetting } from '/@/hooks/setting';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useLocaleStore } from '/@/store/modules/locale';
-import LoginForm from './LoginForm.vue';
+import { computed } from 'vue'
+import { AppDarkModeToggle, AppLocalePicker, AppLogo } from '/@/components/Application'
+import { useGlobSetting } from '/@/hooks/setting'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useLocaleStore } from '/@/store/modules/locale'
+import LoginForm from './LoginForm.vue'
 
 defineProps({
   sessionTimeout: {
     type: Boolean,
   },
-});
+})
 
-const globSetting = useGlobSetting();
-const { prefixCls } = useDesign('login');
-const { t } = useI18n();
-const localStore = useLocaleStore();
-const showLocale = localStore.getShowPicker;
-const title = computed(() => globSetting?.title ?? '');
+const globSetting = useGlobSetting()
+const { prefixCls } = useDesign('login')
+const { t } = useI18n()
+const localStore = useLocaleStore()
+const showLocale = localStore.getShowPicker
+const title = computed(() => globSetting?.title ?? '')
 </script>
 
 <template>

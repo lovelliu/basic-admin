@@ -1,12 +1,12 @@
 <script lang="ts">
 // @ts-nocheck
-import type { SizeType } from '../../types/table';
-import { defineComponent, ref } from 'vue';
-import { Dropdown, Menu, Tooltip } from 'ant-design-vue';
-import { ColumnHeightOutlined } from '@ant-design/icons-vue';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useTableContext } from '../../hooks/useTableContext';
-import { getPopupContainer } from '/@/utils';
+import type { SizeType } from '../../types/table'
+import { defineComponent, ref } from 'vue'
+import { Dropdown, Menu, Tooltip } from 'ant-design-vue'
+import { ColumnHeightOutlined } from '@ant-design/icons-vue'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useTableContext } from '../../hooks/useTableContext'
+import { getPopupContainer } from '/@/utils'
 
 export default defineComponent({
   name: 'SizeSetting',
@@ -18,16 +18,16 @@ export default defineComponent({
     MenuItem: Menu.Item,
   },
   setup() {
-    const table = useTableContext();
-    const { t } = useI18n();
+    const table = useTableContext()
+    const { t } = useI18n()
 
-    const selectedKeysRef = ref<SizeType[]>([table.getSize()]);
+    const selectedKeysRef = ref<SizeType[]>([table.getSize()])
 
     function handleTitleClick({ key }: { key: SizeType }) {
-      selectedKeysRef.value = [key];
+      selectedKeysRef.value = [key]
       table.setProps({
         size: key,
-      });
+      })
     }
 
     return {
@@ -35,9 +35,9 @@ export default defineComponent({
       selectedKeysRef,
       getPopupContainer,
       t,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>
@@ -46,7 +46,7 @@ export default defineComponent({
       <span>{{ t('component.table.settingDens') }}</span>
     </template>
 
-    <Dropdown placement="bottomCenter" :trigger="['click']" :get-popup-container="getPopupContainer">
+    <Dropdown placement="bottom" :trigger="['click']" :get-popup-container="getPopupContainer">
       <ColumnHeightOutlined />
       <template #overlay>
         <Menu v-model:selectedKeys="selectedKeysRef" selectable @click="handleTitleClick">

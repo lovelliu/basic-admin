@@ -3,8 +3,8 @@ import type {
   EditMenuInfo,
   MenuItem,
   MenuList,
-} from './model/systemModel';
-import { defHttp } from '/@/utils/request';
+} from './model/systemModel'
+import { defHttp } from '/@/utils/request'
 
 enum Api {
   GetAllMenu = '/menu/all',
@@ -17,23 +17,23 @@ enum Api {
 }
 
 export const getAllMenu = (params?: any) =>
-  defHttp.get<MenuList>({ url: Api.GetAllMenu, params });
+  defHttp.get<MenuList>({ url: Api.GetAllMenu, params })
 
 export const addMenu = (data: AddOrUpdateMenuParams) =>
-  defHttp.post<boolean>({ url: Api.AddMenu, data });
+  defHttp.post<boolean>({ url: Api.AddMenu, data })
 
 export const updateMenu = (data: AddOrUpdateMenuParams) =>
-  defHttp.put<boolean>({ url: Api.UpdateMenu, data });
+  defHttp.put<boolean>({ url: Api.UpdateMenu, data })
 
-export const deleteMenu = id => defHttp.delete({ url: Api.DeleteMenu, data: { id } });
+export const deleteMenu = id => defHttp.delete({ url: Api.DeleteMenu, data: { id } })
 
-export const getMenuById = id => defHttp.get<MenuItem>({ url: `${Api.Menu}/${id}` });
+export const getMenuById = id => defHttp.get<MenuItem>({ url: `${Api.Menu}/${id}` })
 
 export const getRoleMenus = (id: number) =>
   defHttp.get<EditMenuInfo['parentMenuList'] & { selected: boolean }>({
     url: Api.GetRoleMenus,
     params: { roleId: id },
-  });
+  })
 
 export const allocateRoleMenus = (data: { roleId: number; menuIdList: number[] }) =>
-  defHttp.post({ url: Api.AllocateRoleMenus, data });
+  defHttp.post({ url: Api.AllocateRoleMenus, data })

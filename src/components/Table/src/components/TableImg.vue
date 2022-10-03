@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { CSSProperties } from 'vue';
-import { computed, defineComponent } from 'vue';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { Badge, Image } from 'ant-design-vue';
-import { propTypes } from '/@/utils/propTypes';
+import type { CSSProperties } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { Badge, Image } from 'ant-design-vue'
+import { propTypes } from '/@/utils/propTypes'
 
 export default defineComponent({
   name: 'TableImage',
@@ -22,15 +22,15 @@ export default defineComponent({
   },
   setup(props) {
     const getWrapStyle = computed((): CSSProperties => {
-      const { size } = props;
-      const s = `${size}px`;
-      return { height: s, width: s };
-    });
+      const { size } = props
+      const s = `${size}px`
+      return { height: s, width: s }
+    })
 
-    const { prefixCls } = useDesign('basic-table-img');
-    return { prefixCls, getWrapStyle };
+    const { prefixCls } = useDesign('basic-table-img')
+    return { prefixCls, getWrapStyle }
   },
-});
+})
 </script>
 
 <template>

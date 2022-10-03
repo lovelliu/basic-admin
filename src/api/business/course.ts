@@ -1,7 +1,7 @@
-import type { CourseInfo, LessonData, UploadImgResult } from './model/course';
-import type { UploadFileParams } from '/#/axios';
-import { useGlobSetting } from '/@/hooks/setting';
-import { defHttp } from '/@/utils/request';
+import type { CourseInfo, LessonData, UploadImgResult } from './model/course'
+import type { UploadFileParams } from '/#/axios'
+import { useGlobSetting } from '/@/hooks/setting'
+import { defHttp } from '/@/utils/request'
 
 enum Api {
   GetCourseList = '/course/getQueryCourses',
@@ -18,12 +18,12 @@ enum Api {
   AliyunUploadTransPercent = '/course/upload/aliyunTransCodePercent.json',
 }
 
-const { apiUrl } = useGlobSetting();
+const { apiUrl } = useGlobSetting()
 
-export const getCourseList = data => defHttp.post({ url: Api.GetCourseList, data });
+export const getCourseList = data => defHttp.post({ url: Api.GetCourseList, data })
 
 export const changeCourseState = (id: number, status: 1 | 0) =>
-  defHttp.get({ url: Api.ChangeCourseState, params: { courseId: id, status } });
+  defHttp.get({ url: Api.ChangeCourseState, params: { courseId: id, status } })
 
 export const uploadImg = (
   params: UploadFileParams,
@@ -32,28 +32,28 @@ export const uploadImg = (
   defHttp.uploadFile<UploadImgResult>(
     { url: `${apiUrl}/boss${Api.UploadImg}`, onUploadProgress },
     params,
-  );
+  )
 
 export const saveOrUpdateCourse = data =>
-  defHttp.post({ url: Api.SaveOrUpdateCourse, data }, { isTransformResponse: false });
+  defHttp.post({ url: Api.SaveOrUpdateCourse, data }, { isTransformResponse: false })
 
 export const getCourseById = id =>
-  defHttp.get<CourseInfo>({ url: Api.GetCourseById, params: { courseId: id } });
+  defHttp.get<CourseInfo>({ url: Api.GetCourseById, params: { courseId: id } })
 
 export const getLessonInfoById = id =>
-  defHttp.get<LessonData[]>({ url: Api.GetLessonInfoById, params: { courseId: id } });
+  defHttp.get<LessonData[]>({ url: Api.GetLessonInfoById, params: { courseId: id } })
 
 export const saveOrUpdateSection = data =>
-  defHttp.post({ url: Api.SaveOrUpdateSection, data }, { isTransformResponse: false });
+  defHttp.post({ url: Api.SaveOrUpdateSection, data }, { isTransformResponse: false })
 
-export const saveOrUpdateLesson = data => defHttp.post({ url: Api.SaveOrUpdateLesson, data });
+export const saveOrUpdateLesson = data => defHttp.post({ url: Api.SaveOrUpdateLesson, data })
 
-export const aliyunUploadImg = () => defHttp.get({ url: Api.AliyunUploadImg });
+export const aliyunUploadImg = () => defHttp.get({ url: Api.AliyunUploadImg })
 
-export const aliyunUploadVideo = params => defHttp.get({ url: Api.AliyunUploadVideo, params });
+export const aliyunUploadVideo = params => defHttp.get({ url: Api.AliyunUploadVideo, params })
 
 export const aliyunUploadTransCode = data =>
-  defHttp.post({ url: Api.AliyunUploadTransCode, data });
+  defHttp.post({ url: Api.AliyunUploadTransCode, data })
 
 export const AliyunUploadTransPercent = params =>
-  defHttp.get({ url: Api.AliyunUploadTransPercent, params });
+  defHttp.get({ url: Api.AliyunUploadTransPercent, params })

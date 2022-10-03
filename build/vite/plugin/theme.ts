@@ -2,62 +2,62 @@
  * Vite plugin for website theme color switching
  * https://github.com/anncwb/vite-plugin-theme
  */
-import type { Plugin } from 'vite';
-import path from 'path';
+import type { Plugin } from 'vite'
+import path from 'path'
 import {
-  viteThemePlugin,
   antdDarkThemePlugin,
-  mixLighten,
   mixDarken,
+  mixLighten,
   tinycolor,
-} from 'vite-plugin-theme';
-import { getThemeColors, generateColors } from '../../config/themeConfig';
-import { generateModifyVars } from '../../generate/generateModifyVars';
+  viteThemePlugin,
+} from 'vite-plugin-theme'
+import { generateColors, getThemeColors } from '../../config/themeConfig'
+import { generateModifyVars } from '../../generate/generateModifyVars'
 
 export function configThemePlugin(isBuild: boolean): Plugin[] {
   const colors = generateColors({
     mixDarken,
     mixLighten,
     tinycolor,
-  });
+  })
   // 抽取出viteThemePlugin插件，下方会根据不同环境设置enforce
   const vite_theme_plugin = viteThemePlugin({
-    resolveSelector: (s) => {
-      s = s.trim();
+    resolveSelector: s => {
+      s = s.trim()
       switch (s) {
         case '.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon':
-          return '.ant-steps-item-icon > .ant-steps-icon';
+          return '.ant-steps-item-icon > .ant-steps-icon'
         case '.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)':
         case '.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover':
         case '.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active':
-          return s;
+          return s
         case '.ant-steps-item-icon > .ant-steps-icon':
-          return s;
+          return s
         case '.ant-select-item-option-selected:not(.ant-select-item-option-disabled)':
-          return s;
+          return s
         default:
           if (s.indexOf('.ant-btn') >= -1) {
             // 按钮被重新定制过，需要过滤掉class防止覆盖
-            return s;
+            return s
           }
       }
-      return s.startsWith('[data-theme') ? s : `[data-theme] ${s}`;
+      return s.startsWith('[data-theme') ? s : `[data-theme] ${s}`
     },
     colorVariables: [...getThemeColors(), ...colors],
-  });
-  //console.log('vite_theme_plugin:'+JSON.stringify(vite_theme_plugin));
-  vite_theme_plugin.forEach(function (item) {
-    //对vite:theme插件特殊配置
-    if ('vite:theme' === item.name) {
-      //console.log(item);
+  })
+  // console.log('vite_theme_plugin:'+JSON.stringify(vite_theme_plugin));
+  vite_theme_plugin.forEach(item => {
+    // 对vite:theme插件特殊配置
+    if (item.name === 'vite:theme') {
+      // console.log(item);
       // 打包时去除enforce: "post"，vite 2.6.x适配，否则生成app-theme-style为空，因为async transform(code, id) {的code没有正确获取
-      if (isBuild) {
-        delete item.enforce;
-      }
-      //console.log(item);
+      if (isBuild)
+        delete item.enforce
+
+      // console.log(item);
     }
-  });
-  //console.log('vite_theme_plugin后:'+JSON.stringify(vite_theme_plugin));
+  })
+  // console.log('vite_theme_plugin后:'+JSON.stringify(vite_theme_plugin));
   const plugin = [
     vite_theme_plugin,
     // 黑暗模式，颜色层穿透bug较多
@@ -65,7 +65,7 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
       preloadFiles: [
         path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.less'),
       ],
-      filter: (id) => (isBuild ? !id.endsWith('antd.less') : true),
+      filter: id => (isBuild ? !id.endsWith('antd.less') : true),
       // extractCss: false,
       darkModifyVars: {
         ...generateModifyVars(true),
@@ -97,7 +97,7 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
         'alert-error-icon-color': '#a61d24',
       },
     }),
-  ];
+  ]
 
-  return plugin as unknown as Plugin[];
+  return plugin as unknown as Plugin[]
 }

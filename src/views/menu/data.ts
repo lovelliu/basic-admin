@@ -1,7 +1,7 @@
-import type { BasicColumn, FormSchema } from '/@/components/Table';
-import { Tag } from 'ant-design-vue';
-import { h } from 'vue';
-import Icon from '/@/components/Icon';
+import type { BasicColumn, FormSchema } from '/@/components/Table'
+import { Tag } from 'ant-design-vue'
+import { h } from 'vue'
+import Icon from '/@/components/Icon'
 
 export const columns: BasicColumn[] = [
   {
@@ -22,7 +22,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'icon',
     width: 30,
     customRender: ({ record }: any) => {
-      return h(Icon, { icon: record.icon });
+      return h(Icon, { icon: record.icon })
     },
   },
   {
@@ -50,13 +50,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'status',
     width: 30,
     customRender: ({ record }: any) => {
-      const status = record.status;
-      const color = status ? 'green' : 'red';
-      const text = status ? '启用' : '停用';
-      return h(Tag, { color }, () => text);
+      const status = record.status
+      const color = status ? 'green' : 'red'
+      const text = status ? '启用' : '停用'
+      return h(Tag, { color }, () => text)
     },
   },
-];
+]
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -77,10 +77,10 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { span: 8 },
   },
-];
+]
 
-const isMenu = (type: number) => type === 1;
-const isButton = (type: number) => type === 2;
+const isMenu = (type: number) => type === 1
+const isButton = (type: number) => type === 2
 
 export const formSchema: FormSchema[] = [
   {
@@ -193,4 +193,4 @@ export const formSchema: FormSchema[] = [
       ],
     },
   },
-];
+]

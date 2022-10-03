@@ -1,6 +1,6 @@
-export type ScrollType = 'default' | 'main';
+export type ScrollType = 'default' | 'main'
 
 export interface ScrollContainerOptions {
-  enableScroll?: boolean;
-  type?: ScrollType;
+  enableScroll?: boolean
+  type?: ScrollType
 }

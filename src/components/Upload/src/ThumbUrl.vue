@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { propTypes } from '/@/utils/propTypes';
-import { Image } from 'ant-design-vue';
+import { defineComponent } from 'vue'
+import { propTypes } from '/@/utils/propTypes'
+import { Image } from 'ant-design-vue'
 
 export default defineComponent({
   components: { Image },
@@ -9,7 +9,7 @@ export default defineComponent({
     fileUrl: propTypes.string.def(''),
     fileName: propTypes.string.def(''),
   },
-});
+})
 </script>
 
 <template>

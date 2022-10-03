@@ -1,48 +1,48 @@
 <script lang="tsx">
-import type { CSSProperties } from 'vue';
-import { defineComponent, nextTick, watch } from 'vue';
-import { fileListProps } from './props';
-import { isFunction } from '/@/utils/is';
-import { useModalContext } from '/@/components/Modal/src/hooks/useModalContext';
+import type { CSSProperties } from 'vue'
+import { defineComponent, nextTick, watch } from 'vue'
+import { fileListProps } from './props'
+import { isFunction } from '/@/utils/is'
+import { useModalContext } from '/@/components/Modal/src/hooks/useModalContext'
 
 export default defineComponent({
   name: 'FileList',
   props: fileListProps,
   setup(props) {
-    const modalFn = useModalContext();
+    const modalFn = useModalContext()
     watch(
       () => props.dataSource,
       () => {
         nextTick(() => {
-          modalFn?.redoModalHeight?.();
-        });
+          modalFn?.redoModalHeight?.()
+        })
       },
-    );
-    /* eslint-disable react/display-name, react/prop-types */
+    )
+
     return () => {
-      const { columns, actionColumn, dataSource } = props;
-      const columnList = [...columns, actionColumn];
+      const { columns, actionColumn, dataSource } = props
+      const columnList = [...columns, actionColumn]
       return (
           <table className="file-table">
             <colgroup>
               {columnList.map(item => {
-                const { width = 0, dataIndex } = item;
+                const { width = 0, dataIndex } = item
                 const style: CSSProperties = {
                   width: `${width}px`,
                   minWidth: `${width}px`,
-                };
-                return <col style={width ? style : {}} key={dataIndex} />;
+                }
+                return <col style={width ? style : {}} key={dataIndex} />
               })}
             </colgroup>
             <thead>
               <tr className="file-table-tr">
                 {columnList.map(item => {
-                  const { title = '', align = 'center', dataIndex } = item;
+                  const { title = '', align = 'center', dataIndex } = item
                   return (
                     <th className={['file-table-th', align]} key={dataIndex}>
                       {title}
                     </th>
-                  );
+                  )
                 })}
               </tr>
             </thead>
@@ -51,25 +51,25 @@ export default defineComponent({
                 return (
                   <tr className="file-table-tr" key={`${index + record.name || ''}`}>
                     {columnList.map(item => {
-                      const { dataIndex = '', customRender, align = 'center' } = item;
-                      const render = customRender && isFunction(customRender);
+                      const { dataIndex = '', customRender, align = 'center' } = item
+                      const render = customRender && isFunction(customRender)
                       return (
                         <td className={['file-table-td', align]} key={dataIndex}>
-                          {render ?
-                            customRender?.({ text: record[dataIndex], record }) :
-                            record[dataIndex]}
+                          {render
+                            ? customRender?.({ text: record[dataIndex], record })
+                            : record[dataIndex]}
                         </td>
-                      );
+                      )
                     })}
                   </tr>
-                );
+                )
               })}
             </tbody>
           </table>
-      );
-    };
+      )
+    }
   },
-});
+})
 </script>
 
 <style lang="less">

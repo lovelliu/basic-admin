@@ -1,12 +1,12 @@
 <script lang="tsx">
-import type { CSSProperties, PropType } from 'vue';
-import { computed, defineComponent, unref } from 'vue';
-import { Tooltip } from 'ant-design-vue';
-import { InfoCircleOutlined } from '@ant-design/icons-vue';
-import { getPopupContainer } from '/@/utils';
-import { isArray, isString } from '/@/utils/is';
-import { getSlot } from '../../../utils/helper/tsxHelper';
-import { useDesign } from '/@/hooks/web/useDesign';
+import type { CSSProperties, PropType } from 'vue'
+import { computed, defineComponent, unref } from 'vue'
+import { Tooltip } from 'ant-design-vue'
+import { InfoCircleOutlined } from '@ant-design/icons-vue'
+import { getPopupContainer } from '/@/utils'
+import { isArray, isString } from '/@/utils/is'
+import { getSlot } from '../../../utils/helper/tsxHelper'
+import { useDesign } from '/@/hooks/web/useDesign'
 
 const props = {
   /**
@@ -37,28 +37,28 @@ const props = {
      * Help text list
      */
   text: { type: [Array, String] as PropType<string[] | string> },
-};
+}
 
 export default defineComponent({
   name: 'BasicHelp',
   components: { Tooltip },
   props,
   setup(props, { slots }) {
-    const { prefixCls } = useDesign('basic-help');
+    const { prefixCls } = useDesign('basic-help')
 
     const getTooltipStyle = computed(
       (): CSSProperties => ({ color: props.color, fontSize: props.fontSize }),
-    );
+    )
 
     const getOverlayStyle = computed(
       (): CSSProperties => ({ maxWidth: props.maxWidth }),
-    );
+    )
 
     function renderTitle() {
-      const textList = props.text;
+      const textList = props.text
 
       if (isString(textList))
-        return <p>{textList}</p>;
+        return <p>{textList}</p>
 
       if (isArray(textList)) {
         return textList.map((text, index) => {
@@ -69,28 +69,28 @@ export default defineComponent({
                   {text}
                 </>
               </p>
-          );
-        });
+          )
+        })
       }
-      return null;
+      return null
     }
 
-    return () => { // eslint-disable-line react/display-name
+    return () => {
       return (
           <Tooltip
             overlayClassName={`${prefixCls}__wrap`}
             title={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
             autoAdjustOverflow={true}
             overlayStyle={unref(getOverlayStyle)}
-            placement={props.placement as 'right'} // eslint-disable-line react/prop-types
+            placement={props.placement as 'right'}
             getPopupContainer={() => getPopupContainer()}
           >
             <span className={prefixCls}>{getSlot(slots) || <InfoCircleOutlined />}</span>
           </Tooltip>
-      );
-    };
+      )
+    }
   },
-});
+})
 </script>
 
 <style lang="less">

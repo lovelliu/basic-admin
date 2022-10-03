@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { PageWrapper } from '/@/components/Page';
-import { BasicTable, TableAction, useTable } from '/@/components/Table';
-import { deleteResourceCate, getResourceCate } from '/@/api/sys/resource';
-import { ResourceCateColumns } from './data';
-import { useGo } from '/@/hooks/web/usePage';
-import { useModal } from '/@/components/Modal';
-import ResourceCateModal from './ResourceCateModal.vue';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { PageWrapper } from '/@/components/Page'
+import { BasicTable, TableAction, useTable } from '/@/components/Table'
+import { deleteResourceCate, getResourceCate } from '/@/api/sys/resource'
+import { ResourceCateColumns } from './data'
+import { useGo } from '/@/hooks/web/usePage'
+import { useModal } from '/@/components/Modal'
+import ResourceCateModal from './ResourceCateModal.vue'
+import { useMessage } from '/@/hooks/web/useMessage'
 
-const go = useGo();
-const [registerModal, { openModal }] = useModal();
+const go = useGo()
+const [registerModal, { openModal }] = useModal()
 const [registerTable, { reload }] = useTable({
   title: '资源分类列表',
   api: getResourceCate,
@@ -25,31 +25,31 @@ const [registerTable, { reload }] = useTable({
     slots: { customRender: 'action' },
     fixed: false,
   },
-});
+})
 
 function handleCreate() {
   openModal(true, {
     isUpdate: false,
-  });
+  })
 }
 
 function handleSuccess() {
-  reload();
+  reload()
 }
 
 function handleEdit(record: Recordable) {
   openModal(true, {
     isUpdate: true,
     record,
-  });
+  })
 }
 
-const { createMessage } = useMessage();
+const { createMessage } = useMessage()
 async function handleDelete(record: Recordable) {
-  const res = await deleteResourceCate(record.id);
+  const res = await deleteResourceCate(record.id)
   if (res) {
-    createMessage.success('删除成功');
-    reload();
+    createMessage.success('删除成功')
+    reload()
   }
 }
 </script>

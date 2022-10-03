@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Ref } from 'vue';
-import { ref, watch } from 'vue';
-import { Card } from 'ant-design-vue';
-import { useECharts } from '/@/hooks/web/useECharts';
+import type { Ref } from 'vue'
+import { ref, watch } from 'vue'
+import { Card } from 'ant-design-vue'
+import { useECharts } from '/@/hooks/web/useECharts'
 
 const props = defineProps({
   loading: Boolean,
@@ -14,15 +14,15 @@ const props = defineProps({
     type: String as PropType<string>,
     default: '400px',
   },
-});
+})
 
-const chartRef = ref<HTMLDivElement | null>(null);
-const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
+const chartRef = ref<HTMLDivElement | null>(null)
+const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>)
 watch(
   () => props.loading,
   () => {
     if (props.loading)
-      return;
+      return
 
     setOptions({
       legend: {
@@ -35,27 +35,27 @@ watch(
         splitNumber: 8,
         indicator: [
           {
-            text: '2017',
+            name: '2017',
             max: 100,
           },
           {
-            text: '2017',
+            name: '2017',
             max: 100,
           },
           {
-            text: '2018',
+            name: '2018',
             max: 100,
           },
           {
-            text: '2019',
+            name: '2019',
             max: 100,
           },
           {
-            text: '2020',
+            name: '2020',
             max: 100,
           },
           {
-            text: '2021',
+            name: '2021',
             max: 100,
           },
         ],
@@ -89,10 +89,10 @@ watch(
           ],
         },
       ],
-    });
+    })
   },
   { immediate: true },
-);
+)
 </script>
 
 <template>

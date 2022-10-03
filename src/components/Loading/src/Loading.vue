@@ -1,40 +1,23 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-import type { PropType } from 'vue';
-import { Spin } from 'ant-design-vue';
-import { SizeEnum } from '/@/enums/sizeEnum';
+<script lang="ts" setup>
+import { Spin } from 'ant-design-vue'
+import { SizeEnum } from '/@/enums/sizeEnum'
 
-export default defineComponent({
-  name: 'Loading',
-  components: { Spin },
-  props: {
-    tip: {
-      type: String as PropType<string>,
-      default: '',
-    },
-    size: {
-      type: String as PropType<SizeEnum>,
-      default: SizeEnum.LARGE,
-      validator: (v: SizeEnum): boolean => {
-        return [SizeEnum.DEFAULT, SizeEnum.SMALL, SizeEnum.LARGE].includes(v);
-      },
-    },
-    absolute: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },
-    loading: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },
-    background: {
-      type: String as PropType<string>,
-    },
-    theme: {
-      type: String as PropType<'dark' | 'light'>,
-    },
-  },
-});
+interface Props {
+  tip?: string
+  size?: SizeEnum
+  absolute?: boolean
+  loading?: boolean
+  background?: string
+  theme?: 'light' | 'dark'
+}
+
+withDefaults(defineProps<Props>(), {
+  tip: '',
+  size: SizeEnum.LARGE,
+  absolute: false,
+  loading: false,
+  theme: 'light',
+})
 </script>
 
 <template>

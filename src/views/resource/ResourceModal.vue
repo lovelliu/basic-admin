@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { computed, ref, unref } from 'vue';
-import { BasicModal, useModalInner } from '/@/components/Modal';
-import { BasicForm, useForm } from '/@/components/Form';
-import { ResourceFormSchema } from './data';
-import { addOrUpdate } from '/@/api/sys/resource';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { computed, ref, unref } from 'vue'
+import { BasicModal, useModalInner } from '/@/components/Modal'
+import { BasicForm, useForm } from '/@/components/Form'
+import { ResourceFormSchema } from './data'
+import { addOrUpdate } from '/@/api/sys/resource'
+import { useMessage } from '/@/hooks/web/useMessage'
 
-const emit = defineEmits(['register', 'success']);
-const isUpdate = ref(true);
-const rowId = ref('');
+const emit = defineEmits(['register', 'success'])
+const isUpdate = ref(true)
+const rowId = ref('')
 
 const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
   labelWidth: 100,
@@ -17,18 +17,18 @@ const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = 
   actionColOptions: {
     span: 23,
   },
-});
+})
 
 const [registerModal, { setModalProps, closeModal }] = useModalInner(data => {
-  resetFields();
-  setModalProps({ confirmLoading: false });
-  isUpdate.value = !!data?.isUpdate;
+  resetFields()
+  setModalProps({ confirmLoading: false })
+  isUpdate.value = !!data?.isUpdate
 
   if (unref(isUpdate)) {
-    rowId.value = data.record.id;
+    rowId.value = data.record.id
     setFieldsValue({
       ...data.record,
-    });
+    })
   }
 
   updateSchema([
@@ -38,24 +38,24 @@ const [registerModal, { setModalProps, closeModal }] = useModalInner(data => {
         options: data.resourceCate,
       },
     },
-  ]);
-});
-const getTitle = computed(() => (!unref(isUpdate) ? '新增资源' : '更新资源'));
+  ])
+})
+const getTitle = computed(() => (!unref(isUpdate) ? '新增资源' : '更新资源'))
 
-const { createMessage } = useMessage();
+const { createMessage } = useMessage()
 async function handleSubmit() {
   try {
-    const values = await validate();
-    setModalProps({ confirmLoading: true });
-    const res = await addOrUpdate({ id: rowId.value, ...values });
+    const values = await validate()
+    setModalProps({ confirmLoading: true })
+    const res = await addOrUpdate({ id: rowId.value, ...values })
     if (res) {
-      isUpdate.value ? createMessage.success('修改成功') : createMessage.success('添加成功');
-      closeModal();
-      emit('success');
+      isUpdate.value ? createMessage.success('修改成功') : createMessage.success('添加成功')
+      closeModal()
+      emit('success')
     }
   }
   finally {
-    setModalProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false })
   }
 }
 </script>

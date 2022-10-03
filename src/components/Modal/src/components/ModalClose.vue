@@ -1,9 +1,9 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { CloseOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { Tooltip } from 'ant-design-vue';
-import { useI18n } from '/@/hooks/web/useI18n';
+import { computed, defineComponent } from 'vue'
+import { CloseOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { Tooltip } from 'ant-design-vue'
+import { useI18n } from '/@/hooks/web/useI18n'
 
 export default defineComponent({
   name: 'ModalClose',
@@ -14,8 +14,8 @@ export default defineComponent({
   },
   emits: ['cancel', 'fullscreen'],
   setup(props, { emit }) {
-    const { prefixCls } = useDesign('basic-modal-close');
-    const { t } = useI18n();
+    const { prefixCls } = useDesign('basic-modal-close')
+    const { t } = useI18n()
 
     const getClass = computed(() => {
       return [
@@ -24,17 +24,17 @@ export default defineComponent({
           {
             [`${prefixCls}--can-full`]: props.canFullscreen,
           },
-      ];
-    });
+      ]
+    })
 
     function handleCancel(e: Event) {
-      emit('cancel', e);
+      emit('cancel', e)
     }
 
     function handleFullScreen(e: Event) {
-      e?.stopPropagation();
-      e?.preventDefault();
-      emit('fullscreen');
+      e?.stopPropagation()
+      e?.preventDefault()
+      emit('fullscreen')
     }
 
     return {
@@ -43,9 +43,9 @@ export default defineComponent({
       prefixCls,
       handleCancel,
       handleFullScreen,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

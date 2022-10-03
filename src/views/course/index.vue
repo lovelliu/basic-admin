@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { columns, searchFormSchema } from './data';
-import { getCourseList } from '/@/api/business/course';
-import { BasicTable, TableAction, useTable } from '/@/components/Table';
-import { useGo } from '/@/hooks/web/usePage';
-import { PageEnum } from '/@/enums/pageEnum';
+import { columns, searchFormSchema } from './data'
+import { getCourseList } from '/@/api/business/course'
+import { BasicTable, TableAction, useTable } from '/@/components/Table'
+import { useGo } from '/@/hooks/web/usePage'
+import { PageEnum } from '/@/enums/pageEnum'
 
-const go = useGo();
+const go = useGo()
 const [registerTable] = useTable({
   title: '课程管理',
   api: getCourseList,
@@ -31,7 +31,7 @@ const [registerTable] = useTable({
     slots: { customRender: 'action' },
     width: 80,
   },
-});
+})
 </script>
 
 <template>

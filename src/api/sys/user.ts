@@ -1,9 +1,9 @@
-import { defHttp } from '/@/utils/request';
-import type { CaptchaModel, LoginParams, LoginResultModel } from './model/userModel';
+import { defHttp } from '/@/utils/request'
+import type { CaptchaModel, LoginParams, LoginResultModel } from './model/userModel'
 
-import type { UserInfo } from '/#/store';
-import type { GetUserListParams } from './model/systemModel';
-import type { VAxios } from '/@/utils/request/Axios';
+import type { UserInfo } from '/#/store'
+import type { GetUserListParams } from './model/systemModel'
+import type { VAxios } from '/@/utils/request/Axios'
 
 enum Api {
   GetCaptcha = '/auth/captcha/img',
@@ -30,7 +30,7 @@ export const getCaptcha = () =>
     {
       withToken: false,
     },
-  );
+  )
 
 /**
  * @description: user login api
@@ -44,25 +44,25 @@ export function loginApi(params: LoginParams) {
     {
       withToken: false,
     },
-  );
+  )
 }
 
 /**
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return defHttp.get<UserInfo>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+  return defHttp.get<UserInfo>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' })
 }
 
 export function refreshToken(axiosInstance: VAxios) {
-  return axiosInstance.get({ url: Api.RefreshToken });
+  return axiosInstance.get({ url: Api.RefreshToken })
 }
 
 export const getUserList = (params: Partial<GetUserListParams>) =>
-  defHttp.get({ url: Api.GetUserPages, params });
+  defHttp.get({ url: Api.GetUserPages, params })
 
 export const forbidUser = (id: number) =>
-  defHttp.patch({ url: Api.ForbidUser, params: { id } }, { isReturnNativeResponse: true });
+  defHttp.patch({ url: Api.ForbidUser, params: { id } }, { isReturnNativeResponse: true })
 
 export const enableUser = (id: number) =>
   defHttp.patch(
@@ -73,13 +73,13 @@ export const enableUser = (id: number) =>
       },
     },
     { isReturnNativeResponse: true },
-  );
+  )
 
 export const isUserExist = (username: string) =>
-  defHttp.post({ url: Api.isUserExist, data: { username } });
+  defHttp.post({ url: Api.isUserExist, data: { username } })
 
-export const addUser = data => defHttp.post({ url: Api.AddUser, data });
+export const addUser = data => defHttp.post({ url: Api.AddUser, data })
 
-export const updateUser = data => defHttp.put({ url: Api.UpdateUser, data });
+export const updateUser = data => defHttp.put({ url: Api.UpdateUser, data })
 
-export const getUsername = id => defHttp.get({ url: `${Api.GetUsername}/${id}` });
+export const getUsername = id => defHttp.get({ url: `${Api.GetUsername}/${id}` })

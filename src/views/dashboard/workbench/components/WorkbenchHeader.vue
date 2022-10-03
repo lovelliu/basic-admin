@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { Avatar } from 'ant-design-vue';
-import { useUserStore } from '/@/store/modules/user';
+import { computed } from 'vue'
+import { Avatar } from 'ant-design-vue'
+import { useUserStore } from '/@/store/modules/user'
 
-const userStore = useUserStore();
-const userinfo = computed(() => userStore.getUserInfo);
+const userStore = useUserStore()
+const userinfo = computed(() => userStore.getUserInfo)
 </script>
 
 <template>

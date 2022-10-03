@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { CSSProperties } from 'vue';
-import { computed, defineComponent } from 'vue';
-import { useDesign } from '/@/hooks/web/useDesign';
+import type { CSSProperties } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useDesign } from '/@/hooks/web/useDesign'
 
-import { footerProps } from '../props';
+import { footerProps } from '../props'
 export default defineComponent({
   name: 'BasicDrawerFooter',
   props: {
@@ -15,26 +15,26 @@ export default defineComponent({
   },
   emits: ['ok', 'close'],
   setup(props, { emit }) {
-    const { prefixCls } = useDesign('basic-drawer-footer');
+    const { prefixCls } = useDesign('basic-drawer-footer')
 
     const getStyle = computed((): CSSProperties => {
-      const heightStr = `${props.height}`;
+      const heightStr = `${props.height}`
       return {
         height: heightStr,
         lineHeight: heightStr,
-      };
-    });
+      }
+    })
 
     function handleOk() {
-      emit('ok');
+      emit('ok')
     }
 
     function handleClose() {
-      emit('close');
+      emit('close')
     }
-    return { handleOk, prefixCls, handleClose, getStyle };
+    return { handleOk, prefixCls, handleClose, getStyle }
   },
-});
+})
 </script>
 
 <template>

@@ -1,17 +1,17 @@
 <script lang="ts">
-import type { ColEx } from '../types/index';
+import type { ColEx } from '../types/index'
 // import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
-import type { PropType } from 'vue';
-import { computed, defineComponent } from 'vue';
-import { Col, Form } from 'ant-design-vue';
-import type { ButtonProps } from '/@/components/Button';
-import { Button as AntdButton } from '/@/components/Button';
-import { BasicArrow } from '/@/components/Basic';
-import { useFormContext } from '../hooks/useFormContext';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { propTypes } from '/@/utils/propTypes';
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { Col, Form } from 'ant-design-vue'
+import type { ButtonProps } from '/@/components/Button'
+import { Button as AntdButton } from '/@/components/Button'
+import { BasicArrow } from '/@/components/Basic'
+import { useFormContext } from '../hooks/useFormContext'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { propTypes } from '/@/utils/propTypes'
 
-  type ButtonOptions = Partial<ButtonProps> & { text: string };
+  type ButtonOptions = Partial<ButtonProps> & { text: string }
 
 export default defineComponent({
   name: 'BasicFormAction',
@@ -44,22 +44,22 @@ export default defineComponent({
   },
   emits: ['toggleAdvanced'],
   setup(props, { emit }) {
-    const { t } = useI18n();
+    const { t } = useI18n()
 
     const actionColOpt = computed(() => {
-      const { showAdvancedButton, actionSpan: span, actionColOptions } = props;
-      const actionSpan = 24 - span;
-      const advancedSpanObj = showAdvancedButton ?
-          { span: actionSpan < 6 ? 24 : actionSpan } :
-          {};
+      const { showAdvancedButton, actionSpan: span, actionColOptions } = props
+      const actionSpan = 24 - span
+      const advancedSpanObj = showAdvancedButton
+        ? { span: actionSpan < 6 ? 24 : actionSpan }
+        : {}
       const actionColOpt: Partial<ColEx> = {
         style: { textAlign: 'right' },
         span: showAdvancedButton ? 6 : 4,
         ...advancedSpanObj,
         ...actionColOptions,
-      };
-      return actionColOpt;
-    });
+      }
+      return actionColOpt
+    })
 
     const getResetBtnOptions = computed((): ButtonOptions => {
       return Object.assign(
@@ -67,8 +67,8 @@ export default defineComponent({
           text: t('common.resetText'),
         },
         props.resetButtonOptions,
-      );
-    });
+      )
+    })
 
     const getSubmitBtnOptions = computed(() => {
       return Object.assign(
@@ -76,11 +76,11 @@ export default defineComponent({
           text: t('common.queryText'),
         },
         props.submitButtonOptions,
-      );
-    });
+      )
+    })
 
     function toggleAdvanced() {
-      emit('toggleAdvanced');
+      emit('toggleAdvanced')
     }
 
     return {
@@ -90,9 +90,9 @@ export default defineComponent({
       getSubmitBtnOptions,
       toggleAdvanced,
       ...useFormContext(),
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

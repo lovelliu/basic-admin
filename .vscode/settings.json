@@ -11,6 +11,7 @@
     "Antd",
     "Attributify",
     "DTOS",
+    "echarts",
     "iconify",
     "Inited",
     "intlify",
@@ -18,6 +19,7 @@
     "noreferrer",
     "pinia",
     "qrcode",
+    "RETOKEN",
     "Sider",
     "sortablejs",
     "unocss",
@@ -25,5 +27,6 @@
     "vditor",
     "vueuse",
     "windi"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
 }

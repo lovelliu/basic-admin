@@ -1,11 +1,11 @@
 <script lang="ts">
-import type { ColumnChangeParam, TableSetting } from '../types/table';
-import type { PropType } from 'vue';
-import { defineComponent } from 'vue';
-import { Divider } from 'ant-design-vue';
-import TableSettingComponent from './settings/index.vue';
-import TableTitle from './TableTitle.vue';
-import { useDesign } from '/@/hooks/web/useDesign';
+import type { ColumnChangeParam, TableSetting } from '../types/table'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import { Divider } from 'ant-design-vue'
+import TableSettingComponent from './settings/index.vue'
+import TableTitle from './TableTitle.vue'
+import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'BasicTableHeader',
@@ -31,13 +31,13 @@ export default defineComponent({
   },
   emits: ['columnsChange'],
   setup(_, { emit }) {
-    const { prefixCls } = useDesign('basic-table-header');
+    const { prefixCls } = useDesign('basic-table-header')
     function handleColumnChange(data: ColumnChangeParam[]) {
-      emit('columnsChange', data);
+      emit('columnsChange', data)
     }
-    return { prefixCls, handleColumnChange };
+    return { prefixCls, handleColumnChange }
   },
-});
+})
 </script>
 
 <template>

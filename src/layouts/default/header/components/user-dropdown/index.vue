@@ -1,22 +1,22 @@
 <script lang="ts">
 // @ts-nocheck
 // components
-import { Dropdown, Menu } from 'ant-design-vue';
+import { Dropdown, Menu } from 'ant-design-vue'
 
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue'
 
-import { useUserStore } from '/@/store/modules/user';
-import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useDesign } from '/@/hooks/web/useDesign';
-import { useModal } from '/@/components/Modal';
+import { useUserStore } from '/@/store/modules/user'
+import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { useModal } from '/@/components/Modal'
 
-import headerImg from '/@/assets/images/header.jpg';
-import { propTypes } from '/@/utils/propTypes';
+import headerImg from '/@/assets/images/header.jpg'
+import { propTypes } from '/@/utils/propTypes'
 
-import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock'
 
 export default defineComponent({
   name: 'UserDropdown',
@@ -30,35 +30,35 @@ export default defineComponent({
     theme: propTypes.oneOf(['dark', 'light']),
   },
   setup() {
-    const { prefixCls } = useDesign('header-user-dropdown');
-    const { t } = useI18n();
-    const { getUseLockPage } = useHeaderSetting();
-    const userStore = useUserStore();
+    const { prefixCls } = useDesign('header-user-dropdown')
+    const { t } = useI18n()
+    const { getUseLockPage } = useHeaderSetting()
+    const userStore = useUserStore()
 
     const getUserInfo = computed(() => {
-      const { userName = '', portrait, desc } = userStore.getUserInfo || {};
-      return { userName, avatar: portrait || headerImg, desc };
-    });
+      const { userName = '', portrait, desc } = userStore.getUserInfo || {}
+      return { userName, avatar: portrait || headerImg, desc }
+    })
 
-    const [register, { openModal }] = useModal();
+    const [register, { openModal }] = useModal()
 
     function handleLock() {
-      openModal(true);
+      openModal(true)
     }
 
     //  login out
     function handleLoginOut() {
-      userStore.confirmLoginOut();
+      userStore.confirmLoginOut()
     }
 
     function handleMenuClick(e: { key: MenuEvent }) {
       switch (e.key) {
         case 'logout':
-          handleLoginOut();
-          break;
+          handleLoginOut()
+          break
         case 'lock':
-          handleLock();
-          break;
+          handleLock()
+          break
       }
     }
 
@@ -69,9 +69,9 @@ export default defineComponent({
       handleMenuClick,
       register,
       getUseLockPage,
-    };
+    }
   },
-});
+})
 </script>
 
 <template>

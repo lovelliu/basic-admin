@@ -1,23 +1,23 @@
-import type { AxiosTransform, RequestOptions, Result } from '/#/axios';
+import type { AxiosTransform, RequestOptions, Result } from '/#/axios'
 
-import { RequestEnum } from '/@/enums/httpEnum';
-import type { AxiosResponse } from 'axios';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { getRefreshToken, getToken } from '/@/utils/auth';
-import { setObjToUrlParams } from '..';
-import { isString } from '../is';
-import { checkStatus } from './checkStatus';
-import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useGlobSetting } from '/@/hooks/setting';
-import { formatRequestDate, joinTimestamp } from './helper';
-import { useUserStoreWithOut } from '/@/store/modules/user';
-import { defHttp } from '.';
+import { RequestEnum } from '/@/enums/httpEnum'
+import type { AxiosResponse } from 'axios'
+import { useMessage } from '/@/hooks/web/useMessage'
+import { getRefreshToken, getToken } from '/@/utils/auth'
+import { setObjToUrlParams } from '..'
+import { isString } from '../is'
+import { checkStatus } from './checkStatus'
+import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useGlobSetting } from '/@/hooks/setting'
+import { formatRequestDate, joinTimestamp } from './helper'
+import { useUserStoreWithOut } from '/@/store/modules/user'
+import { defHttp } from '.'
 
-const { createErrorModal, createMessage } = useMessage();
-let isRefreshing = false;
-let requests: Function[] = [];
-const { apiUrl } = useGlobSetting();
+const { createErrorModal, createMessage } = useMessage()
+let isRefreshing = false
+let requests: Function[] = []
+const { apiUrl } = useGlobSetting()
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -27,31 +27,31 @@ export const transform: AxiosTransform = {
    * @description: 处理请求数据。如果数据不是预期格式，可直接抛出错误
    */
   transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
-    const { t } = useI18n();
-    const { isTransformResponse, isReturnNativeResponse } = options;
+    const { t } = useI18n()
+    const { isTransformResponse, isReturnNativeResponse } = options
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
     if (isReturnNativeResponse)
-      return res;
+      return res
 
     // 不进行任何处理，直接返回
     // 用于页面代码可能需要直接获取code，data，message这些信息时开启
     if (!isTransformResponse)
-      return res.data;
+      return res.data
 
     // 错误的时候返回
 
-    const { data } = res;
+    const { data } = res
 
     if (!data) {
       // return '[HTTP] Request has no return value';
-      throw new Error(t('sys.api.apiRequestFailed'));
+      throw new Error(t('sys.api.apiRequestFailed'))
     }
 
     if ('result' in (data as Result)) {
-      const { status, message, result } = data as Result;
+      const { status, message, result } = data as Result
       if (status === 'success')
-        return result;
-      else createErrorModal({ title: t('sys.api.errorTip'), content: message });
+        return result
+      else createErrorModal({ title: t('sys.api.errorTip'), content: message })
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
@@ -90,58 +90,58 @@ export const transform: AxiosTransform = {
       formatDate,
       joinTime = true,
       urlPrefix,
-    } = options;
+    } = options
 
     if (joinPrefix)
-      config.url = `${urlPrefix}${config.url}`;
+      config.url = `${urlPrefix}${config.url}`
 
     if (apiUrl && isString(apiUrl))
-      config.url = `${apiUrl}${config.url}`;
+      config.url = `${apiUrl}${config.url}`
 
-    const params = config.params || {};
-    const data = config.data || false;
-    formatDate && data && !isString(data) && formatRequestDate(data);
+    const params = config.params || {}
+    const data = config.data || false
+    formatDate && data && !isString(data) && formatRequestDate(data)
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
+        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false))
       }
       else {
         // 兼容restful风格
-        config.url = `${config.url + params}${joinTimestamp(joinTime, true)}`;
-        config.params = undefined;
+        config.url = `${config.url + params}${joinTimestamp(joinTime, true)}`
+        config.params = undefined
       }
     }
     else {
       if (!isString(params)) {
-        formatDate && formatRequestDate(params);
+        formatDate && formatRequestDate(params)
         if (
-          Reflect.has(config, 'data') &&
-          config.data &&
-          Object.keys(config.data).length > 0
+          Reflect.has(config, 'data')
+          && config.data
+          && Object.keys(config.data).length > 0
         ) {
-          config.data = data;
-          config.params = params;
+          config.data = data
+          config.params = params
         }
         else {
           // 非GET请求如果没有提供data，则将params视为data
-          config.data = params;
-          config.params = undefined;
+          config.data = params
+          config.params = undefined
         }
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(
             config.url as string,
             Object.assign({}, config.params, config.data),
-          );
+          )
         }
       }
       else {
         // 兼容restful风格
-        config.url = config.url + params;
-        config.params = undefined;
+        config.url = config.url + params
+        config.params = undefined
       }
     }
-    return config;
+    return config
   },
 
   /**
@@ -149,87 +149,87 @@ export const transform: AxiosTransform = {
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理config
-    const token =
-      config.url ===
-      `${process.env.NODE_ENV === 'development' ? apiUrl : ''}/api/auth/refreshToken` ?
-        getRefreshToken() :
-        getToken();
+    const token
+      = config.url
+      === `${process.env.NODE_ENV === 'development' ? apiUrl : ''}/api/auth/refreshToken`
+        ? getRefreshToken()
+        : getToken()
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
-      (config as Recordable).headers.Authorization = options.authenticationScheme ?
-        `${options.authenticationScheme} ${token}` :
-        token;
+      (config as Recordable).headers.Authorization = options.authenticationScheme
+        ? `${options.authenticationScheme} ${token}`
+        : token
     }
-    return config;
+    return config
   },
 
   /**
    * @description: 响应拦截器处理
    */
   responseInterceptors: (res: AxiosResponse<any>) => {
-    return res;
+    return res
   },
 
   /**
    * @description: 响应错误处理
    */
   responseInterceptorsCatch: (error: any) => {
-    const { t } = useI18n();
-    const errorLogStore = useErrorLogStoreWithOut();
-    errorLogStore.addAjaxErrorInfo(error);
+    const { t } = useI18n()
+    const errorLogStore = useErrorLogStoreWithOut()
+    errorLogStore.addAjaxErrorInfo(error)
 
-    const { response, code, message, config } = error || {};
-    const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
-    const msg: string = response?.data?.error ?? '';
+    const { response, code, message, config } = error || {}
+    const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none'
+    const msg: string = response?.data?.error ?? ''
 
-    const err: string = error?.toString?.() ?? '';
-    let errMessage = '';
+    const err: string = error?.toString?.() ?? ''
+    let errMessage = ''
 
     try {
       if (code === 'ECONNABORTED' && message.includes('timeout'))
-        errMessage = t('sys.api.apiTimeoutMessage');
+        errMessage = t('sys.api.apiTimeoutMessage')
 
       if (err?.includes('Network Error'))
-        errMessage = t('sys.api.networkExceptionMsg');
+        errMessage = t('sys.api.networkExceptionMsg')
 
       if (errMessage) {
         if (errorMessageMode === 'modal')
-          createErrorModal({ title: t('sys.api.errorTip'), content: errMessage });
+          createErrorModal({ title: t('sys.api.errorTip'), content: errMessage })
         else if (errorMessageMode === 'message')
-          createMessage.error(errMessage);
+          createMessage.error(errMessage)
 
-        return Promise.reject(error);
+        return Promise.reject(error)
       }
     }
     catch (error) {
-      throw new Error(error as unknown as string);
+      throw new Error(error as unknown as string)
     }
 
     // token过期启用刷新token获取新的token
     if (error.response.status === 401) {
-      const userStore = useUserStoreWithOut();
+      const userStore = useUserStoreWithOut()
       if (!userStore.getToken || /\/refreshToken/.test(error.response.config.url))
-        userStore.logout(true);
+        userStore.logout(true)
       if (!isRefreshing) {
-        isRefreshing = true;
+        isRefreshing = true
         return userStore
           .toTefreshToken()
           .then(() => {
-            requests.forEach(cb => cb());
-            requests = [];
-            return defHttp.getAxios()(error.config);
+            requests.forEach(cb => cb())
+            requests = []
+            return defHttp.getAxios()(error.config)
           })
           .catch(() => userStore.logout(true))
-          .finally(() => (isRefreshing = false));
+          .finally(() => (isRefreshing = false))
       }
       return new Promise(resolve => {
         requests.push(() => {
-          resolve(defHttp.request(error.config));
-        });
-      });
+          resolve(defHttp.request(error.config))
+        })
+      })
     }
-    checkStatus(error?.response?.status, msg, errorMessageMode);
+    checkStatus(error?.response?.status, msg, errorMessageMode)
 
-    return Promise.reject(error);
+    return Promise.reject(error)
   },
-};
+}
