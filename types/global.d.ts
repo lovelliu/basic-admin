@@ -12,10 +12,6 @@ declare global {
     __: unknown;
   }
 
-  interface Window {
-    AliyunUpload: any;
-  }
-
   declare interface ViteEnv {
     VITE_PORT: number;
     VITE_USE_MOCK: boolean;
@@ -40,12 +36,10 @@ declare global {
   declare type TimeoutHandle = ReturnType<typeof setTimeout>;
   declare type IntervalHandle = ReturnType<typeof setInterval>;
 
-  declare function parseInt(s: string | number, radix?: number): number;
+  // declare function parseInt(s: string | number, radix?: number): number;
 
   namespace JSX {
-    // tslint:disable no-empty-interface
     type Element = VNode;
-    // tslint:disable no-empty-interface
     type ElementClass = ComponentRenderProxy;
     interface ElementAttributesProperty {
       $props: any;

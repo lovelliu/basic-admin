@@ -1,5 +1,6 @@
-import type { LoadingProps } from './typing'
+import type { LoadingProps } from './types'
 import type { Ref } from 'vue'
+
 import { unref } from 'vue'
 import { createLoading } from './createLoading'
 
@@ -12,16 +13,13 @@ interface Fn {
   (): void
 }
 
-export function useLoading(props: Partial<LoadingProps>): [Fn, Fn, (string) => void]
-export function useLoading(opt: Partial<UseLoadingOptions>): [Fn, Fn, (string) => void]
-
 export function useLoading(
   opt: Partial<LoadingProps> | Partial<UseLoadingOptions>,
-): [Fn, Fn, (string) => void] {
+): [Fn, Fn, (tip: string) => void] {
   let props: Partial<LoadingProps>
   let target: HTMLElement | Ref<ElRef> = document.body
 
-  if (Reflect.has(opt, 'target') || Reflect.has(opt, 'props')) {
+  if ('target' in opt || 'props' in opt) {
     const options = opt as Partial<UseLoadingOptions>
     props = options.props || {}
     target = options.target || document.body
@@ -32,14 +30,14 @@ export function useLoading(
 
   const instance = createLoading(props, undefined, true)
 
-  const open = (): void => {
+  const open = () => {
     const t = unref(target as Ref<ElRef>)
     if (!t)
       return
     instance.open(t)
   }
 
-  const close = (): void => {
+  const close = () => {
     instance.close()
   }
 
