@@ -1,30 +1,28 @@
 <script lang="ts">
 import { computed, defineComponent, unref } from 'vue'
 
-import { propTypes } from '/@/utils/propTypes'
-
 import { Layout } from 'ant-design-vue'
-import { AppLocalePicker, AppLogo } from '/@/components/Application'
-import LayoutMenu from '../menu/index.vue'
-import LayoutTrigger from '../trigger/index.vue'
+import { propTypes } from '@/utils/propTypes'
+import { AppLocalePicker, AppLogo } from '@/components/Application'
 
-// import { AppSearch } from '/@/components/Application';
+// import { AppSearch } from '@/components/Application';
 
-import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting'
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
-import { useRootSetting } from '/@/hooks/setting/useRootSetting'
+import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useRootSetting } from '@/hooks/setting/useRootSetting'
 
-import { MenuModeEnum, MenuSplitTypeEnum } from '/@/enums/menuEnum'
-import { SettingButtonPositionEnum } from '/@/enums/appEnum'
+import { MenuModeEnum, MenuSplitTypeEnum } from '@/enums/menuEnum'
+import { SettingButtonPositionEnum } from '@/enums/appEnum'
 
 // import { UserDropDown, LayoutBreadcrumb, FullScreen, Notify, ErrorAction } from './components';
-import { UserDropDown } from './components'
-import { LayoutBreadcrumb } from './components'
-import { useAppInject } from '/@/hooks/web/useAppInject'
-import { useDesign } from '/@/hooks/web/useDesign'
+import { useAppInject } from '@/hooks/web/useAppInject'
+import { useDesign } from '@/hooks/web/useDesign'
 
-import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
-import { useLocale } from '/@/locales/useLocale'
+import { createAsyncComponent } from '@/utils/factory/createAsyncComponent'
+import { useLocale } from '@/locales/useLocale'
+import LayoutTrigger from '../trigger/index.vue'
+import LayoutMenu from '../menu/index.vue'
+import { LayoutBreadcrumb, UserDropDown } from './components'
 
 export default defineComponent({
   name: 'LayoutHeader',
@@ -41,7 +39,7 @@ export default defineComponent({
     // AppSearch,
     // ErrorAction,
     SettingDrawer: createAsyncComponent(
-      () => import('/@/layouts/default/setting/index.vue'),
+      () => import('@/layouts/default/setting/index.vue'),
       {
         loading: true,
       },

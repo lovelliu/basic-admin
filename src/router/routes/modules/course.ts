@@ -1,7 +1,7 @@
-import type { AppRouteModule } from '/@/router/types'
+import type { AppRouteModule } from '@/router/types'
 
-import { LAYOUT } from '/@/router/constant'
-import { t } from '/@/hooks/web/useI18n'
+import { LAYOUT } from '@/router/constant'
+import { t } from '@/hooks/web/useI18n'
 
 const course: AppRouteModule = {
   path: '/course',
@@ -23,7 +23,7 @@ const course: AppRouteModule = {
         ignoreKeepAlive: true,
         hideMenu: true,
       },
-      component: () => import('/@/views/course/index.vue'),
+      component: () => import('@/views/course/index.vue'),
     },
     {
       path: 'basic-course',
@@ -34,7 +34,7 @@ const course: AppRouteModule = {
         hideMenu: true,
         hideTab: true,
       },
-      component: () => import('/@/views/course/BasicCourse.vue'),
+      component: () => import('@/views/course/BasicCourse.vue'),
     },
     {
       path: 'lesson',
@@ -45,7 +45,7 @@ const course: AppRouteModule = {
         hideMenu: true,
         hideTab: true,
       },
-      component: () => import('/@/views/course/Lesson.vue'),
+      component: () => import('@/views/course/Lesson.vue'),
     },
   ],
 }

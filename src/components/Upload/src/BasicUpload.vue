@@ -1,12 +1,12 @@
 <script lang="ts">
 import { computed, defineComponent, ref, unref, watch } from 'vue'
-import { Icon } from '/@/components/Icon'
 import { Space, Tooltip } from 'ant-design-vue'
-import { useModal } from '/@/components/Modal'
 import { omit } from 'lodash-es'
+import { useModal } from '@/components/Modal'
+import { Icon } from '@/components/Icon'
+import { useI18n } from '@/hooks/web/useI18n'
+import { isArray } from '@/utils/is'
 import { uploadContainerProps } from './props'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { isArray } from '/@/utils/is'
 import UploadModal from './UploadModal.vue'
 import UploadPreviewModal from './UploadPreviewModal.vue'
 

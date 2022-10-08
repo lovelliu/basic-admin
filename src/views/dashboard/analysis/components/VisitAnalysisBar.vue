@@ -1,11 +1,11 @@
 <script lang="ts">
-import { basicProps } from './props'
 </script>
 
 <script lang="ts" setup>
 import type { Ref } from 'vue'
 import { onMounted, ref } from 'vue'
-import { useECharts } from '/@/hooks/web/useECharts'
+import { useECharts } from '@/hooks/web/useECharts'
+import { basicProps } from './props'
 
 defineProps({
   ...basicProps,

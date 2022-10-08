@@ -1,11 +1,11 @@
 /**
  * Multi-language related operations
  */
-import type { LocaleType } from '/#/config'
+import type { LocaleType } from '#/config'
 
 import { computed, unref } from 'vue'
+import { useLocaleStoreWithOut } from '@/store/modules/locale'
 import { i18n } from './setupI18n'
-import { useLocaleStoreWithOut } from '/@/store/modules/locale'
 import { loadLocalePool, setHtmlPageLang } from './helper'
 
 interface LangModule {

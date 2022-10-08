@@ -3,5 +3,5 @@ import './style'
 
 export { BasicTree }
 /* eslint-disable import/export */
-export type { ContextMenuItem } from '/@/hooks/web/useContextMenu'
+export type { ContextMenuItem } from '@/hooks/web/useContextMenu'
 export * from './src/tree'

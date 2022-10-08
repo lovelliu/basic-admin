@@ -1,12 +1,12 @@
 <script lang="ts" setup name="ResourceManagement">
-import { deleteResource, getResourceCate, getResourceList } from '/@/api/sys/resource'
-import { BasicTable, TableAction, useTable } from '/@/components/Table'
-import { useModal } from '/@/components/Modal'
-import { columns, searchFormSchema } from './data'
 import { onMounted, ref } from 'vue'
+import { deleteResource, getResourceCate, getResourceList } from '@/api/sys/resource'
+import { BasicTable, TableAction, useTable } from '@/components/Table'
+import { useModal } from '@/components/Modal'
+import { useMessage } from '@/hooks/web/useMessage'
+import { useGo } from '@/hooks/web/usePage'
+import { columns, searchFormSchema } from './data'
 import ResourceModal from './ResourceModal.vue'
-import { useMessage } from '/@/hooks/web/useMessage'
-import { useGo } from '/@/hooks/web/usePage'
 
 const go = useGo()
 const [registerModal, { openModal }] = useModal()

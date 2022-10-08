@@ -2,11 +2,11 @@
 // @ts-nocheck
 import { computed, ref, useSlots, watch } from 'vue'
 import { Dropdown, InputSearch, Menu, MenuDivider, MenuItem } from 'ant-design-vue'
-import { Icon } from '/@/components/Icon'
-import { BasicTitle } from '/@/components/Basic'
-import { useI18n } from '/@/hooks/web/useI18n'
 import { useDebounceFn } from '@vueuse/core'
-import { createBEM } from '/@/utils/bem'
+import { Icon } from '@/components/Icon'
+import { BasicTitle } from '@/components/Basic'
+import { useI18n } from '@/hooks/web/useI18n'
+import { createBEM } from '@/utils/bem'
 import { ToolbarEnum } from './tree'
 
 const props = defineProps({

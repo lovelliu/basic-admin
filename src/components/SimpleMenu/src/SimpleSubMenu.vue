@@ -1,16 +1,16 @@
 <script lang="ts">
 import type { PropType } from 'vue'
-import type { Menu } from '/@/router/types'
+import type { Menu } from '@/router/types'
 
 import { computed, defineComponent } from 'vue'
-import { useDesign } from '/@/hooks/web/useDesign'
-import Icon from '/@/components/Icon/index'
+import { useDesign } from '@/hooks/web/useDesign'
+import Icon from '@/components/Icon/index'
 
-import MenuItem from './components/MenuItem.vue'
+import { propTypes } from '@/utils/propTypes'
+import { useI18n } from '@/hooks/web/useI18n'
+import { createAsyncComponent } from '@/utils/factory/createAsyncComponent'
 import SubMenu from './components/SubMenuItem.vue'
-import { propTypes } from '/@/utils/propTypes'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
+import MenuItem from './components/MenuItem.vue'
 
 export default defineComponent({
   name: 'SimpleSubMenu',

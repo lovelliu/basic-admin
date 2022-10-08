@@ -4,13 +4,13 @@ import type {
   RequestOptions,
   Result,
   UploadFileParams,
-} from '/#/axios'
+} from '#/axios'
 import axios from 'axios'
 import qs from 'qs'
-import { AxiosCanceler } from './axiosCancel'
-import { isFunction } from '../is'
 import { cloneDeep } from 'lodash-es'
-import { ContentTypeEnum, RequestEnum } from '/@/enums/httpEnum'
+import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum'
+import { isFunction } from '../is'
+import { AxiosCanceler } from './axiosCancel'
 
 /**
  * @description: axios module

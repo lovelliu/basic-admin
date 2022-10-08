@@ -3,9 +3,9 @@ import type { BasicTableProps } from '../types/table'
 import type { ComputedRef } from 'vue'
 import { computed, ref, unref, watch } from 'vue'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue'
-import { isBoolean } from '/@/utils/is'
+import { isBoolean } from '@/utils/is'
+import { useI18n } from '@/hooks/web/useI18n'
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../const'
-import { useI18n } from '/@/hooks/web/useI18n'
 
 interface ItemRender {
   page: number

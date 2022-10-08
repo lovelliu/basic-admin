@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { PageWrapper } from '/@/components/Page'
-import { BasicTable, TableAction, useTable } from '/@/components/Table'
-import { deleteResourceCate, getResourceCate } from '/@/api/sys/resource'
-import { ResourceCateColumns } from './data'
-import { useGo } from '/@/hooks/web/usePage'
-import { useModal } from '/@/components/Modal'
+import { PageWrapper } from '@/components/Page'
+import { BasicTable, TableAction, useTable } from '@/components/Table'
+import { deleteResourceCate, getResourceCate } from '@/api/sys/resource'
+import { useGo } from '@/hooks/web/usePage'
+import { useModal } from '@/components/Modal'
+import { useMessage } from '@/hooks/web/useMessage'
 import ResourceCateModal from './ResourceCateModal.vue'
-import { useMessage } from '/@/hooks/web/useMessage'
+import { ResourceCateColumns } from './data'
 
 const go = useGo()
 const [registerModal, { openModal }] = useModal()

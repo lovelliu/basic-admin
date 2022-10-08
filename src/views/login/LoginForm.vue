@@ -2,16 +2,16 @@
 import { computed, reactive, ref, unref } from 'vue'
 
 import { Checkbox, Col, Form, Input, Row } from 'ant-design-vue'
-import LoginFormTitleVue from './LoginFormTitle.vue'
 
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useMessage } from '/@/hooks/web/useMessage'
+import { useI18n } from '@/hooks/web/useI18n'
+import { useMessage } from '@/hooks/web/useMessage'
 
-import { useUserStore } from '/@/store/modules/user'
+import { useUserStore } from '@/store/modules/user'
+
+import { getCaptcha } from '@/api/sys/user'
+import { onMountedOrActivated } from '@/hooks/core/onMountedOrActivated'
 import { LoginStateEnum, useFormRules, useFormValid, useLoginState } from './useLogin'
-
-import { getCaptcha } from '/@/api/sys/user'
-import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated'
+import LoginFormTitleVue from './LoginFormTitle.vue'
 
 const ACol = Col
 const ARow = Row

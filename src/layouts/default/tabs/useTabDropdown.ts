@@ -1,14 +1,14 @@
 import type { TabContentProps } from './types'
-import type { DropMenu } from '/@/components/Dropdown'
+import type { DropMenu } from '@/components/Dropdown'
 import type { ComputedRef } from 'vue'
 
-import { computed, reactive, unref } from 'vue'
-import { MenuEventEnum } from './types'
-import { useMultipleTabStore } from '/@/store/modules/multipleTab'
 import type { RouteLocationNormalized } from 'vue-router'
+import { computed, reactive, unref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTabs } from '/@/hooks/web/useTabs'
-import { useI18n } from '/@/hooks/web/useI18n'
+import { useMultipleTabStore } from '@/store/modules/multipleTab'
+import { useTabs } from '@/hooks/web/useTabs'
+import { useI18n } from '@/hooks/web/useI18n'
+import { MenuEventEnum } from './types'
 
 export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: ComputedRef<boolean>) {
   const state = reactive({

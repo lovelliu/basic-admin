@@ -1,8 +1,8 @@
 import type { ComputedRef, Ref } from 'vue'
 import type { BasicTableProps } from '../types/table'
 import { computed, h, nextTick, unref, watchEffect } from 'vue'
+import { useEventListener } from '@/hooks/event/useEventListener'
 import TableFooter from '../components/TableFooter.vue'
-import { useEventListener } from '/@/hooks/event/useEventListener'
 
 export function useTableFooter(
   propsRef: ComputedRef<BasicTableProps>,

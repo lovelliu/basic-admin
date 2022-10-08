@@ -12,17 +12,17 @@ import {
   watch,
   watchEffect,
 } from 'vue'
+import { omit } from 'lodash-es'
+import { isFunction } from '@/utils/is'
+import { deepMerge } from '@/utils'
+import { useDesign } from '@/hooks/web/useDesign'
 import Modal from './components/Modal'
 import ModalWrapper from './components/ModalWrapper.vue'
 import ModalClose from './components/ModalClose.vue'
 import ModalFooter from './components/ModalFooter.vue'
 import ModalHeader from './components/ModalHeader.vue'
-import { isFunction } from '/@/utils/is'
-import { deepMerge } from '/@/utils'
 import { basicProps } from './props'
 import { useFullScreen } from './hooks/useModalFullScreen'
-import { omit } from 'lodash-es'
-import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'BasicModal',

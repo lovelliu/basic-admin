@@ -1,8 +1,8 @@
 <script lang="ts" setup name="AButton">
 import { computed, unref } from 'vue'
 import { Button } from 'ant-design-vue'
-import Icon from '/@/components/Icon/src/Icon.vue'
-import { useAttrs } from '/@/hooks/core/useAttrs'
+import Icon from '@/components/Icon'
+import { useAttrs } from '@/hooks/core/useAttrs'
 
 interface ButtonProps {
   color?: 'error' | 'warning' | 'success' | ''

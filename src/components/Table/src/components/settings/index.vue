@@ -2,12 +2,12 @@
 import type { PropType } from 'vue'
 import type { ColumnChangeParam, TableSetting } from '../../types/table'
 import { computed, defineComponent, unref } from 'vue'
+import { useI18n } from '@/hooks/web/useI18n'
 import { useTableContext } from '../../hooks/useTableContext'
 import ColumnSetting from './ColumnSetting.vue'
 import SizeSetting from './SizeSetting.vue'
 import RedoSetting from './RedoSetting.vue'
 import FullScreenSetting from './FullScreenSetting.vue'
-import { useI18n } from '/@/hooks/web/useI18n'
 
 export default defineComponent({
   name: 'TableSetting',

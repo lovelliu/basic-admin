@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { AppDarkModeToggle, AppLocalePicker, AppLogo } from '/@/components/Application'
-import { useGlobSetting } from '/@/hooks/setting'
-import { useDesign } from '/@/hooks/web/useDesign'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useLocaleStore } from '/@/store/modules/locale'
+import { AppDarkModeToggle, AppLocalePicker, AppLogo } from '@/components/Application'
+import { useGlobSetting } from '@/hooks/setting'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useI18n } from '@/hooks/web/useI18n'
+import { useLocaleStore } from '@/store/modules/locale'
 import LoginForm from './LoginForm.vue'
 
 defineProps({
@@ -80,7 +80,7 @@ const title = computed(() => globSetting?.title ?? '')
       background-color: @dark-bg;
 
       &::before {
-        background-image: url(/@/assets/svg/login-bg-dark.svg);
+        background-image: url(@/assets/svg/login-bg-dark.svg);
       }
 
       .ant-input,
@@ -126,7 +126,7 @@ const title = computed(() => globSetting?.title ?? '')
       width: 100%;
       height: 100%;
       margin-left: -48%;
-      background-image: url(/@/assets/svg/login-bg.svg);
+      background-image: url(@/assets/svg/login-bg.svg);
       background-position: 100%;
       background-repeat: no-repeat;
       background-size: auto 100%;

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { computed, ref, unref } from 'vue'
-import { BasicDrawer, useDrawerInner } from '/@/components/Drawer'
-import { BasicForm, useForm } from '/@/components/Form'
-import { formSchema } from './data'
+import { BasicDrawer, useDrawerInner } from '@/components/Drawer'
+import { BasicForm, useForm } from '@/components/Form'
 
-import { addMenu, getAllMenu, updateMenu } from '/@/api/sys/menu'
-import { useMessage } from '/@/hooks/web/useMessage'
+import { addMenu, getAllMenu, updateMenu } from '@/api/sys/menu'
+import { useMessage } from '@/hooks/web/useMessage'
+import { formSchema } from './data'
 
 const emit = defineEmits(['success', 'register'])
 const isUpdate = ref(true)

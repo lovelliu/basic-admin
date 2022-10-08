@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { computed, ref, unref } from 'vue'
-import { BasicModal, useModalInner } from '/@/components/Modal'
-import { useMessage } from '/@/hooks/web/useMessage'
-import { useForm } from '/@/components/Form'
-import BasicForm from '/@/components/Form/src/BasicForm.vue'
+import { BasicModal, useModalInner } from '@/components/Modal'
+import { useMessage } from '@/hooks/web/useMessage'
+import { useForm } from '@/components/Form'
+import BasicForm from '@/components/Form/src/BasicForm.vue'
+import { addUser, updateUser } from '@/api/sys/user'
 import { userFormSchema } from './data'
-import { addUser, updateUser } from '/@/api/sys/user'
 
 const emit = defineEmits(['register', 'success'])
 const isUpdate = ref(true)

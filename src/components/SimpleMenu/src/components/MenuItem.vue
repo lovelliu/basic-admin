@@ -1,9 +1,9 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { computed, defineComponent, getCurrentInstance, ref, unref, watch } from 'vue'
-import { useDesign } from '/@/hooks/web/useDesign'
-import { propTypes } from '/@/utils/propTypes'
 import { Tooltip } from 'ant-design-vue'
+import { useDesign } from '@/hooks/web/useDesign'
+import { propTypes } from '@/utils/propTypes'
 import { useMenuItem } from './useMenu'
 import { useSimpleRootMenuContext } from './useSimpleMenuContext'
 export default defineComponent({

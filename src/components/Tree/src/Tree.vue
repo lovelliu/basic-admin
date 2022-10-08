@@ -9,6 +9,7 @@ import type {
   TreeState,
 } from './tree'
 
+import type { CreateContextOptions } from '@/components/ContextMenu'
 import {
   computed,
   defineComponent,
@@ -20,19 +21,18 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import TreeHeader from './TreeHeader.vue'
 import { Empty, Tree } from 'ant-design-vue'
-import { TreeIcon } from './TreeIcon'
-import { ScrollContainer } from '/@/components/Container'
 import { cloneDeep, difference, get, omit } from 'lodash-es'
-import { isArray, isBoolean, isEmpty, isFunction } from '/@/utils/is'
-import { extendSlots, getSlot } from '/@/utils/helper/tsxHelper'
-import { eachTree, filter, treeToList } from '/@/utils/helper/treeHelper'
+import { ScrollContainer } from '@/components/Container'
+import { isArray, isBoolean, isEmpty, isFunction } from '@/utils/is'
+import { extendSlots, getSlot } from '@/utils/helper/tsxHelper'
+import { eachTree, filter, treeToList } from '@/utils/helper/treeHelper'
+import { useContextMenu } from '@/hooks/web/useContextMenu'
+import { createBEM } from '@/utils/bem'
 import { useTree } from './useTree'
-import { useContextMenu } from '/@/hooks/web/useContextMenu'
-import type { CreateContextOptions } from '/@/components/ContextMenu'
 import { treeEmits, treeProps } from './tree'
-import { createBEM } from '/@/utils/bem'
+import { TreeIcon } from './TreeIcon'
+import TreeHeader from './TreeHeader.vue'
 
 export default defineComponent({
   name: 'BasicTree',

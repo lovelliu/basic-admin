@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
-import { propTypes } from '/@/utils/propTypes'
+import { createAsyncComponent } from '@/utils/factory/createAsyncComponent'
+import { propTypes } from '@/utils/propTypes'
 import HeaderTrigger from './HeaderTrigger.vue'
 
 export default defineComponent({

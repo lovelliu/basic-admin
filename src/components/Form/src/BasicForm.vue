@@ -14,24 +14,24 @@ import {
   watch,
 } from 'vue'
 import { Form, Row } from 'ant-design-vue'
+import { dateUtil } from '@/utils/dateUtil'
+import { deepMerge } from '@/utils'
+import { useModalContext } from '@/components/Modal'
+import { useDesign } from '@/hooks/web/useDesign'
 import FormItem from './components/FormItem.vue'
 import FormAction from './components/FormAction.vue'
 
 import { dateItemType } from './helper'
-import { dateUtil } from '/@/utils/dateUtil'
 
 // import { cloneDeep } from 'lodash-es';
-import { deepMerge } from '/@/utils'
 
 import { useFormValues } from './hooks/useFormValues'
 import useAdvanced from './hooks/useAdvanced'
 import { useFormEvents } from './hooks/useFormEvents'
 import { createFormContext } from './hooks/useFormContext'
 import { useAutoFocus } from './hooks/useAutoFocus'
-import { useModalContext } from '/@/components/Modal'
 
 import { basicProps } from './props'
-import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'BasicForm',

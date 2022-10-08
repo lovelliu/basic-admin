@@ -1,10 +1,10 @@
 <script lang="ts">
-import type { Menu } from '/@/router/types'
+import type { Menu } from '@/router/types'
 
 import { computed, defineComponent } from 'vue'
 
-import { useDesign } from '/@/hooks/web/useDesign'
-import { propTypes } from '/@/utils/propTypes'
+import { useDesign } from '@/hooks/web/useDesign'
+import { propTypes } from '@/utils/propTypes'
 
 export default defineComponent({
   name: 'SimpleMenuTag',

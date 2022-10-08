@@ -1,11 +1,11 @@
 import type { ModalFunc, ModalFuncProps } from 'ant-design-vue/lib/modal/Modal'
 
+import type { ConfigProps, NotificationArgsProps } from 'ant-design-vue/lib/notification'
 import { message as Message, Modal, notification } from 'ant-design-vue'
 import { CheckCircleFilled, CloseCircleFilled, InfoCircleFilled } from '@ant-design/icons-vue'
 
-import type { ConfigProps, NotificationArgsProps } from 'ant-design-vue/lib/notification'
+import { isString } from '@/utils/is'
 import { useI18n } from './useI18n'
-import { isString } from '/@/utils/is'
 
 export interface NotifyApi {
   info(config: NotificationArgsProps): void

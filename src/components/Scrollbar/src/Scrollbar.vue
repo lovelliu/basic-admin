@@ -1,7 +1,4 @@
 <script lang="ts">
-import { addResizeListener, removeResizeListener } from '/@/utils/event'
-import componentSetting from '/@/settings/componentSetting'
-import { toObject } from './util'
 import {
   computed,
   defineComponent,
@@ -12,6 +9,9 @@ import {
   ref,
   unref,
 } from 'vue'
+import { addResizeListener, removeResizeListener } from '@/utils/event'
+import componentSetting from '@/settings/componentSetting'
+import { toObject } from './util'
 import Bar from './bar'
 const { scrollbar } = componentSetting
 

@@ -5,13 +5,13 @@ import type {
   TableActionType,
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
-import type { DynamicProps } from '/#/utils'
-import type { FormActionType } from '/@/components/Form'
+import type { DynamicProps } from '#/utils'
+import type { FormActionType } from '@/components/Form'
 import type { WatchStopHandle } from 'vue'
-import { getDynamicProps } from '/@/utils'
 import { onUnmounted, ref, toRaw, unref, watch } from 'vue'
-import { isProdMode } from '/@/utils/env'
-import { error } from '/@/utils/log'
+import { getDynamicProps } from '@/utils'
+import { isProdMode } from '@/utils/env'
+import { error } from '@/utils/log'
 
 type Props = Partial<DynamicProps<BasicTableProps>>
 

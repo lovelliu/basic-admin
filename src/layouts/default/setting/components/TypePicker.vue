@@ -4,7 +4,7 @@ import type { menuTypeList } from '../enum'
 import { defineComponent } from 'vue'
 
 import { Tooltip } from 'ant-design-vue'
-import { useDesign } from '/@/hooks/web/useDesign'
+import { useDesign } from '@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'MenuTypePicker',

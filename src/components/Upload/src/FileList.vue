@@ -1,9 +1,9 @@
 <script lang="tsx">
 import type { CSSProperties } from 'vue'
 import { defineComponent, nextTick, watch } from 'vue'
+import { isFunction } from '@/utils/is'
+import { useModalContext } from '@/components/Modal/src/hooks/useModalContext'
 import { fileListProps } from './props'
-import { isFunction } from '/@/utils/is'
-import { useModalContext } from '/@/components/Modal/src/hooks/useModalContext'
 
 export default defineComponent({
   name: 'FileList',

@@ -13,10 +13,10 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import { useTimeoutFn } from '/@/hooks/core/useTimeout'
-import { buildUUID } from '/@/utils/uuid'
-import { isBoolean, isFunction } from '/@/utils/is'
 import { cloneDeep, get, merge } from 'lodash-es'
+import { useTimeoutFn } from '@/hooks/core/useTimeout'
+import { buildUUID } from '@/utils/uuid'
+import { isBoolean, isFunction } from '@/utils/is'
 import { FETCH_SETTING, PAGE_SIZE, ROW_KEY } from '../const'
 
 interface ActionType {

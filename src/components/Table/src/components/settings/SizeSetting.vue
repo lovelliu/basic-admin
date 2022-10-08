@@ -4,9 +4,9 @@ import type { SizeType } from '../../types/table'
 import { defineComponent, ref } from 'vue'
 import { Dropdown, Menu, Tooltip } from 'ant-design-vue'
 import { ColumnHeightOutlined } from '@ant-design/icons-vue'
-import { useI18n } from '/@/hooks/web/useI18n'
+import { useI18n } from '@/hooks/web/useI18n'
+import { getPopupContainer } from '@/utils'
 import { useTableContext } from '../../hooks/useTableContext'
-import { getPopupContainer } from '/@/utils'
 
 export default defineComponent({
   name: 'SizeSetting',

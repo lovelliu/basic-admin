@@ -5,8 +5,8 @@ import type { HandlerEnum } from '../enum'
 import { computed, defineComponent } from 'vue'
 
 import { Switch } from 'ant-design-vue'
-import { useDesign } from '/@/hooks/web/useDesign'
-import { useI18n } from '/@/hooks/web/useI18n'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useI18n } from '@/hooks/web/useI18n'
 import { baseHandler } from '../handler'
 
 export default defineComponent({

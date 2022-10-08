@@ -12,15 +12,15 @@ import {
   watch,
 } from 'vue'
 import { Drawer } from 'ant-design-vue'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { isFunction, isNumber } from '/@/utils/is'
-import { deepMerge } from '/@/utils'
+import { useI18n } from '@/hooks/web/useI18n'
+import { isFunction, isNumber } from '@/utils/is'
+import { deepMerge } from '@/utils'
+import { ScrollContainer } from '@/components/Container'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useAttrs } from '@/hooks/core/useAttrs'
 import DrawerFooter from './components/DrawerFooter.vue'
 import DrawerHeader from './components/DrawerHeader.vue'
-import { ScrollContainer } from '/@/components/Container'
 import { basicProps } from './props'
-import { useDesign } from '/@/hooks/web/useDesign'
-import { useAttrs } from '/@/hooks/core/useAttrs'
 
 export default defineComponent({
   components: { Drawer, ScrollContainer, DrawerFooter, DrawerHeader },

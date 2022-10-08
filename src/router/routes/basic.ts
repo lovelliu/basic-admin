@@ -1,11 +1,11 @@
-import type { AppRouteRecordRaw } from '/@/router/types'
-// import { t } from '/@/hooks/web/useI18n';
+import type { AppRouteRecordRaw } from '@/router/types'
+// import { t } from '@/hooks/web/useI18n';
 import {
   EXCEPTION_COMPONENT,
   LAYOUT,
   PAGE_NOT_FOUND_NAME,
   REDIRECT_NAME,
-} from '/@/router/constant'
+} from '@/router/constant'
 
 // // 404 on a page
 export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
@@ -44,7 +44,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
     {
       path: '/redirect/:path(.*)',
       name: REDIRECT_NAME,
-      component: () => import('/@/views/redirect/index.vue'),
+      component: () => import('@/views/redirect/index.vue'),
       meta: {
         title: REDIRECT_NAME,
         hideBreadcrumb: true,
@@ -67,7 +67,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
 //     {
 //       path: 'list',
 //       name: 'ErrorLogList',
-//       component: () => import('/@/views/sys/error-log/index.vue'),
+//       component: () => import('@/views/sys/error-log/index.vue'),
 //       meta: {
 //         title: t('routes.basic.errorLogList'),
 //         hideBreadcrumb: true,

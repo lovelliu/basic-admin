@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 import { ref, unref, watch, watchEffect } from 'vue'
-import { useDesign } from '/@/hooks/web/useDesign'
-import { ScrollContainer } from '/@/components/Container'
 import { Empty, Input, Pagination, Popover } from 'ant-design-vue'
 import { useDebounceFn } from '@vueuse/core'
 import svgIcons from 'virtual:svg-icons-names'
+import { ScrollContainer } from '@/components/Container'
+import { useDesign } from '@/hooks/web/useDesign'
+import { usePagination } from '@/hooks/web/usePagination'
+import { useI18n } from '@/hooks/web/useI18n'
+import { useCopyToClipboard } from '@/hooks/web/useCopyToClipboard'
+import { useMessage } from '@/hooks/web/useMessage'
 import iconsData from '../data/icons.data'
-import Icon from './Icon.vue'
 import SvgIcon from './SvgIcon.vue'
-import { usePagination } from '/@/hooks/web/usePagination'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard'
-import { useMessage } from '/@/hooks/web/useMessage'
+import Icon from './Icon.vue'
 
 interface Props {
   value: string

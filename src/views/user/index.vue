@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { BasicTable, TableAction, useTable } from '/@/components/Table'
-import { useModal } from '/@/components/Modal'
-import { getUserList } from '/@/api/sys/user'
+import { BasicTable, TableAction, useTable } from '@/components/Table'
+import { useModal } from '@/components/Modal'
+import { getUserList } from '@/api/sys/user'
+import { formatToDate } from '@/utils/dateUtil'
+import { usePermission } from '@/hooks/web/usePermission'
 import { columns, searchFormSchema } from './data'
-import { formatToDate } from '/@/utils/dateUtil'
 import UserModal from './UserModal.vue'
-import { usePermission } from '/@/hooks/web/usePermission'
 
 const { hasPermission } = usePermission()
 const [registerModal, { openModal }] = useModal()

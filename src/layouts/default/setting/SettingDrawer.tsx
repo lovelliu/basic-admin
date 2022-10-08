@@ -1,28 +1,23 @@
 import { computed, defineComponent, unref } from 'vue'
-import { BasicDrawer } from '/@/components/Drawer/index'
 import { Divider } from 'ant-design-vue'
+import { BasicDrawer } from '@/components/Drawer/index'
+
+import { AppDarkModeToggle } from '@/components/Application'
+
+import { MenuTypeEnum, TriggerEnum } from '@/enums/menuEnum'
+
+import { useRootSetting } from '@/hooks/setting/useRootSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useMultipleTabSetting } from '@/hooks/setting/useMultipleTabSetting'
+import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting'
+import { useI18n } from '@/hooks/web/useI18n'
+
 import {
-  InputNumberItem,
-  SelectItem,
-  SettingFooter,
-  SwitchItem,
-  ThemeColorPicker,
-  TypePicker,
-} from './components'
-
-import { AppDarkModeToggle } from '/@/components/Application'
-
-import { MenuTypeEnum, TriggerEnum } from '/@/enums/menuEnum'
-
-import { useRootSetting } from '/@/hooks/setting/useRootSetting'
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
-import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting'
-import { useMultipleTabSetting } from '/@/hooks/setting/useMultipleTabSetting'
-import { useTransitionSetting } from '/@/hooks/setting/useTransitionSetting'
-import { useI18n } from '/@/hooks/web/useI18n'
-
-import { baseHandler } from './handler'
-
+  APP_PRESET_COLOR_LIST,
+  HEADER_PRESET_BG_COLOR_LIST,
+  SIDE_BAR_BG_COLOR_LIST,
+} from '@/settings/designSetting'
 import {
   HandlerEnum,
   contentModeOptions,
@@ -34,10 +29,14 @@ import {
 } from './enum'
 
 import {
-  APP_PRESET_COLOR_LIST,
-  HEADER_PRESET_BG_COLOR_LIST,
-  SIDE_BAR_BG_COLOR_LIST,
-} from '/@/settings/designSetting'
+  InputNumberItem,
+  SelectItem,
+  SettingFooter,
+  SwitchItem,
+  ThemeColorPicker,
+  TypePicker,
+} from './components'
+import { baseHandler } from './handler'
 
 const { t } = useI18n()
 

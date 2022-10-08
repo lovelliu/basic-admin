@@ -1,10 +1,10 @@
 import type { Router } from 'vue-router'
-import { configureDynamicParamsMenu } from '../helper/menuHelper'
 import type { Menu } from '../types'
-import { PermissionModeEnum } from '/@/enums/appEnum'
-import { useAppStoreWithOut } from '/@/store/modules/app'
+import { PermissionModeEnum } from '@/enums/appEnum'
+import { useAppStoreWithOut } from '@/store/modules/app'
 
-import { usePermissionStoreWithOut } from '/@/store/modules/permission'
+import { usePermissionStoreWithOut } from '@/store/modules/permission'
+import { configureDynamicParamsMenu } from '../helper/menuHelper'
 
 export function createParamMenuGuard(router: Router) {
   const permissionStore = usePermissionStoreWithOut()

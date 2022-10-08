@@ -1,27 +1,27 @@
-import type { AppRouteRecordRaw, Menu } from '/@/router/types'
+import type { AppRouteRecordRaw, Menu } from '@/router/types'
 
 import { defineStore } from 'pinia'
-import { store } from '/@/store'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useUserStore } from './user'
-import { useAppStoreWithOut } from './app'
 import { toRaw } from 'vue'
-import { flatMultiLevelRoutes, transformObjToRoute } from '/@/router/helper/routeHelper'
-import { transformRouteToMenu } from '/@/router/helper/menuHelper'
+import { useI18n } from '@/hooks/web/useI18n'
+import { store } from '@/store'
+import { flatMultiLevelRoutes, transformObjToRoute } from '@/router/helper/routeHelper'
+import { transformRouteToMenu } from '@/router/helper/menuHelper'
 
-import projectSetting from '/@/settings/projectSetting'
+import projectSetting from '@/settings/projectSetting'
 
-import { PermissionModeEnum } from '/@/enums/appEnum'
+import { PermissionModeEnum } from '@/enums/appEnum'
 
-import { asyncRoutes } from '/@/router/routes'
-import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic'
+import { asyncRoutes } from '@/router/routes'
+import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
 
-import { filter } from '/@/utils/helper/treeHelper'
+import { filter } from '@/utils/helper/treeHelper'
 
-import { getMenuList, getPermCode } from '/@/api/sys/role'
+import { getMenuList, getPermCode } from '@/api/sys/role'
 
-import { useMessage } from '/@/hooks/web/useMessage'
-import { PageEnum } from '/@/enums/pageEnum'
+import { useMessage } from '@/hooks/web/useMessage'
+import { PageEnum } from '@/enums/pageEnum'
+import { useAppStoreWithOut } from './app'
+import { useUserStore } from './user'
 
 interface PermissionState {
   // Permission code list

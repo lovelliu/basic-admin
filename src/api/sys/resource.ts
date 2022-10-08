@@ -6,7 +6,7 @@ import type {
   ResourceParams,
   RoleResourceList,
 } from './model/systemModel'
-import { defHttp } from '/@/utils/request'
+import { defHttp } from '@/utils/request'
 
 enum Api {
   GetResourceList = '/resource/getResourcePages',

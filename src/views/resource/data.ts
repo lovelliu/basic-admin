@@ -1,5 +1,5 @@
-import type { BasicColumn, FormSchema } from '/@/components/Table'
-import { formatToDateTime } from '/@/utils/dateUtil'
+import type { BasicColumn, FormSchema } from '@/components/Table'
+import { formatToDateTime } from '@/utils/dateUtil'
 
 export const columns: BasicColumn[] = [
   {

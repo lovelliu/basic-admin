@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { CourseInfo } from '/@/api/business/model/course'
+import type { CourseInfo } from '@/api/business/model/course'
 import { Card } from 'ant-design-vue'
 import { useRoute } from 'vue-router'
-import { PageWrapper } from '/@/components/Page'
-import { BasicForm, useForm } from '/@/components/Form'
-import { useGo } from '/@/hooks/web/usePage'
-import { formatToDateTime } from '/@/utils/dateUtil'
-import { getCourseById, saveOrUpdateCourse } from '/@/api/business/course'
-import { useMessage } from '/@/hooks/web/useMessage'
 import { computed } from 'vue'
 import showdown from 'showdown'
+import { PageWrapper } from '@/components/Page'
+import { BasicForm, useForm } from '@/components/Form'
+import { useGo } from '@/hooks/web/usePage'
+import { formatToDateTime } from '@/utils/dateUtil'
+import { getCourseById, saveOrUpdateCourse } from '@/api/business/course'
+import { useMessage } from '@/hooks/web/useMessage'
 import { BasicFormSchema, SalesFormSchema, activityFormSchema, detailFormSchema } from './data'
 
 const go = useGo()

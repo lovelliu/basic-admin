@@ -2,10 +2,10 @@ import type { Ref } from 'vue'
 
 import { computed, nextTick, onMounted, ref, unref } from 'vue'
 
-import { TriggerEnum } from '/@/enums/menuEnum'
-
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
 import { useDebounceFn } from '@vueuse/core'
+import { TriggerEnum } from '@/enums/menuEnum'
+
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
 
 /**
  * Handle related operations of menu events

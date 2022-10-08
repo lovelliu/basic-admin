@@ -1,9 +1,9 @@
-import { defHttp } from '/@/utils/request'
 import type { CaptchaModel, LoginParams, LoginResultModel } from './model/userModel'
 
-import type { UserInfo } from '/#/store'
+import type { UserInfo } from '#/store'
 import type { GetUserListParams } from './model/systemModel'
-import type { VAxios } from '/@/utils/request/Axios'
+import type { VAxios } from '@/utils/request/Axios'
+import { defHttp } from '@/utils/request'
 
 enum Api {
   GetCaptcha = '/auth/captcha/img',

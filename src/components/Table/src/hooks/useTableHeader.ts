@@ -1,9 +1,9 @@
 import type { ComputedRef, Slots } from 'vue'
 import type { BasicTableProps, InnerHandlers } from '../types/table'
 import { computed, h, unref } from 'vue'
+import { isString } from '@/utils/is'
+import { getSlot } from '@/utils/helper/tsxHelper'
 import TableHeader from '../components/TableHeader.vue'
-import { isString } from '/@/utils/is'
-import { getSlot } from '/@/utils/helper/tsxHelper'
 
 export function useTableHeader(
   propsRef: ComputedRef<BasicTableProps>,

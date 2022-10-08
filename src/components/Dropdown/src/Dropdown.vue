@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { computed } from 'vue'
 import type { DropMenu } from './typing'
+import { computed } from 'vue'
 import { Dropdown, Menu, Popconfirm } from 'ant-design-vue'
-import { Icon } from '/@/components/Icon'
 import { omit } from 'lodash-es'
-import { isFunction } from '/@/utils/is'
+import { Icon } from '@/components/Icon'
+import { isFunction } from '@/utils/is'
 
 const props = defineProps({
   popconfirm: Boolean,

@@ -1,9 +1,9 @@
+import type { BasicColumn, FormSchema } from '@/components/Table'
 import { Switch } from 'ant-design-vue'
 import { h } from 'vue'
-import { changeCourseState, uploadImg } from '/@/api/business/course'
-import { MarkDown } from '/@/components/Markdown'
-import type { BasicColumn, FormSchema } from '/@/components/Table'
-import { useMessage } from '/@/hooks/web/useMessage'
+import { changeCourseState, uploadImg } from '@/api/business/course'
+import { MarkDown } from '@/components/Markdown'
+import { useMessage } from '@/hooks/web/useMessage'
 
 export const columns: BasicColumn[] = [
   {

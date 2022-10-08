@@ -1,12 +1,12 @@
+import type { BasicColumn } from '@/components/Table'
+import type { FormSchema } from '@/components/Form'
 import { Avatar, Switch } from 'ant-design-vue'
 import { h } from 'vue'
-import type { BasicColumn } from '/@/components/Table'
-import type { FormSchema } from '/@/components/Form'
-import { formatToDateTime } from '/@/utils/dateUtil'
-import { useMessage } from '/@/hooks/web/useMessage'
-import { enableUser, forbidUser, isUserExist } from '/@/api/sys/user'
-import { getRoleList } from '/@/api/sys/role'
-import { usePermission } from '/@/hooks/web/usePermission'
+import { formatToDateTime } from '@/utils/dateUtil'
+import { useMessage } from '@/hooks/web/useMessage'
+import { enableUser, forbidUser, isUserExist } from '@/api/sys/user'
+import { getRoleList } from '@/api/sys/role'
+import { usePermission } from '@/hooks/web/usePermission'
 
 const { hasPermission } = usePermission()
 

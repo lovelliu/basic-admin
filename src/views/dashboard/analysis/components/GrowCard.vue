@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Card, Tag } from 'ant-design-vue'
-import { Icon } from '/@/components/Icon'
-import { CountTo } from '/@/components/CountTo'
+import { Icon } from '@/components/Icon'
+import { CountTo } from '@/components/CountTo'
 import { growCardList } from '../data'
 
 defineProps({

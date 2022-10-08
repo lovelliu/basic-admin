@@ -1,7 +1,7 @@
-import type { AppRouteModule } from '/@/router/types'
+import type { AppRouteModule } from '@/router/types'
 
-import { LAYOUT } from '/@/router/constant'
-import { t } from '/@/hooks/web/useI18n'
+import { LAYOUT } from '@/router/constant'
+import { t } from '@/hooks/web/useI18n'
 
 const permission: AppRouteModule = {
   path: '/permission',
@@ -21,7 +21,7 @@ const permission: AppRouteModule = {
         title: t('routes.demo.system.menu'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/menu/index.vue'),
+      component: () => import('@/views/menu/index.vue'),
     },
     {
       path: 'resource',
@@ -30,7 +30,7 @@ const permission: AppRouteModule = {
         title: t('routes.demo.system.resource'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/resource/index.vue'),
+      component: () => import('@/views/resource/index.vue'),
     },
     {
       path: 'resource_cate',
@@ -41,7 +41,7 @@ const permission: AppRouteModule = {
         ignoreKeepAlive: true,
         currentActiveMenu: '/permission/resource',
       },
-      component: () => import('/@/views/resource/ResourceCate.vue'),
+      component: () => import('@/views/resource/ResourceCate.vue'),
     },
     {
       path: 'role',
@@ -50,7 +50,7 @@ const permission: AppRouteModule = {
         title: t('routes.demo.system.role'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/role/index.vue'),
+      component: () => import('@/views/role/index.vue'),
     },
   ],
 }

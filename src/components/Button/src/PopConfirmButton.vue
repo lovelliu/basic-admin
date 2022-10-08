@@ -2,10 +2,10 @@
 import { computed, defineComponent, h, unref } from 'vue'
 import { Popconfirm } from 'ant-design-vue'
 import { omit } from 'lodash-es'
+import { extendSlots } from '@/utils/helper/tsxHelper'
+import { useAttrs } from '@/hooks/core/useAttrs'
+import { useI18n } from '@/hooks/web/useI18n'
 import BasicButton from './BasicButton.vue'
-import { extendSlots } from '/@/utils/helper/tsxHelper'
-import { useAttrs } from '/@/hooks/core/useAttrs'
-import { useI18n } from '/@/hooks/web/useI18n'
 
 export default defineComponent({
   name: 'PopButton',

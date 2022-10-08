@@ -1,12 +1,12 @@
 <script lang="ts" setup name="MenuManagement">
 import { nextTick } from 'vue'
-import { BasicTable, TableAction, useTable } from '/@/components/Table'
-import { deleteMenu, getAllMenu } from '/@/api/sys/menu'
-import { columns, searchFormSchema } from './data'
+import { BasicTable, TableAction, useTable } from '@/components/Table'
+import { deleteMenu, getAllMenu } from '@/api/sys/menu'
+import { useDrawer } from '@/components/Drawer'
+import { useMessage } from '@/hooks/web/useMessage'
+import { usePermission } from '@/hooks/web/usePermission'
 import MenuDrawer from './MenuDrawer.vue'
-import { useDrawer } from '/@/components/Drawer'
-import { useMessage } from '/@/hooks/web/useMessage'
-import { usePermission } from '/@/hooks/web/usePermission'
+import { columns, searchFormSchema } from './data'
 
 const { hasPermission } = usePermission()
 const [registerDrawer, { openDrawer }] = useDrawer()

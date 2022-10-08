@@ -3,9 +3,9 @@ import type { ColumnChangeParam, TableSetting } from '../types/table'
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 import { Divider } from 'ant-design-vue'
+import { useDesign } from '@/hooks/web/useDesign'
 import TableSettingComponent from './settings/index.vue'
 import TableTitle from './TableTitle.vue'
-import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'BasicTableHeader',

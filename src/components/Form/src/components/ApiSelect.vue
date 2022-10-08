@@ -3,13 +3,13 @@
 import type { PropType } from 'vue'
 import { computed, defineComponent, ref, unref, watch, watchEffect } from 'vue'
 import { Select as AntdSelect } from 'ant-design-vue'
-import { isFunction } from '/@/utils/is'
-import { useRuleFormItem } from '/@/hooks/component/useFormItem'
-import { useAttrs } from '/@/hooks/core/useAttrs'
 import { get, omit } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { propTypes } from '/@/utils/propTypes'
+import { isFunction } from '@/utils/is'
+import { useRuleFormItem } from '@/hooks/component/useFormItem'
+import { useAttrs } from '@/hooks/core/useAttrs'
+import { useI18n } from '@/hooks/web/useI18n'
+import { propTypes } from '@/utils/propTypes'
 
 interface OptionsItem { label: string; value: string; disabled?: boolean }
 

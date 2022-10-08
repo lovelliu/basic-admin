@@ -38,7 +38,7 @@ export function createLoading(
       vm.el.parentNode.removeChild(vm.el)
   }
 
-  function open(target: HTMLElement = document.body) {
+  function open(target: HTMLElement) {
     if (!vm || !vm.el)
       return
 

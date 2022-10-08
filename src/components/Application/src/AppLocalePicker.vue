@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { LocaleType } from '/#/config'
-import type { DropMenu } from '/@/components/Dropdown'
+import type { LocaleType } from '#/config'
+import type { DropMenu } from '@/components/Dropdown'
 import { computed, ref, unref, watchEffect } from 'vue'
-import { Dropdown } from '/@/components/Dropdown'
-import { useLocale } from '/@/locales/useLocale'
-import { localeList } from '/@/settings/localeSetting'
+import { Dropdown } from '@/components/Dropdown'
+import { useLocale } from '@/locales/useLocale'
+import { localeList } from '@/settings/localeSetting'
 import Icon from '../../Icon/src/Icon.vue'
 
 const props = defineProps({

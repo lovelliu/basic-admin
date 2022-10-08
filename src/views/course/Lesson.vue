@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import type { LessonData } from '/@/api/business/model/course'
+import type { LessonData } from '@/api/business/model/course'
 
-import type { TreeActionItem } from '/@/components/Tree'
+import type { TreeActionItem } from '@/components/Tree'
 import { h, ref } from 'vue'
 import { Button as AButton } from 'ant-design-vue'
 import { useRoute } from 'vue-router'
-import { PageWrapper } from '/@/components/Page'
-import { useModal } from '/@/components/Modal'
-import { BasicTree } from '/@/components/Tree'
-import { Button } from '/@/components/Button'
-import { getLessonInfoById } from '/@/api/business/course'
-import { useGo } from '/@/hooks/web/usePage'
+import { PageWrapper } from '@/components/Page'
+import { useModal } from '@/components/Modal'
+import { BasicTree } from '@/components/Tree'
+import { Button } from '@/components/Button'
+import { getLessonInfoById } from '@/api/business/course'
+import { useGo } from '@/hooks/web/usePage'
+import { rgbToHex } from '@/utils/color'
 import LessonModal from './LessonModal.vue'
-import { rgbToHex } from '/@/utils/color'
 import AliUploadModal from './AliUploadModal.vue'
 
 const route = useRoute()

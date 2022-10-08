@@ -4,7 +4,7 @@ import type { HandlerEnum } from '../enum'
 import { defineComponent } from 'vue'
 import { CheckOutlined } from '@ant-design/icons-vue'
 
-import { useDesign } from '/@/hooks/web/useDesign'
+import { useDesign } from '@/hooks/web/useDesign'
 
 import { baseHandler } from '../handler'
 

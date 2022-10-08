@@ -1,10 +1,10 @@
-import { isFunction } from '/@/utils/is'
 import type { BasicTableProps, TableRowSelection } from '../types/table'
 import type { ComputedRef, Ref } from 'vue'
 import { computed, nextTick, ref, toRaw, unref, watch } from 'vue'
-import { ROW_KEY } from '../const'
 import { omit } from 'lodash-es'
-import { findNodeAll } from '/@/utils/helper/treeHelper'
+import { isFunction } from '@/utils/is'
+import { findNodeAll } from '@/utils/helper/treeHelper'
+import { ROW_KEY } from '../const'
 
 export function useRowSelection(
   propsRef: ComputedRef<BasicTableProps>,

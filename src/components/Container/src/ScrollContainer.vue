@@ -1,8 +1,8 @@
 <script lang="ts">
+import type { ScrollbarType } from '@/components/Scrollbar'
 import { defineComponent, nextTick, ref, unref } from 'vue'
-import type { ScrollbarType } from '/@/components/Scrollbar'
-import { Scrollbar } from '/@/components/Scrollbar'
-import { useScrollTo } from '/@/hooks/event/useScrollTo'
+import { Scrollbar } from '@/components/Scrollbar'
+import { useScrollTo } from '@/hooks/event/useScrollTo'
 
 export default defineComponent({
   name: 'ScrollContainer',

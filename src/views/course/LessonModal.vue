@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { BasicForm, useForm } from '/@/components/Form'
-import { BasicModal, useModalInner } from '/@/components/Modal'
-import { editCourseFormSchema, editLessonFormSchema } from './data'
 import { useRoute } from 'vue-router'
-import { saveOrUpdateLesson, saveOrUpdateSection } from '/@/api/business/course'
-import { useMessage } from '/@/hooks/web/useMessage'
+import { BasicForm, useForm } from '@/components/Form'
+import { BasicModal, useModalInner } from '@/components/Modal'
+import { saveOrUpdateLesson, saveOrUpdateSection } from '@/api/business/course'
+import { useMessage } from '@/hooks/web/useMessage'
+import { editCourseFormSchema, editLessonFormSchema } from './data'
 
 const emit = defineEmits(['register', 'success'])
 const level = ref(-1)

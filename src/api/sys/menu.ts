@@ -4,7 +4,7 @@ import type {
   MenuItem,
   MenuList,
 } from './model/systemModel'
-import { defHttp } from '/@/utils/request'
+import { defHttp } from '@/utils/request'
 
 enum Api {
   GetAllMenu = '/menu/all',

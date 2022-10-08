@@ -1,5 +1,5 @@
 import type { GetMenuListResultModel, RoleItem, RoleList } from './model/systemModel'
-import { defHttp } from '/@/utils/request'
+import { defHttp } from '@/utils/request'
 
 enum Api {
   AddRole = '/role/add',

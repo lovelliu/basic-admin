@@ -11,9 +11,9 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn'
-import { ScrollContainer } from '/@/components/Container'
 import { useMutationObserver } from '@vueuse/core'
+import { useWindowSizeFn } from '@/hooks/event/useWindowSizeFn'
+import { ScrollContainer } from '@/components/Container'
 import { createModalContext } from '../hooks/useModalContext'
 
 const props = {

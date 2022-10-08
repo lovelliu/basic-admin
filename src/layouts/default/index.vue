@@ -1,27 +1,26 @@
 <script lang="ts">
 import { computed, defineComponent, unref } from 'vue'
 import { Layout } from 'ant-design-vue'
-import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
+import { createAsyncComponent } from '@/utils/factory/createAsyncComponent'
 
+import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useAppInject } from '@/hooks/web/useAppInject'
 import LayoutHeader from './header/index.vue'
 import LayoutContent from './content/index.vue'
 import LayoutSideBar from './sider/index.vue'
 import LayoutMultipleHeader from './header/MultipleHeader.vue'
 
-import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting'
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
-import { useDesign } from '/@/hooks/web/useDesign'
-// import { useLockPage } from '/@/hooks/web/useLockPage';
-
-import { useAppInject } from '/@/hooks/web/useAppInject'
+// import { useLockPage } from '@/hooks/web/useLockPage';
 
 export default defineComponent({
   name: 'DefaultLayout',
   components: {
     LayoutFeatures: createAsyncComponent(
-      () => import('/@/layouts/default/feature/index.vue'),
+      () => import('@/layouts/default/feature/index.vue'),
     ),
-    // LayoutFooter: createAsyncComponent(() => import('/@/layouts/default/footer/index.vue')),
+    // LayoutFooter: createAsyncComponent(() => import('@/layouts/default/footer/index.vue')),
     LayoutHeader,
     LayoutContent,
     LayoutSideBar,

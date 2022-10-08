@@ -7,9 +7,9 @@ import {
   aliyunUploadImg,
   aliyunUploadTransCode,
   aliyunUploadVideo,
-} from '/@/api/business/course'
-import { BasicModal, useModalInner } from '/@/components/Modal'
-import { useMessage } from '/@/hooks/web/useMessage'
+} from '@/api/business/course'
+import { BasicModal, useModalInner } from '@/components/Modal'
+import { useMessage } from '@/hooks/web/useMessage'
 
 const courseName = ref('')
 const theme = ref('')

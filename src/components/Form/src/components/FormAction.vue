@@ -2,16 +2,16 @@
 import type { ColEx } from '../types/index'
 // import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import type { PropType } from 'vue'
+import type { ButtonProps } from '@/components/Button'
 import { computed, defineComponent } from 'vue'
 import { Col, Form } from 'ant-design-vue'
-import type { ButtonProps } from '/@/components/Button'
-import { Button as AntdButton } from '/@/components/Button'
-import { BasicArrow } from '/@/components/Basic'
+import { Button as AntdButton } from '@/components/Button'
+import { BasicArrow } from '@/components/Basic'
+import { useI18n } from '@/hooks/web/useI18n'
+import { propTypes } from '@/utils/propTypes'
 import { useFormContext } from '../hooks/useFormContext'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { propTypes } from '/@/utils/propTypes'
 
-  type ButtonOptions = Partial<ButtonProps> & { text: string }
+type ButtonOptions = Partial<ButtonProps> & { text: string }
 
 export default defineComponent({
   name: 'BasicFormAction',

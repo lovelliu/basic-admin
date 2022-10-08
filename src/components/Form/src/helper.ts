@@ -1,8 +1,8 @@
 import type { ValidationRule } from 'ant-design-vue/lib/form/Form'
 import type { ComponentType } from './types'
 
-import { useI18n } from '/@/hooks/web/useI18n'
-import { isNumber } from '/@/utils/is'
+import { useI18n } from '@/hooks/web/useI18n'
+import { isNumber } from '@/utils/is'
 
 const { t } = useI18n()
 /**

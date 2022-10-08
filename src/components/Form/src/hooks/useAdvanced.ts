@@ -4,9 +4,9 @@ import type { ColEx } from '../types'
 
 import type { AdvanceState } from '../types/hooks'
 import { computed, unref, watch } from 'vue'
-import { useBreakpoint } from '/@/hooks/event/useBreakpoint'
-import { isBoolean, isFunction, isNumber, isObject } from '/@/utils/is'
 import { useDebounceFn } from '@vueuse/core'
+import { useBreakpoint } from '@/hooks/event/useBreakpoint'
+import { isBoolean, isFunction, isNumber, isObject } from '@/utils/is'
 
 const BASIC_COL_LEN = 24
 

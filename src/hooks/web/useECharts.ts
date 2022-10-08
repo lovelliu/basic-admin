@@ -1,13 +1,13 @@
 import type { Ref } from 'vue'
 import type { EChartsOption } from 'echarts'
 
-import { useTimeoutFn } from '/@/hooks/core/useTimeout'
 import { tryOnUnmounted, useDebounceFn } from '@vueuse/core'
 import { computed, nextTick, ref, unref, watch } from 'vue'
-import { useEventListener } from '/@/hooks/event/useEventListener'
-import { useBreakpoint } from '/@/hooks/event/useBreakpoint'
-import echarts from '/@/utils/lib/echarts'
-import { useRootSetting } from '/@/hooks/setting/useRootSetting'
+import { useTimeoutFn } from '@/hooks/core/useTimeout'
+import { useEventListener } from '@/hooks/event/useEventListener'
+import { useBreakpoint } from '@/hooks/event/useBreakpoint'
+import echarts from '@/utils/lib/echarts'
+import { useRootSetting } from '@/hooks/setting/useRootSetting'
 
 export function useECharts(
   elRef: Ref<HTMLDivElement>,

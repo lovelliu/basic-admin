@@ -1,7 +1,7 @@
 import type { CourseInfo, LessonData, UploadImgResult } from './model/course'
-import type { UploadFileParams } from '/#/axios'
-import { useGlobSetting } from '/@/hooks/setting'
-import { defHttp } from '/@/utils/request'
+import type { UploadFileParams } from '#/axios'
+import { useGlobSetting } from '@/hooks/setting'
+import { defHttp } from '@/utils/request'
 
 enum Api {
   GetCourseList = '/course/getQueryCourses',

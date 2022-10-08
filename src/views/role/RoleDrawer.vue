@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import type { TreeItem } from '/@/components/Tree'
+import type { TreeItem } from '@/components/Tree'
 import { computed, ref, unref } from 'vue'
-import { BasicDrawer, useDrawerInner } from '/@/components/Drawer'
-import { BasicTree } from '/@/components/Tree'
-import { useMessage } from '/@/hooks/web/useMessage'
-import { getAllMenu } from '/@/api/sys/menu'
-import BasicForm from '/@/components/Form/src/BasicForm.vue'
-import { useForm } from '/@/components/Form'
-import { addRole, updateRole } from '/@/api/sys/role'
+import { BasicDrawer, useDrawerInner } from '@/components/Drawer'
+import { BasicTree } from '@/components/Tree'
+import { useMessage } from '@/hooks/web/useMessage'
+import { getAllMenu } from '@/api/sys/menu'
+import BasicForm from '@/components/Form/src/BasicForm.vue'
+import { useForm } from '@/components/Form'
+import { addRole, updateRole } from '@/api/sys/role'
 import { RoleFormSchema } from './data'
 
 const emit = defineEmits(['register', 'success'])

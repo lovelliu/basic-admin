@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref, toRefs, unref } from 'vue'
+import { useAppStore } from '@/store/modules/app'
+import { createBreakpointListen } from '@/hooks/event/useBreakpoint'
+import { prefixCls as defaultValue } from '@/settings/designSetting'
+import { MenuModeEnum, MenuTypeEnum } from '@/enums/menuEnum'
 import { createAppProviderContext } from './useAppContext'
-import { useAppStore } from '/@/store/modules/app'
-import { createBreakpointListen } from '/@/hooks/event/useBreakpoint'
-import { prefixCls as defaultValue } from '/@/settings/designSetting'
-import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum'
 
 interface Props {
   prefixCls?: string

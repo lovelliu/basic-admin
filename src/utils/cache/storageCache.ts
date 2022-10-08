@@ -1,6 +1,6 @@
-import type { EncryptionParams } from '/@/utils/cipher'
+import type { EncryptionParams } from '@/utils/cipher'
 
-import { cacheCipher } from '/@/settings/encryptionSetting'
+import { cacheCipher } from '@/settings/encryptionSetting'
 
 import { AesEncryption } from '../cipher'
 

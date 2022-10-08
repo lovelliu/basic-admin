@@ -2,9 +2,9 @@
 import type { PropType } from 'vue'
 import type { BasicColumn } from '../types/table'
 import { computed, defineComponent } from 'vue'
-import BasicHelp from '/@/components/Basic/src/BasicHelp.vue'
+import BasicHelp from '@/components/Basic/src/BasicHelp.vue'
+import { useDesign } from '@/hooks/web/useDesign'
 import EditTableHeaderCell from './EditTableHeaderIcon.vue'
-import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
   name: 'TableHeaderCell',

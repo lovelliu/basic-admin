@@ -4,7 +4,7 @@ import type { HandlerEnum } from '../enum'
 import { defineComponent } from 'vue'
 
 import { InputNumber } from 'ant-design-vue'
-import { useDesign } from '/@/hooks/web/useDesign'
+import { useDesign } from '@/hooks/web/useDesign'
 import { baseHandler } from '../handler'
 
 export default defineComponent({

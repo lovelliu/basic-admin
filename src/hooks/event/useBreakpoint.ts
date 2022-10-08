@@ -1,8 +1,8 @@
 import type { ComputedRef } from 'vue'
 
 import { computed, ref, unref } from 'vue'
+import { screenEnum, screenMap, sizeEnum } from '@/enums/breakpointEnum'
 import { useEventListener } from './useEventListener'
-import { screenEnum, screenMap, sizeEnum } from '/@/enums/breakpointEnum'
 
 let globalScreenRef: ComputedRef<sizeEnum | undefined>
 let globalWidthRef: ComputedRef<number>
@@ -63,7 +63,7 @@ export function createBreakpointListen(fn?: (opt: CreateCallbackParams) => void)
   })
 
   getWindowWidth()
-  /* eslint-disable vue/no-ref-as-operand */
+
   globalScreenRef = computed(() => unref(screenRef))
   globalWidthRef = computed((): number => screenMap.get(unref(screenRef)!)!)
   globalRealWidthRef = computed((): number => unref(realWidthRef))

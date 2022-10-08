@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { computed, nextTick, ref, unref, watch } from 'vue'
 import { SearchOutlined } from '@ant-design/icons-vue'
-import AppSearchFooter from './AppSearchFooter.vue'
-import Icon from '/@/components/Icon'
+import Icon from '@/components/Icon'
 // @ts-expect-error
-import vClickOutside from '/@/directives/clickOutside'
-import { useDesign } from '/@/hooks/web/useDesign'
-import { useRefs } from '/@/hooks/core/useRefs'
+import vClickOutside from '@/directives/clickOutside'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useRefs } from '@/hooks/core/useRefs'
+import { useI18n } from '@/hooks/web/useI18n'
+import { useAppInject } from '@/hooks/web/useAppInject'
 import { useMenuSearch } from './useMenuSearch'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useAppInject } from '/@/hooks/web/useAppInject'
+import AppSearchFooter from './AppSearchFooter.vue'
 
 const props = defineProps({
   visible: { type: Boolean },

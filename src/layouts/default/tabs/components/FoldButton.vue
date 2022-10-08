@@ -1,11 +1,11 @@
 <script lang="ts">
 import { computed, defineComponent, unref } from 'vue'
-import { Icon } from '/@/components/Icon'
+import { Icon } from '@/components/Icon'
 
-import { useDesign } from '/@/hooks/web/useDesign'
-import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting'
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
-import { triggerWindowResize } from '/@/utils/event'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { triggerWindowResize } from '@/utils/event'
 
 export default defineComponent({
   name: 'FoldButton',

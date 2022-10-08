@@ -3,15 +3,15 @@ import type { CSSProperties } from 'vue'
 import { computed, defineComponent, h, ref, unref } from 'vue'
 
 import { Layout } from 'ant-design-vue'
+import LayoutTrigger from '@/layouts/default/trigger/index.vue'
+
+import { MenuModeEnum, MenuSplitTypeEnum } from '@/enums/menuEnum'
+
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useAppInject } from '@/hooks/web/useAppInject'
+import { useDesign } from '@/hooks/web/useDesign'
 import LayoutMenu from '../menu/index.vue'
-import LayoutTrigger from '/@/layouts/default/trigger/index.vue'
-
-import { MenuModeEnum, MenuSplitTypeEnum } from '/@/enums/menuEnum'
-
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
 import { useDragLine, useSiderEvent, useTrigger } from './useLayoutSider'
-import { useAppInject } from '/@/hooks/web/useAppInject'
-import { useDesign } from '/@/hooks/web/useDesign'
 
 import DragBar from './DragBar.vue'
 export default defineComponent({

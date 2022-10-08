@@ -13,17 +13,17 @@ import {
 } from 'vue'
 import { CheckOutlined, CloseOutlined, FormOutlined } from '@ant-design/icons-vue'
 
-import { useDesign } from '/@/hooks/web/useDesign'
 import { omit, pick, set } from 'lodash-es'
 import { Spin } from 'ant-design-vue'
+import { useDesign } from '@/hooks/web/useDesign'
+
+import clickOutside from '@/directives/clickOutside'
+
+import { propTypes } from '@/utils/propTypes'
+import { isArray, isBoolean, isFunction, isNumber, isString } from '@/utils/is'
+import { treeToList } from '@/utils/helper/treeHelper'
 import { useTableContext } from '../../hooks/useTableContext'
-
-import clickOutside from '/@/directives/clickOutside'
-
-import { propTypes } from '/@/utils/propTypes'
-import { isArray, isBoolean, isFunction, isNumber, isString } from '/@/utils/is'
 import { createPlaceholderMessage } from './helper'
-import { treeToList } from '/@/utils/helper/treeHelper'
 import { CellComponent } from './CellComponent'
 
 export default defineComponent({

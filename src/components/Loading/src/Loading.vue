@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Spin } from 'ant-design-vue'
-import { SizeEnum } from '/@/enums/sizeEnum'
+import { SizeEnum } from '@/enums/sizeEnum'
 
 interface Props {
   tip?: string

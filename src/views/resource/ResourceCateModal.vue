@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed, ref, unref } from 'vue'
-import { BasicModal, useModalInner } from '/@/components/Modal'
-import { BasicForm, useForm } from '/@/components/Form'
+import { BasicModal, useModalInner } from '@/components/Modal'
+import { BasicForm, useForm } from '@/components/Form'
+import { addOrUpdateCate } from '@/api/sys/resource'
+import { useMessage } from '@/hooks/web/useMessage'
 import { ResourceCateFormSchema } from './data'
-import { addOrUpdateCate } from '/@/api/sys/resource'
-import { useMessage } from '/@/hooks/web/useMessage'
 
 const emit = defineEmits(['register', 'success'])
 const isUpdate = ref(true)

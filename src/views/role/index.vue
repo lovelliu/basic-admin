@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { BasicTable, TableAction, useTable } from '/@/components/Table'
-import { deleteRole, getAllRoles } from '/@/api/sys/role'
-import { columns, searchFormSchema } from './data'
-import { useMessage } from '/@/hooks/web/useMessage'
-import { useDrawer } from '/@/components/Drawer'
+import { BasicTable, TableAction, useTable } from '@/components/Table'
+import { deleteRole, getAllRoles } from '@/api/sys/role'
+import { useMessage } from '@/hooks/web/useMessage'
+import { useDrawer } from '@/components/Drawer'
+import { usePermission } from '@/hooks/web/usePermission'
 import RoleDrawer from './RoleDrawer.vue'
-import { usePermission } from '/@/hooks/web/usePermission'
+import { columns, searchFormSchema } from './data'
 
 const { hasPermission } = usePermission()
 const [registerDrawer, { openDrawer }] = useDrawer()

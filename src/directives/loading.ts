@@ -1,5 +1,6 @@
-import { createLoading } from '/@/components/Loading'
 import type { App, Directive } from 'vue'
+import { createLoading } from '@/components/Loading'
+import { SizeEnum } from '../enums/sizeEnum'
 
 const loadingDirective: Directive = {
   mounted(el, binding) {
@@ -11,7 +12,7 @@ const loadingDirective: Directive = {
       {
         tip,
         background,
-        size: size || 'large',
+        size: size || SizeEnum.LARGE,
         loading: !!binding.value,
         absolute: !fullscreen,
       },

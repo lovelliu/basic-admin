@@ -4,11 +4,11 @@ import type { RouteLocationNormalized } from 'vue-router'
 import type { TabContentProps } from '../types'
 
 import { computed, defineComponent, unref } from 'vue'
-import { Dropdown } from '/@/components/Dropdown/index'
-import { Icon } from '/@/components/Icon'
+import { Dropdown } from '@/components/Dropdown/index'
+import { Icon } from '@/components/Icon'
 
-import { useDesign } from '/@/hooks/web/useDesign'
-import { useI18n } from '/@/hooks/web/useI18n'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useI18n } from '@/hooks/web/useI18n'
 import { useTabDropdown } from '../useTabDropdown'
 
 export default defineComponent({

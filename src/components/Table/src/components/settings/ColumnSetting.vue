@@ -14,15 +14,15 @@ import {
 } from 'vue'
 import { Checkbox, Divider, Popover, Tooltip } from 'ant-design-vue'
 import { DragOutlined, SettingOutlined } from '@ant-design/icons-vue'
-import { Icon } from '/@/components/Icon'
-import { ScrollContainer } from '/@/components/Container'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useDesign } from '/@/hooks/web/useDesign'
-// import { useSortable } from '/@/hooks/web/useSortable';
-import { isFunction, isNullAndUnDef } from '/@/utils/is'
-import { getPopupContainer as getParentContainer } from '/@/utils'
 import { cloneDeep, omit } from 'lodash-es'
 import Sortablejs from 'sortablejs'
+import { Icon } from '@/components/Icon'
+import { ScrollContainer } from '@/components/Container'
+import { useI18n } from '@/hooks/web/useI18n'
+import { useDesign } from '@/hooks/web/useDesign'
+// import { useSortable } from '@/hooks/web/useSortable';
+import { isFunction, isNullAndUnDef } from '@/utils/is'
+import { getPopupContainer as getParentContainer } from '@/utils'
 import { useTableContext } from '../../hooks/useTableContext'
 
 interface State {

@@ -2,7 +2,7 @@
 import type { CSSProperties } from 'vue'
 
 import { computed } from 'vue'
-import { useDesign } from '/@/hooks/web/useDesign'
+import { useDesign } from '@/hooks/web/useDesign'
 
 interface Props {
   prefix?: string

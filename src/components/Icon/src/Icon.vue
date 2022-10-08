@@ -2,8 +2,8 @@
 import type { CSSProperties } from 'vue'
 
 import { computed } from 'vue'
+import { isString } from '@/utils/is'
 import SvgIcon from './SvgIcon.vue'
-import { isString } from '/@/utils/is'
 
 interface Props {
   icon: string

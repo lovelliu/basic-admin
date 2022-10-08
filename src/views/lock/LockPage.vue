@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { Input } from 'ant-design-vue'
-import { useUserStore } from '/@/store/modules/user'
-import { useLockStore } from '/@/store/modules/lock'
-import { useI18n } from '/@/hooks/web/useI18n'
-import { useNow } from './useNow'
-import { useDesign } from '/@/hooks/web/useDesign'
 import { LockOutlined } from '@ant-design/icons-vue'
-import headerImg from '/@/assets/images/header.jpg'
+import { useUserStore } from '@/store/modules/user'
+import { useLockStore } from '@/store/modules/lock'
+import { useI18n } from '@/hooks/web/useI18n'
+import { useDesign } from '@/hooks/web/useDesign'
+import headerImg from '@/assets/images/header.jpg'
+import { useNow } from './useNow'
 
 const InputPassword = Input.Password
 
