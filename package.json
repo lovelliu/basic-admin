@@ -94,7 +94,7 @@
     "vite-plugin-svg-icons": "^1.1.0",
     "vite-plugin-theme": "^0.8.6",
     "vite-plugin-vue-setup-extend": "^0.1.0",
-    "vue-tsc": "^1.0.0"
+    "vue-tsc": "^1.0.2"
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china",
