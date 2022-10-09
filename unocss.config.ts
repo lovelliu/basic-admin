@@ -88,9 +88,12 @@ export default defineConfig({
   safelist: [
     'i-ion:settings-outline', 'i-ion:language', 'i-ion:lock-closed-outline', 'i-ion:power-outline', 'i-ion:apps-outline', 'i-clarity:note-edit-line',
     'i-ion:ios-arrow-down', 'i-ion:grid-outline', 'i-ion:reload-sharp',
+    'i-ion:home-outline', 'i-ion:layers-outline', 'i-ion:key-outline',
     'i-clarity:close-line', 'i-mdi:arrow-collapse-left', 'i-mdi:arrow-collapse-right',
     'i-dashicons:align-center', 'i-clarity:minus-line', 'i-codicon:screen-full',
-    'i-codicon:screen-normal',
+    'i-codicon:screen-normal', 'i-ion:bar-chart-outline', 'i-ion:logo-github',
+    'i-ion:logo-vue', 'i-ion:logo-html5', 'i-ion:logo-angular',
+    'i-ion:logo-react', 'i-ion:logo-javascript',
     ...icons,
   ],
 })
