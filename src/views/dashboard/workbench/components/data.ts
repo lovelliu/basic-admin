@@ -107,7 +107,7 @@ export const dynamicInfoItems: DynamicInfoItem[] = [
 export const groupItems: GroupItem[] = [
   {
     title: 'Github',
-    icon: 'carbon:logo-github',
+    icon: 'ion:logo-github',
     color: '',
     desc: '不要等待机会，而要创造机会。',
     group: '开源组',
@@ -139,7 +139,7 @@ export const groupItems: GroupItem[] = [
   },
   {
     title: 'React',
-    icon: 'bx:bxl-react',
+    icon: 'ion:logo-react',
     color: '#00d8ff',
     desc: '健康的身体是实目标的基石。',
     group: '技术牛',
@@ -148,7 +148,7 @@ export const groupItems: GroupItem[] = [
   {
     title: 'Js',
     icon: 'ion:logo-javascript',
-    color: '#4daf1bc9',
+    color: '#EBD94E',
     desc: '路是走出来的，而不是空想出来的。',
     group: '架构组',
     date: '2021-04-01',
