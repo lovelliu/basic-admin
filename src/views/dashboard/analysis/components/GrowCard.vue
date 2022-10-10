@@ -27,7 +27,7 @@ defineProps({
           </Tag>
         </template>
 
-        <div class="p-4 flex justify-between">
+        <div class="p-4 flex justify-between items-center">
           <CountTo prefix="$" :start-val="1" :end-val="item.value" class="text-2xl" />
           <Icon :icon="item.icon" :size="40" />
         </div>

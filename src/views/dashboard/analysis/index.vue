@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import GrowCardVue from './components/GrowCard.vue'
+import GrowCard from './components/GrowCard.vue'
 import SiteAnalysis from './components/SiteAnalysis.vue'
 import VisitRadar from './components/VisitRadar.vue'
 import VisitSource from './components/VisitSource.vue'
@@ -14,7 +14,7 @@ setTimeout(() => {
 
 <template>
   <div class="p-4">
-    <GrowCardVue :loading="loading" class="enter-y" />
+    <GrowCard :loading="loading" class="enter-y" />
     <SiteAnalysis class="!my-4 entry-y" :loading="loading" />
     <div class="md:flex entry-y">
       <VisitRadar class="md:w-1/3 w-full" :loading="loading" />
