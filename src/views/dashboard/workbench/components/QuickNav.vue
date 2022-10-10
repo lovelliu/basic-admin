@@ -2,17 +2,15 @@
 import { Card } from 'ant-design-vue'
 import { Icon } from '@/components/Icon'
 import { navItems } from './data'
-
-const CardGrid = Card.Grid
 </script>
 
 <template>
   <Card title="快捷导航" v-bind="$attrs">
-    <CardGrid v-for="item in navItems" :key="item">
+    <Card.Grid v-for="item in navItems" :key="item.icon">
       <span class="flex flex-col items-center">
         <Icon :icon="item.icon" :color="item.color" size="20" />
-        <span class="text-md mt-2">{{ item.title }}</span>
+        <span class="mt-2" style="white-space: nowrap;">{{ item.title }}</span>
       </span>
-    </CardGrid>
+    </Card.Grid>
   </Card>
 </template>
