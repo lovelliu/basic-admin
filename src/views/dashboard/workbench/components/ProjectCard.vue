@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Card } from 'ant-design-vue'
+import { Card, CardGrid } from 'ant-design-vue'
 import { Icon } from '@/components/Icon'
 import { groupItems } from './data'
 </script>
@@ -12,18 +12,18 @@ import { groupItems } from './data'
       </a-button>
     </template>
 
-    <Card.Grid v-for="item in groupItems" :key="item.icon" class="!md:w-1/3 !w-full">
+    <CardGrid v-for="item in groupItems" :key="item.icon" class="!md:w-1/3 !w-full">
       <span class="flex">
         <Icon :icon="item.icon" :color="item.color" size="30" />
         <span class="text-lg ml-4">{{ item.title }}</span>
       </span>
-      <div class="flex mt-2 h-10 text-secondary">
+      <div class="flex mt-2 h-10">
         {{ item.desc }}
       </div>
       <div class="flex justify-between">
         <span>{{ item.group }}</span>
         <span>{{ item.date }}</span>
       </div>
-    </Card.Grid>
+    </CardGrid>
   </Card>
 </template>
