@@ -23,7 +23,7 @@ const title = computed(() => globSetting?.title ?? '')
 
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
-    <div class="flex items-center absolute right-5 top-4">
+    <div class="flex items-center absolute right-5 top-4 z-1">
       <AppDarkModeToggle v-if="!sessionTimeout" class="enter-x mr-2 ml-auto" />
       <AppLocalePicker
         v-if="!sessionTimeout && showLocale"
@@ -112,7 +112,7 @@ const title = computed(() => globSetting?.title ?? '')
     min-height: 100%;
     overflow: hidden;
     @media (max-width: @screen-xl) {
-      background-color: @dark-bg;
+      background-color: whitesmoke;
 
       .@{prefix-cls}-form {
         background-color: #fff;
