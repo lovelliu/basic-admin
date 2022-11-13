@@ -18,7 +18,7 @@ const getClass = computed(() => [prefixCls, { [`${prefixCls}--dark`]: unref(isDa
 
 function toggleDarkMode() {
   const darkMode
-      = getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK
+    = getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK
   setDarkMode(darkMode)
   updateDarkTheme(darkMode)
   updateHeaderBgColor()
@@ -106,7 +106,7 @@ function toggleDarkMode() {
       .star {
         position: absolute;
         background-color: #ffffff;
-        transition: all 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         border-radius: 50%;
 
         &--1 {
@@ -137,7 +137,7 @@ function toggleDarkMode() {
         &--5,
         &--6 {
           opacity: 0;
-          transition: all 300ms 0 cubic-bezier(0.445, 0.05, 0.55, 0.95);
+          transition: all 0.3s 0 cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
 
         &--4 {
@@ -146,7 +146,7 @@ function toggleDarkMode() {
           z-index: 0;
           width: 1px;
           height: 1px;
-          transform: translate3d(3px, 0, 0);
+          transform: translateX(3px);
         }
 
         &--5 {
@@ -155,7 +155,7 @@ function toggleDarkMode() {
           z-index: 0;
           width: 2px;
           height: 2px;
-          transform: translate3d(3px, 0, 0);
+          transform: translateX(3px);
         }
 
         &--6 {
@@ -164,7 +164,7 @@ function toggleDarkMode() {
           z-index: 0;
           width: 1px;
           height: 1px;
-          transform: translate3d(3px, 0, 0);
+          transform: translateX(3px);
         }
       }
     }
@@ -183,7 +183,7 @@ function toggleDarkMode() {
 
         .toggle-handler {
           background-color: #ffe5b5;
-          transform: translate3d(25px, 0, 0) rotate(0);
+          transform: translateX(25px) rotate(0);
 
           .crater {
             opacity: 1;
@@ -198,32 +198,32 @@ function toggleDarkMode() {
         .star--2 {
           width: 3px;
           height: 3px;
-          transform: translate3d(-5px, 0, 0);
+          transform: translateX(-5px);
         }
 
         .star--3 {
           width: 1px;
           height: 1px;
-          transform: translate3d(-7px, 0, 0);
+          transform: translateX(-7px);
         }
 
         .star--4,
         .star--5,
         .star--6 {
           opacity: 1;
-          transform: translate3d(0, 0, 0);
+          transform: translateX(0);
         }
 
         .star--4 {
-          transition: all 300ms 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+          transition: all 0.3s 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
 
         .star--5 {
-          transition: all 300ms 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+          transition: all 0.3s 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
 
         .star--6 {
-          transition: all 300ms 400ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+          transition: all 0.3s 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
       }
     }

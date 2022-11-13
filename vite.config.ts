@@ -60,14 +60,14 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       reportCompressedSize: false,
       chunkSizeWarningLimit: 2000,
     },
-    optimizeDeps: {
-      include: [
-        '@vue/runtime-core',
-        '@vue/shared',
-        '@iconify/json',
-        'ant-design-vue/es/locale/zh_CN',
-        'ant-design-vue/es/locale/en_US',
-      ],
-    },
+    // optimizeDeps: {
+    //   include: [
+    //     '@vue/runtime-core',
+    //     '@vue/shared',
+    //     '@iconify/json',
+    //     'ant-design-vue/es/locale/zh_CN',
+    //     'ant-design-vue/es/locale/en_US',
+    //   ],
+    // },
   }
 }

@@ -25,29 +25,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   upwardSpace: 0,
 })
+
 const wrapperRef = ref(null)
 const headerRef = ref(null)
 const contentRef = ref(null)
 const footerRef = ref(null)
-const { prefixCls } = useDesign('page-wrapper')
-
-const attrs = useAttrs()
-const slots = useSlots()
-
-provide(PageWrapperFixedHeightKey, computed(() => props.fixedHeight))
 
 const getIsContentFullHeight = computed(() => props.contentFullHeight)
-
 const getUpwardSpace = computed(() => props.upwardSpace)
-const { redoHeight, setCompensation, contentHeight } = useContentHeight(
-  getIsContentFullHeight,
-  wrapperRef,
-  [headerRef, footerRef],
-  [contentRef],
-  getUpwardSpace,
-)
-setCompensation({ useLayoutFooter: true, elements: [footerRef] })
-
 const getClass = computed(() => {
   return [
     prefixCls,
@@ -57,18 +42,14 @@ const getClass = computed(() => {
     attrs.class ?? {},
   ]
 })
-
 const getShowFooter = computed(() => slots?.leftFooter || slots?.rightFooter)
-
 const getHeaderSlots = computed(() => {
   return Object.keys(omit(slots, 'default', 'leftFooter', 'rightFooter', 'headerContent'))
 })
-
 const getContentStyle = computed((): CSSProperties => {
   const { contentFullHeight, contentStyle, fixedHeight } = props
   if (!contentFullHeight)
     return { ...contentStyle }
-
   const height = `${unref(contentHeight)}px`
   return {
     ...contentStyle,
@@ -76,7 +57,6 @@ const getContentStyle = computed((): CSSProperties => {
     ...(fixedHeight ? { height } : {}),
   }
 })
-
 const getContentClass = computed(() => {
   const { contentBackground, contentClass } = props
   return [
@@ -87,6 +67,21 @@ const getContentClass = computed(() => {
           },
   ]
 })
+
+const attrs = useAttrs()
+const slots = useSlots()
+const { prefixCls } = useDesign('page-wrapper')
+const { redoHeight, setCompensation, contentHeight } = useContentHeight(
+  getIsContentFullHeight,
+  wrapperRef,
+  [headerRef, footerRef],
+  [contentRef],
+  getUpwardSpace,
+)
+
+provide(PageWrapperFixedHeightKey, computed(() => props.fixedHeight))
+
+setCompensation({ useLayoutFooter: true, elements: [footerRef] })
 
 watch(
   () => [getShowFooter.value],
